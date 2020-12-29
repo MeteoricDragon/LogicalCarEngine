@@ -41,17 +41,15 @@ namespace LogicalEngine.EngineParts
         }
 
         protected virtual void OnActivate(object sender, EventArgs e)
-        {
-            Console.WriteLine("in " + UserFriendlyName);
+        {           
             var carPartSender = (sender as CarPart);
+            Console.WriteLine(carPartSender.UserFriendlyName + " in " + UserFriendlyName);
 
             foreach (CarPart part in carPartSender.ConnectedParts)
             {
                 if (part.TryDrain(UnitsToConsume))
                 {
                     Fill(UnitsToGive);
-                    Console.WriteLine("Battery: ( " + Engine.Subsystems.Find(x => x is PowerParts).Parts.Find(x => x is Battery).UnitsOwned + " )");
-
                 }
 
                 if (ActivateNext(part))
@@ -76,18 +74,21 @@ namespace LogicalEngine.EngineParts
             if (amountNeeded > 0 && CanDrawFromBattery)
             {
                 if (Battery.TryDrain(amountNeeded))
+                {
                     Fill(amountNeeded);
+                    Console.WriteLine("+ Battery: ( " + Engine.Subsystems.Find(x => x is PowerParts).Parts.Find(x => x is Battery).UnitsOwned + " )");
+                }
             }
 
             if (UnitsOwned < drainAmount)
             {
+                Console.WriteLine("ERROR: Failed to drain " + UserFriendlyName);
                 return false;
             }
             
             UnitsOwned -= drainAmount;
             return true;
         }
-
         public virtual void Fill(int fillAmount)
         {
             UnitsOwned = Math.Min(UnitsOwned + fillAmount, UnitsMax);
