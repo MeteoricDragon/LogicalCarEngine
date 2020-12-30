@@ -19,10 +19,5 @@ namespace LogicalEngine.EngineParts
                 return true;
             return false;
         }
-
-        protected override void InvokeActivate(CarPart part, EventArgs e)
-        {
-            base.InvokeActivate(part, e);
-        }
     }
 }

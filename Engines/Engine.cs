@@ -15,7 +15,7 @@ namespace LogicalEngine
         
         public virtual void RunEngine()
         {
-            while (tempCycleCount++ < 2) /* enginecycles < 0 */
+            while (tempCycleCount++ < 1) /* enginecycles < 0 */
                 // run engine while ignitionswitch is set, but it's not on this hierarchy
                 TickEngine();
                 ;

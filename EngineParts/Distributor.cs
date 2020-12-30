@@ -8,12 +8,13 @@ namespace LogicalEngine.EngineParts
     public class Distributor : ElectricalPart
     {
         public override string UserFriendlyName { get => "Distributor"; }
+        
         public Distributor(Engine e) : base(e)
         {
         }
-        protected override bool ActivateNext(CarPart part)
+        protected override bool ActivateNext(CarPart activator)
         {
-            if (part is SparkPlugs)
+            if (activator is CamShaft && UnitsOwned >= UnitTriggerThreshold)
                 return true;
             return false;
         }

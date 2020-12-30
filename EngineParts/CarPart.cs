@@ -16,6 +16,7 @@ namespace LogicalEngine.EngineParts
         public int UnitsOwned { get; protected set; }
         virtual public int UnitsToGive { get => 5; }
         virtual public int UnitsToConsume { get => 5; }
+        virtual public int UnitTriggerThreshold { get => 5; }
 
         public bool CanDrawFromBattery { get; set; }
         public bool CanChargeBattery { get; set; }
@@ -43,24 +44,19 @@ namespace LogicalEngine.EngineParts
         protected virtual void OnActivate(object sender, EventArgs e)
         {           
             var carPartSender = (sender as CarPart);
-            Console.WriteLine(carPartSender.UserFriendlyName + " in " + UserFriendlyName);
-
-            foreach (CarPart part in carPartSender.ConnectedParts)
+            foreach (CarPart connected in carPartSender.ConnectedParts)
             {
-                if (part.TryDrain(UnitsToConsume))
-                {
-                    Fill(UnitsToGive);
-                }
-
-                if (ActivateNext(part))
-                {
-                    InvokeActivate(part, e); 
-                }
+                Console.WriteLine("~=~=~= " + carPartSender.UserFriendlyName + "'s connection to " + connected.UserFriendlyName + ":");
+                if (TryTransferUnits(carPartSender, connected))
+                    if (ActivateNext(connected))
+                    {
+                        connected.InvokeActivate(carPartSender); 
+                    }
             } 
         }
-        protected virtual void InvokeActivate(CarPart part, EventArgs e)
+        protected virtual void InvokeActivate(CarPart activator)
         {
-            Activate?.Invoke(part, e);
+            Activate?.Invoke(activator, new EventArgs());
         }
 
         protected virtual bool ActivateNext(CarPart partToActivate) 
@@ -68,6 +64,15 @@ namespace LogicalEngine.EngineParts
             return true; // TODO: make specific cases for true/false 
         }
 
+        public virtual bool TryTransferUnits(CarPart sender, CarPart reciever)
+        {
+            if (sender.TryDrain(UnitsToConsume))
+            {
+                reciever.Fill(UnitsToGive);
+                return true;
+            }
+            return false;
+        }
         public virtual bool TryDrain(int drainAmount)
         {
             int amountNeeded = Math.Max(drainAmount - UnitsOwned, 0);
@@ -76,7 +81,6 @@ namespace LogicalEngine.EngineParts
                 if (Battery.TryDrain(amountNeeded))
                 {
                     Fill(amountNeeded);
-                    Console.WriteLine("+ Battery: ( " + Engine.Subsystems.Find(x => x is PowerParts).Parts.Find(x => x is Battery).UnitsOwned + " )");
                 }
             }
 
@@ -87,10 +91,14 @@ namespace LogicalEngine.EngineParts
             }
             
             UnitsOwned -= drainAmount;
+            Console.WriteLine(UserFriendlyName + ": drained " + UnitsOwned + " - " + drainAmount + " " + UnitType);
+
+
             return true;
         }
         public virtual void Fill(int fillAmount)
-        {
+        {            
+            Console.WriteLine(UserFriendlyName + ": filled " + UnitsOwned + " + " + fillAmount + " " + UnitType);
             UnitsOwned = Math.Min(UnitsOwned + fillAmount, UnitsMax);
         }
     }

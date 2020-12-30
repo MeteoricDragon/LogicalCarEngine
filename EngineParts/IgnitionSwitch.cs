@@ -26,7 +26,7 @@ namespace LogicalEngine.EngineParts
         /// </summary>
         public void Tick()
         {
-            InvokeActivate(this, new EventArgs());
+            InvokeActivate(this);
         }
 
         public void TurnIgnitionClockwise()
@@ -63,12 +63,6 @@ namespace LogicalEngine.EngineParts
                 return true;
             return false;
         }
-
-        protected override void InvokeActivate(CarPart part, EventArgs e)
-        {
-            base.InvokeActivate(part, e);
-        }
-
 
     }
 }
