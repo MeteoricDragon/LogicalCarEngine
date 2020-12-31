@@ -12,12 +12,5 @@ namespace LogicalEngine.EngineParts
         {
             CanDrawFromBattery = true;
         }
-
-        protected override bool ActivateNext(CarPart part)
-        {
-            if (part is Distributor && (Engine as CombustionEngine).Ignition.IgnitionSwitchOn)
-                return true;
-            return false;
-        }
     }
 }

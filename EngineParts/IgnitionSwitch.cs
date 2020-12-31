@@ -1,4 +1,5 @@
-﻿using LogicalEngine.Engines;
+﻿using LogicalCarEngine.EngineParts;
+using LogicalEngine.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -55,12 +56,11 @@ namespace LogicalEngine.EngineParts
                 IgnitionSwitchOn = false;
         }
 
-        protected override bool ActivateNext(CarPart part)
+        protected override bool TryActivateNext(CarPart partToActivate, CarPart activatingPart)
         {
-            if (part is IgnitionCoil && IgnitionSwitchOn)
-                return true;
-            else if (part is StarterMotor && StartupOn)
-                return true;
+            if (partToActivate is IgnitionCoil && IgnitionSwitchOn
+                || partToActivate is StarterMotor && StartupOn)
+                return base.TryActivateNext(partToActivate, activatingPart);
             return false;
         }
 

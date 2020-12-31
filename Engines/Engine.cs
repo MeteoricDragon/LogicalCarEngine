@@ -12,13 +12,13 @@ namespace LogicalEngine
         public int tempCycleCount = 0;
         protected EngineOperationOrder EngineOrder;
         public List<EngineSubsystem> Subsystems { get; protected set; }
-        
+
         public virtual void RunEngine()
         {
-            while (tempCycleCount++ < 1) /* enginecycles < 0 */
+            //while (tempCycleCount++ < 1) /* enginecycles < 0 */
                 // run engine while ignitionswitch is set, but it's not on this hierarchy
                 TickEngine();
-                ;
+                //;
         }
         public virtual void TickEngine()
         {

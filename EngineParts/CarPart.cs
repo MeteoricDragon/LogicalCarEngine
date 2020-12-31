@@ -48,27 +48,25 @@ namespace LogicalEngine.EngineParts
             {
                 Console.WriteLine("~=~=~= " + carPartSender.UserFriendlyName + "'s connection to " + connected.UserFriendlyName + ":");
                 if (TryTransferUnits(carPartSender, connected))
-                    if (ActivateNext(connected))
-                    {
-                        connected.InvokeActivate(carPartSender); 
-                    }
-            } 
+                    TryActivateNext(connected, carPartSender);
+            }
         }
         protected virtual void InvokeActivate(CarPart activator)
         {
             Activate?.Invoke(activator, new EventArgs());
         }
 
-        protected virtual bool ActivateNext(CarPart partToActivate) 
+        protected virtual bool TryActivateNext(CarPart partToActivate, CarPart activatingPart) 
         {
-            return true; // TODO: make specific cases for true/false 
+            InvokeActivate(partToActivate);
+            return true;
         }
 
-        public virtual bool TryTransferUnits(CarPart sender, CarPart reciever)
+        public virtual bool TryTransferUnits(CarPart sender, CarPart receiver)
         {
             if (sender.TryDrain(UnitsToConsume))
             {
-                reciever.Fill(UnitsToGive);
+                receiver.Fill(UnitsToGive);
                 return true;
             }
             return false;

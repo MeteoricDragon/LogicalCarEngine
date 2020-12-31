@@ -61,7 +61,7 @@ namespace LogicalEngine.Engines
                 { FuelTank, new List<CarPart> {  } },
                 { IgnitionCoil, new List<CarPart> { Distributor } },
                 { IgnitionSwitch, new List<CarPart> { IgnitionCoil, StarterMotor } },
-                { Pistons, new List<CarPart> { Crankshaft /*Only after combustion is occuring in chamber*/} },
+                { Pistons, new List<CarPart> { Crankshaft } },
                 { SparkPlugs, new List<CarPart> { Pistons } },// for sake of continuity, spark plug ignites during combustion cycle, and powers all cycles.  Maybe have a decreasing momentum variable that powers each time combustion occurs?
                 { StarterMotor, new List<CarPart> { Flywheel } }, // disconnect after startup 
                 { TimingChain, new List<CarPart> { CamShaft } },

@@ -12,10 +12,11 @@ namespace LogicalEngine.EngineParts
         public Distributor(Engine e) : base(e)
         {
         }
-        protected override bool ActivateNext(CarPart activator)
+        protected override bool TryActivateNext(CarPart partToActivate, CarPart activatingPart)
         {
-            if (activator is CamShaft && UnitsOwned >= UnitTriggerThreshold)
-                return true;
+            if (activatingPart is Distributor && (Engine as CombustionEngine).Ignition.IgnitionSwitchOn
+                || activatingPart is CamShaft && UnitsOwned >= UnitTriggerThreshold)
+                return base.TryActivateNext(partToActivate, activatingPart);
             return false;
         }
     }
