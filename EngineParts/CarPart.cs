@@ -88,9 +88,8 @@ namespace LogicalEngine.EngineParts
                 return false;
             }
             
-            UnitsOwned -= drainAmount;
             Console.WriteLine(UserFriendlyName + ": drained " + UnitsOwned + " - " + drainAmount + " " + UnitType);
-
+            UnitsOwned -= drainAmount;
 
             return true;
         }

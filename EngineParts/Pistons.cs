@@ -9,6 +9,7 @@ namespace LogicalEngine.EngineParts
         public override string UserFriendlyName { get => "Pistons"; }
         public Pistons(Engine e) : base(e)
         {
+            Engine = e;
         }
     }
 }

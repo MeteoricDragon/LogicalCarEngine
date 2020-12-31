@@ -8,6 +8,14 @@ namespace LogicalEngine.Engines
 {
     public abstract class CombustionEngine : Engine
     {
+        public enum CombustionStrokeCycle
+        {
+            Intake,
+            Compression,
+            Combustion,
+            Exhaust
+        };
+        public CombustionStrokeCycle StrokeCycle;
         public IgnitionSwitch Ignition { get; protected set; }
 
         public CombustionEngine() : base()
