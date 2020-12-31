@@ -15,9 +15,9 @@ namespace LogicalEngine.Engines
             Combustion,
             Exhaust
         };
-        public CombustionStrokeCycle StrokeCycle;
+        public CombustionStrokeCycle StrokeCycle { get; protected set; }
         public IgnitionSwitch Ignition { get; protected set; }
-
+        public bool CombustionActive { get; protected set; }
         public CombustionEngine() : base()
         {
         }
@@ -33,6 +33,12 @@ namespace LogicalEngine.Engines
                 Ignition.TurnIgnitionClockwise();
             }
 
+        }
+
+        public void InitializeStrokeCycle()
+        {
+            StrokeCycle = CombustionStrokeCycle.Intake;
+            Console.WriteLine("^&^&^&^ Changed cycle to Intake");
         }
 
         public override void TickEngine()

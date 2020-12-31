@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LogicalEngine.EngineContainers;
+using LogicalEngine.Engines;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,8 +13,22 @@ namespace LogicalEngine.EngineParts
         public override int UnitsMax { get => 50; }
         public Crankshaft(Engine e) : base(e)
         {
+            Engine = e;
             UnitsOwned = 5;
             FrictionResistance = 0;
+        }
+
+        protected override bool TryActivateNext(CarPart partToActivate, CarPart activatingPart)
+        {
+            if (activatingPart is Flywheel)
+            {
+                (Engine as CombustionEngine).InitializeStrokeCycle();
+            }
+
+            if ((activatingPart is Pistons || activatingPart is Flywheel) 
+                && UnitsOwned >= UnitTriggerThreshold)
+                return base.TryActivateNext(partToActivate, activatingPart);
+            return false;
         }
     }
 }

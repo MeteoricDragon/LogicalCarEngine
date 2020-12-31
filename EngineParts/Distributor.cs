@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static LogicalEngine.Engines.CombustionEngine;
 
 namespace LogicalEngine.EngineParts
 {
@@ -14,9 +15,18 @@ namespace LogicalEngine.EngineParts
         }
         protected override bool TryActivateNext(CarPart partToActivate, CarPart activatingPart)
         {
-            if (activatingPart is Distributor && (Engine as CombustionEngine).Ignition.IgnitionSwitchOn
-                || activatingPart is CamShaft && UnitsOwned >= UnitTriggerThreshold)
+            CombustionEngine CE = (Engine as CombustionEngine);
+            if (
+                (activatingPart is IgnitionCoil 
+                && CE.Ignition.IgnitionSwitchOn 
+                && CE.StrokeCycle == CombustionStrokeCycle.Combustion)
+                || 
+                (activatingPart is CamShaft 
+                && UnitsOwned >= UnitTriggerThreshold))
+            {
                 return base.TryActivateNext(partToActivate, activatingPart);
+            }
+                
             return false;
         }
     }
