@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LogicalEngine.EngineParts
 {
-    public class FuelTank : CarPart
+    public class FuelTank : FuelPart
     {
         public override string UserFriendlyName { get => "Fuel Tank"; }
         public FuelTank(Engine e) : base(e)

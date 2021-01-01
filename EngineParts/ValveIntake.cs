@@ -6,7 +6,7 @@ using static LogicalEngine.Engines.CombustionEngine;
 
 namespace LogicalEngine.EngineParts
 {
-    public class ValveIntake : CarPart
+    public class ValveIntake : FuelPart
     {
         public override string UserFriendlyName { get => "Intake Valve"; }
         public ValveIntake(Engine e) : base(e)

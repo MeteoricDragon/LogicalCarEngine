@@ -33,6 +33,7 @@ namespace LogicalEngine.Engines
             var CamShaft = FindPart<CamShaft>(CombustionParts);
             var Carburetor = FindPart<Carburetor>(FuelParts);
             var Crankshaft = FindPart<Crankshaft>(CombustionParts);
+            var CombustionChamber = FindPart<CombustionChamber>(CombustionParts);
             var Distributor = FindPart<Distributor>(PowerParts);
             var Flywheel = FindPart<Flywheel>(CombustionParts);
             var FuelPump = FindPart<FuelPump>(FuelParts);
@@ -55,6 +56,7 @@ namespace LogicalEngine.Engines
                 { CamShaft, new List<CarPart> { FuelPump, Distributor, ValveExhaust, ValveIntake } },
                 { Carburetor, new List<CarPart> { ValveIntake } },
                 { Crankshaft, new List<CarPart> { Alternator, TimingChain, Pistons} },
+                { CombustionChamber, new List<CarPart> { Pistons } },
                 { Distributor, new List<CarPart> { SparkPlugs } },
                 { Flywheel, new List<CarPart> { Crankshaft /* Reverse after startup */} },
                 { FuelPump, new List<CarPart> { Carburetor } },
@@ -62,7 +64,7 @@ namespace LogicalEngine.Engines
                 { IgnitionCoil, new List<CarPart> { Distributor } },
                 { IgnitionSwitch, new List<CarPart> { IgnitionCoil, StarterMotor } },
                 { Pistons, new List<CarPart> { Crankshaft } },
-                { SparkPlugs, new List<CarPart> { Pistons } },// for sake of continuity, spark plug ignites during combustion cycle, and powers all cycles.  Maybe have a decreasing momentum variable that powers each time combustion occurs?
+                { SparkPlugs, new List<CarPart> { CombustionChamber } },
                 { StarterMotor, new List<CarPart> { Flywheel } }, // disconnect after startup 
                 { TimingChain, new List<CarPart> { CamShaft } },
                 { ValveExhaust, new List<CarPart> {  } },

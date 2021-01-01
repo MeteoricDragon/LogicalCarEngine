@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LogicalEngine.EngineParts
 {
-    public class Battery : CarPart
+    public class Battery : ElectricalPart
     {
         public override string UserFriendlyName { get => "Battery"; }
         public override int UnitsMax { get => 100; }
