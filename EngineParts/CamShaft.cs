@@ -10,5 +10,9 @@ namespace LogicalEngine.EngineParts
         public CamShaft(Engine e) : base(e)
         {
         }
+
+        // if camshaft is activating valves, shouldn't transfer momentum.  
+        // if I transfer momentum, when units get added in the valve, it will report as fuel being added.
+        // That would work for fuel pump sending fuel, but not for camshaft opening valve
     }
 }

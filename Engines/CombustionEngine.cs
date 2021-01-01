@@ -35,10 +35,10 @@ namespace LogicalEngine.Engines
 
         }
 
-        public void InitializeStrokeCycle()
+        public void StrokeCycleChange(CombustionStrokeCycle cycle)
         {
-            StrokeCycle = CombustionStrokeCycle.Intake;
-            Console.WriteLine("^&^&^&^ Changed cycle to Intake");
+            StrokeCycle = cycle;
+            Console.WriteLine("^&^&^&^ Changed cycle to " + cycle);
         }
 
         public override void TickEngine()

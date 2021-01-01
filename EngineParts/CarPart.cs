@@ -16,7 +16,7 @@ namespace LogicalEngine.EngineParts
         public int UnitsOwned { get; protected set; }
         virtual public int UnitsToGive { get => 5; }
         virtual public int UnitsToConsume { get => 5; }
-        virtual public int UnitTriggerThreshold { get => 5; }
+        virtual public int UnitTriggerThreshold { get => 0; }
 
         public bool CanDrawFromBattery { get; set; }
         public bool CanChargeBattery { get; set; }

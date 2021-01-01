@@ -22,7 +22,7 @@ namespace LogicalEngine.EngineParts
         {
             if (activatingPart is Flywheel)
             {
-                (Engine as CombustionEngine).InitializeStrokeCycle();
+                (Engine as CombustionEngine).StrokeCycleIntake();
             }
 
             if ((activatingPart is Pistons || activatingPart is Flywheel) 
