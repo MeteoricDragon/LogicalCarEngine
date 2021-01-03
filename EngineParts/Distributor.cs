@@ -19,7 +19,7 @@ namespace LogicalEngine.EngineParts
             if (
                 (activatingPart is IgnitionCoil 
                 && CE.Ignition.IgnitionSwitchOn 
-                && CE.StrokeCycle == CombustionStrokeCycle.Combustion)
+                && CE.ScheduledStrokeCycle == CombustionStrokeCycle.Combustion)
                 || 
                 (activatingPart is CamShaft 
                 && UnitsOwned >= UnitTriggerThreshold))

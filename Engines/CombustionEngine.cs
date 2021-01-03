@@ -15,7 +15,7 @@ namespace LogicalEngine.Engines
             Combustion,
             Exhaust
         };
-        public CombustionStrokeCycle StrokeCycle { get; protected set; }
+        public CombustionStrokeCycle ScheduledStrokeCycle { get; protected set; }
         public IgnitionSwitch Ignition { get; protected set; }
         public bool CombustionActive { get; protected set; }
         public CombustionEngine() : base()
@@ -37,7 +37,7 @@ namespace LogicalEngine.Engines
 
         public void StrokeCycleChange(CombustionStrokeCycle cycle)
         {
-            StrokeCycle = cycle;
+            ScheduledStrokeCycle = cycle;
             Console.WriteLine("^&^&^&^ Changed cycle to " + cycle);
         }
 

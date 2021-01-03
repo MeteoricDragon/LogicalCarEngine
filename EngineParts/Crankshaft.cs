@@ -25,8 +25,7 @@ namespace LogicalEngine.EngineParts
                 (Engine as CombustionEngine).StrokeCycleChange(CombustionEngine.CombustionStrokeCycle.Intake);
             }
 
-            if ((activatingPart is Pistons || activatingPart is Flywheel) 
-                && UnitsOwned >= UnitTriggerThreshold)
+            if (UnitsOwned >= UnitTriggerThreshold)
                 return base.TryActivateNext(partToActivate, activatingPart);
             return false;
         }
