@@ -55,7 +55,7 @@ namespace LogicalEngine.Engines
                 { Battery, new List<CarPart> {  } },
                 { CamShaft, new List<CarPart> { FuelPump, Distributor, ValveExhaust, ValveIntake } },
                 { Carburetor, new List<CarPart> { ValveIntake } },
-                { Crankshaft, new List<CarPart> { Alternator, TimingChain, Pistons} },
+                { Crankshaft, new List<CarPart> { Alternator, TimingChain} },
                 { CombustionChamber, new List<CarPart> { Pistons } },
                 { Distributor, new List<CarPart> { SparkPlugs } },
                 { Flywheel, new List<CarPart> { Crankshaft } },
@@ -65,7 +65,7 @@ namespace LogicalEngine.Engines
                 { IgnitionSwitch, new List<CarPart> { IgnitionCoil, StarterMotor } },
                 { Pistons, new List<CarPart> { Crankshaft } },
                 { SparkPlugs, new List<CarPart> { CombustionChamber } },
-                { StarterMotor, new List<CarPart> { Flywheel } }, // disconnect after startup 
+                { StarterMotor, new List<CarPart> { Flywheel } }, 
                 { TimingChain, new List<CarPart> { CamShaft } },
                 { ValveExhaust, new List<CarPart> {  } },
                 { ValveIntake, new List<CarPart> { CombustionChamber } } 

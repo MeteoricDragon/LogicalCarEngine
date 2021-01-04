@@ -44,12 +44,14 @@ namespace LogicalEngine.EngineParts
         protected virtual void OnActivate(object sender, EventArgs e)
         {           
             var carPartSender = (sender as CarPart);
+            Output.ConnectedPartsHeader(carPartSender);
             foreach (CarPart connected in carPartSender.ConnectedParts)
             {
-                Console.WriteLine("~=~=~= " + carPartSender.UserFriendlyName + "'s connection to " + connected.UserFriendlyName + ":");
+                Output.TransferReportHeader(carPartSender, connected);
                 if (TryTransferUnits(carPartSender, connected))
                     TryActivateNext(connected, carPartSender);
             }
+            Output.ConnectedPartsFooter(carPartSender);
         }
         protected virtual void InvokeActivate(CarPart activator)
         {
@@ -84,18 +86,18 @@ namespace LogicalEngine.EngineParts
 
             if (UnitsOwned < drainAmount)
             {
-                Console.WriteLine("ERROR: Failed to drain " + UserFriendlyName);
+                Output.TransferReportDrainFail(UserFriendlyName);
                 return false;
             }
-            
-            Console.WriteLine(UserFriendlyName + ": drained " + UnitsOwned + " - " + drainAmount + " " + UnitType);
+
+            Output.TransferReportDrain(this, drainAmount);
             UnitsOwned -= drainAmount;
 
             return true;
         }
         public virtual void Fill(int fillAmount)
-        {            
-            Console.WriteLine(UserFriendlyName + ": filled " + UnitsOwned + " + " + fillAmount + " " + UnitType);
+        {
+            Output.TransferReportFill(this, fillAmount);
             UnitsOwned = Math.Min(UnitsOwned + fillAmount, UnitsMax);
         }
     }
