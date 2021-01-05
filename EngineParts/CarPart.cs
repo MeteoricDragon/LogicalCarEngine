@@ -68,7 +68,7 @@ namespace LogicalEngine.EngineParts
         {
             if (sender.TryDrain(UnitsToConsume))
             {
-                receiver.Fill(UnitsToGive);
+                receiver.Fill(sender.UnitsToGive);
                 return true;
             }
             return false;

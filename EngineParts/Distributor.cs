@@ -9,7 +9,8 @@ namespace LogicalEngine.EngineParts
     public class Distributor : ElectricalPart
     {
         public override string UserFriendlyName { get => "Distributor"; }
-        
+
+        public override int UnitTriggerThreshold { get => 5; }
         public Distributor(Engine e) : base(e)
         {
         }
