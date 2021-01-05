@@ -20,11 +20,7 @@ namespace LogicalEngine.EngineParts
         {
             if (ExhaustValve == null || IntakeValve == null)
             {
-                var parts = new List<CarPart>();
-                foreach (var x in Engine.Subsystems)
-                {
-                    parts.AddRange(x.Parts);
-                }
+                var parts = Engine.AllParts;
                 ExhaustValve = parts.Find(x => x is ValveExhaust) as ValveExhaust;
                 IntakeValve = parts.Find(x => x is ValveIntake) as ValveIntake;
             }
