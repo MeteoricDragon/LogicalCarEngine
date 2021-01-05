@@ -21,31 +21,29 @@ namespace LogicalEngine.Engines
         }
 
         public void ConfigureICEOverheadValveEngine(ICEOverheadValveEngine engine)
-        { 
-            var CombustionParts = engine.Subsystems.Find(x => x is CombustionParts).Parts;
-            var FuelParts = engine.Subsystems.Find(x => x is FuelParts).Parts;
-            var PowerParts = engine.Subsystems.Find(x => x is PowerParts).Parts;
+        {
+            var parts = engine.AllParts;
 
-            var Accelerator = FindPart<Accelerator>(FuelParts);
-            var AirCleaner = FindPart<AirCleaner>(FuelParts);
-            var Alternator = FindPart<Alternator>(PowerParts);
-            var Battery = FindPart<Battery>(PowerParts);
-            var CamShaft = FindPart<CamShaft>(CombustionParts);
-            var Carburetor = FindPart<Carburetor>(FuelParts);
-            var Crankshaft = FindPart<Crankshaft>(CombustionParts);
-            var CombustionChamber = FindPart<CombustionChamber>(CombustionParts);
-            var Distributor = FindPart<Distributor>(PowerParts);
-            var Flywheel = FindPart<Flywheel>(CombustionParts);
-            var FuelPump = FindPart<FuelPump>(FuelParts);
-            var FuelTank = FindPart<FuelTank>(FuelParts);
-            var IgnitionCoil = FindPart<IgnitionCoil>(PowerParts);
-            var IgnitionSwitch = FindPart<IgnitionSwitch>(PowerParts);
-            var Pistons = FindPart<Pistons>(CombustionParts);
-            var SparkPlugs = FindPart<SparkPlugs>(PowerParts);
-            var StarterMotor = FindPart<StarterMotor>(PowerParts);
-            var TimingChain = FindPart<TimingChain>(CombustionParts);
-            var ValveExhaust = FindPart<ValveExhaust>(CombustionParts);
-            var ValveIntake = FindPart<ValveIntake>(CombustionParts);
+            var Accelerator = FindPart<Accelerator>(parts);
+            var AirCleaner = FindPart<AirCleaner>(parts);
+            var Alternator = FindPart<Alternator>(parts);
+            var Battery = FindPart<Battery>(parts);
+            var CamShaft = FindPart<CamShaft>(parts);
+            var Carburetor = FindPart<Carburetor>(parts);
+            var Crankshaft = FindPart<Crankshaft>(parts);
+            var CombustionChamber = FindPart<CombustionChamber>(parts);
+            var Distributor = FindPart<Distributor>(parts);
+            var Flywheel = FindPart<Flywheel>(parts);
+            var FuelPump = FindPart<FuelPump>(parts);
+            var FuelTank = FindPart<FuelTank>(parts);
+            var IgnitionCoil = FindPart<IgnitionCoil>(parts);
+            var IgnitionSwitch = FindPart<IgnitionSwitch>(parts);
+            var Pistons = FindPart<Pistons>(parts);
+            var SparkPlugs = FindPart<SparkPlugs>(parts);
+            var StarterMotor = FindPart<StarterMotor>(parts);
+            var TimingChain = FindPart<TimingChain>(parts);
+            var ValveExhaust = FindPart<ValveExhaust>(parts);
+            var ValveIntake = FindPart<ValveIntake>(parts);
 
             PartChain = new Dictionary<CarPart, List<CarPart>>()
             {
@@ -74,9 +72,9 @@ namespace LogicalEngine.Engines
 
         public void ConnectBattery(Engine engine)
         {
-            var PowerParts = engine.Subsystems.Find(x => x is PowerParts).Parts;
-            var battery = FindPart<Battery>(PowerParts);
-            foreach (CarPart p in PowerParts)
+            var allParts = engine.AllParts;
+            var battery = FindPart<Battery>(allParts);
+            foreach (CarPart p in allParts)
             {
                 if (p.CanChargeBattery || p.CanDrawFromBattery)
                     p.Battery = battery;

@@ -25,8 +25,7 @@ namespace LogicalEngine.Engines
         public override void StartEngine()
         {
             if (Ignition == null)
-                Ignition = Subsystems.Find(x => x is PowerParts)
-                .Parts.Find(x => x is IgnitionSwitch) as IgnitionSwitch;
+                Ignition = AllParts.Find(x => x is IgnitionSwitch) as IgnitionSwitch;
 
             while (!Ignition.StartupOn)
             {
