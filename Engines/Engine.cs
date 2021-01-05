@@ -13,6 +13,18 @@ namespace LogicalEngine
         protected EngineOperationOrder EngineOrder;
         public List<EngineSubsystem> Subsystems { get; protected set; }
 
+        public List<CarPart> AllParts
+        {
+            get {
+                var parts = new List<CarPart>();
+                foreach (var x in Subsystems)
+                {
+                    parts.AddRange(x.Parts);
+                }
+                return parts; 
+            }
+        }
+
         public virtual void RunEngine()
         {
             //while (tempCycleCount++ < 1) /* enginecycles < 0 */
