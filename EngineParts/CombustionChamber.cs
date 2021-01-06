@@ -10,23 +10,29 @@ namespace LogicalEngine.EngineParts
 {
     public class CombustionChamber : FuelPart
     {
+        private ValveExhaust ExhaustValve;
+        private ValveIntake IntakeValve;
         public override string UserFriendlyName { get => "Combustion Chamber"; }
         public CombustionChamber(Engine e) : base(e)
         {
             Engine = e;
         }
-        protected override bool TryActivateNext(CarPart partToActivate, CarPart activatingPart)
+        protected override bool TryActivate(CarPart activatingPart)
         {
-            if (activatingPart is ValveIntake)
+            if (ExhaustValve == null || IntakeValve == null)
             {
-                if (UnitsOwned >= UnitTriggerThreshold)
-                {
-                    (Engine as CombustionEngine).StrokeCycleChange(CombustionStrokeCycle.Compression);
-                }
-                return false;
+                var parts = Engine.AllParts;
+                ExhaustValve = parts.Find(x => x is ValveExhaust) as ValveExhaust;
+                IntakeValve = parts.Find(x => x is ValveIntake) as ValveIntake;
             }
 
-            return base.TryActivateNext(partToActivate, activatingPart);
+            if (UnitsOwned >= UnitTriggerThreshold
+                && !IntakeValve.IsOpen && !ExhaustValve.IsOpen)
+                return base.TryActivate(activatingPart);
+
+            return false;
         }
+
+
     }
 }

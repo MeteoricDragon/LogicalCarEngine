@@ -9,19 +9,25 @@ namespace LogicalEngine.EngineParts
     public class ValveIntake : FuelPart, IValve
     {
         public override string UserFriendlyName { get => "Intake Valve"; }
-        public bool IsOpen { get; set; }
+        public bool IsOpen
+        {
+            get
+            {
+                return ((Engine as CombustionEngine).ScheduledStrokeCycle == CombustionStrokeCycle.Intake);
+            }
+        }
         public ValveIntake(Engine e) : base(e)
         {
             Engine = e;
         }
 
-        protected override bool TryActivateNext(CarPart partToActivate, CarPart activatingPart)
+        protected override bool TryActivate(CarPart activatingPart)
         {
             if (activatingPart is Carburetor )  
             {
                 if (UnitsOwned >= UnitTriggerThreshold)
                 {
-                    return base.TryActivateNext(partToActivate, activatingPart);
+                    return base.TryActivate(activatingPart);
                 }
             }
             return false;

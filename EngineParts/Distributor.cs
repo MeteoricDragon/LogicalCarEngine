@@ -14,18 +14,17 @@ namespace LogicalEngine.EngineParts
         public Distributor(Engine e) : base(e)
         {
         }
-        protected override bool TryActivateNext(CarPart partToActivate, CarPart activatingPart)
+        protected override bool TryActivate(CarPart activatingPart)
         {
             CombustionEngine CE = (Engine as CombustionEngine);
             if (
                 (activatingPart is IgnitionCoil 
-                && CE.Ignition.IgnitionSwitchOn 
-                && CE.ScheduledStrokeCycle == CombustionStrokeCycle.Combustion)
+                && CE.Ignition.IgnitionSwitchOn)
                 || 
                 (activatingPart is CamShaft 
                 && UnitsOwned >= UnitTriggerThreshold))
             {
-                return base.TryActivateNext(partToActivate, activatingPart);
+                return base.TryActivate(activatingPart);
             }
                 
             return false;

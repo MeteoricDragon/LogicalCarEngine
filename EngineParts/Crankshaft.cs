@@ -18,7 +18,7 @@ namespace LogicalEngine.EngineParts
             FrictionResistance = 0;
         }
 
-        protected override bool TryActivateNext(CarPart partToActivate, CarPart activatingPart)
+        protected override bool TryActivate( CarPart activatingPart)
         {
             if (activatingPart is Flywheel)
             {
@@ -26,7 +26,7 @@ namespace LogicalEngine.EngineParts
             }
 
             if (UnitsOwned >= UnitTriggerThreshold)
-                return base.TryActivateNext(partToActivate, activatingPart);
+                return base.TryActivate(activatingPart);
             return false;
         }
     }

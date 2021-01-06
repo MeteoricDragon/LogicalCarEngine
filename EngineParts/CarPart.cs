@@ -49,19 +49,28 @@ namespace LogicalEngine.EngineParts
             {
                 Output.TransferReportHeader(carPartSender, connected);
                 if (TryTransferUnits(carPartSender, connected))
-                    TryActivateNext(connected, carPartSender);
+                {
+                    connected.ActivateToggles(carPartSender);
+                    connected.TryActivate(carPartSender);
+                }
+
             }
             Output.ConnectedPartsFooter(carPartSender);
         }
-        protected virtual void InvokeActivate(CarPart activator)
+        protected virtual void InvokeActivate()
         {
-            Activate?.Invoke(activator, new EventArgs());
+            Activate?.Invoke(this, new EventArgs());
         }
 
-        protected virtual bool TryActivateNext(CarPart partToActivate, CarPart activatingPart) 
+        protected virtual bool TryActivate(CarPart activatingPart) 
         {
-            InvokeActivate(partToActivate);
+            InvokeActivate();
             return true;
+        }
+
+        protected virtual void ActivateToggles(CarPart activatingPart)
+        {
+
         }
 
         public virtual bool TryTransferUnits(CarPart sender, CarPart receiver)

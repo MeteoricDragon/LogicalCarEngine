@@ -10,5 +10,12 @@ namespace LogicalEngine.EngineParts
         public StarterMotor(Engine e) : base(e)
         {
         }
+
+        protected override bool TryActivate(CarPart activatingPart)
+        {
+            if ((activatingPart as IgnitionSwitch).StartupOn)
+                return base.TryActivate(activatingPart);
+            return false;
+        }
     }
 }

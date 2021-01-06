@@ -27,7 +27,7 @@ namespace LogicalEngine.EngineParts
         /// </summary>
         public void Tick()
         {
-            InvokeActivate(this);
+            InvokeActivate();
         }
 
         public void TurnIgnitionClockwise()
@@ -55,14 +55,5 @@ namespace LogicalEngine.EngineParts
             else if (IgnitionSwitchOn)
                 IgnitionSwitchOn = false;
         }
-
-        protected override bool TryActivateNext(CarPart partToActivate, CarPart activatingPart)
-        {
-            if (partToActivate is IgnitionCoil && IgnitionSwitchOn
-                || partToActivate is StarterMotor && StartupOn)
-                return base.TryActivateNext(partToActivate, activatingPart);
-            return false;
-        }
-
     }
 }
