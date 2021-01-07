@@ -12,9 +12,9 @@ namespace LogicalEngine.EngineParts
         public Battery Battery { get; set; }
         virtual public string UserFriendlyName { get => "Car Part"; }
         virtual public string UnitType { get => "Units"; }
-        virtual public int UnitsMax { get => 15; }
+        virtual public int UnitsMax { get => 50; }
         public int UnitsOwned { get; protected set; }
-        virtual public int UnitsToGive { get => 5; }
+        virtual public int UnitsToGive { get => 15; }
         virtual public int UnitsToConsume { get => 5; }
         virtual public int UnitTriggerThreshold { get => 0; }
 
@@ -53,7 +53,6 @@ namespace LogicalEngine.EngineParts
                     connected.ActivateToggles(carPartSender);
                     connected.TryActivate(carPartSender);
                 }
-
             }
             Output.ConnectedPartsFooter(carPartSender);
         }
@@ -67,7 +66,10 @@ namespace LogicalEngine.EngineParts
             InvokeActivate();
             return true;
         }
-
+        /// <summary>
+        /// placeholder function for toggling things on/off
+        /// </summary>
+        /// <param name="activatingPart"></param>
         protected virtual void ActivateToggles(CarPart activatingPart)
         {
 
@@ -95,7 +97,7 @@ namespace LogicalEngine.EngineParts
 
             if (UnitsOwned < drainAmount)
             {
-                Output.TransferReportDrainFail(UserFriendlyName);
+                //Output.TransferReportDrainFail(UserFriendlyName);
                 return false;
             }
 
