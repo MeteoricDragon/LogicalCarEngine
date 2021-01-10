@@ -16,7 +16,7 @@ namespace LogicalEngine.EngineParts
         public int UnitsOwned { get; protected set; }
         virtual public int UnitsToGive { get => 15; }
         virtual public int UnitsToConsume { get => 5; }
-        virtual public int UnitTriggerThreshold { get => 0; }
+        virtual public int UnitTriggerThreshold { get => 1; }
 
         public bool CanDrawFromBattery { get; set; }
         public bool CanChargeBattery { get; set; }
@@ -47,7 +47,7 @@ namespace LogicalEngine.EngineParts
             Output.ConnectedPartsHeader(carPartSender);
             foreach (CarPart connected in carPartSender.ConnectedParts)
             {
-                Output.TransferReportHeader(carPartSender, connected);
+                //Output.TransferReportHeader(carPartSender, connected);
                 if (TryTransferUnits(carPartSender, connected))
                 {
                     connected.ActivateToggles(carPartSender);

@@ -37,7 +37,7 @@ namespace LogicalEngine.Engines
         public void StrokeCycleChange(CombustionStrokeCycle cycle)
         {
             ScheduledStrokeCycle = cycle;
-            Console.WriteLine("^&^&^&^ Changed cycle to " + cycle);
+            Output.ChangeCycleReport(cycle);
         }
 
         public override void TickEngine()
