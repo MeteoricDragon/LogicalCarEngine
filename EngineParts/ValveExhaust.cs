@@ -3,7 +3,7 @@ using LogicalEngine.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static LogicalEngine.Engines.CombustionEngine;
+using static LogicalEngine.EngineParts.CombustionChamber;
 
 namespace LogicalEngine.EngineParts
 {
@@ -12,7 +12,7 @@ namespace LogicalEngine.EngineParts
         public override string UserFriendlyName { get => "Exhaust Valve"; }
         public bool IsOpen { 
             get {
-                return ((Engine as CombustionEngine).ScheduledStrokeCycle == CombustionStrokeCycle.Exhaust);
+                return ((Engine as CombustionEngine).Chamber.StrokeCycle == CombustionStrokeCycle.Exhaust);
             } 
         }
 
@@ -21,11 +21,6 @@ namespace LogicalEngine.EngineParts
             Engine = e;
         }
 
-        protected override bool TryActivate( CarPart activatingPart)
-        {
-            TryDrain(UnitsToConsume); // connected parts for this are outside scope of program.  just drain
-            
-            return base.TryActivate(activatingPart);
-        }
+
     }
 }

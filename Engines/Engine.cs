@@ -9,7 +9,8 @@ namespace LogicalEngine
 {
     public abstract class Engine
     {
-        public int tempCycleCount = 0;
+        public int CycleCount = 0;
+        public bool CycleComplete { get; set; }
         protected EngineOperationOrder EngineOrder;
         public List<EngineSubsystem> Subsystems { get; protected set; }
 
@@ -27,10 +28,14 @@ namespace LogicalEngine
 
         public virtual void RunEngine()
         {
-            //while (tempCycleCount++ < 1) /* enginecycles < 0 */
-                // run engine while ignitionswitch is set, but it's not on this hierarchy
+            while (CycleCount++ < 1) /* enginecycles < 0 */
+            // run engine while ignitionswitch is set, but it's not on this hierarchy
+            {
                 TickEngine();
-                //;
+                CycleComplete = false;
+            }
+                
+                ;
         }
         public virtual void TickEngine()
         {

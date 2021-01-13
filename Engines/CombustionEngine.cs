@@ -8,14 +8,7 @@ namespace LogicalEngine.Engines
 {
     public abstract class CombustionEngine : Engine
     {
-        public enum CombustionStrokeCycle
-        {
-            Intake,
-            Compression,
-            Combustion,
-            Exhaust
-        };
-        public CombustionStrokeCycle ScheduledStrokeCycle { get; protected set; }
+        public CombustionChamber Chamber { get; protected set; }
         public IgnitionSwitch Ignition { get; protected set; }
         public bool CombustionActive { get; protected set; }
         public CombustionEngine() : base()
@@ -26,6 +19,8 @@ namespace LogicalEngine.Engines
         {
             if (Ignition == null)
                 Ignition = AllParts.Find(x => x is IgnitionSwitch) as IgnitionSwitch;
+            if (Chamber == null)
+                Chamber = AllParts.Find(x => x is CombustionChamber) as CombustionChamber;
 
             while (!Ignition.StartupOn)
             {
@@ -34,11 +29,6 @@ namespace LogicalEngine.Engines
 
         }
 
-        public void StrokeCycleChange(CombustionStrokeCycle cycle)
-        {
-            ScheduledStrokeCycle = cycle;
-            Output.ChangeCycleReport(cycle);
-        }
 
         public override void TickEngine()
         {

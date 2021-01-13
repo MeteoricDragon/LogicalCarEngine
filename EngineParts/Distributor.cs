@@ -14,7 +14,7 @@ namespace LogicalEngine.EngineParts
         public Distributor(Engine e) : base(e)
         {
         }
-        protected override bool TryActivate(CarPart activatingPart)
+        protected override bool ThresholdTriggered(CarPart activatingPart)
         {
             CombustionEngine CE = (Engine as CombustionEngine);
             if (
@@ -24,7 +24,7 @@ namespace LogicalEngine.EngineParts
                 (activatingPart is CamShaft 
                 && UnitsOwned >= UnitTriggerThreshold))
             {
-                return base.TryActivate(activatingPart);
+                return base.ThresholdTriggered(activatingPart);
             }
                 
             return false;

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static LogicalEngine.Engines.CombustionEngine;
+using static LogicalEngine.EngineParts.CombustionChamber;
 
 namespace LogicalEngine.EngineParts
 {
@@ -13,7 +13,7 @@ namespace LogicalEngine.EngineParts
         {
             get
             {
-                return ((Engine as CombustionEngine).ScheduledStrokeCycle == CombustionStrokeCycle.Intake);
+                return ((Engine as CombustionEngine).Chamber.StrokeCycle == CombustionStrokeCycle.Intake);
             }
         }
         public ValveIntake(Engine e) : base(e)
@@ -21,14 +21,11 @@ namespace LogicalEngine.EngineParts
             Engine = e;
         }
 
-        protected override bool TryActivate(CarPart activatingPart)
+        protected override bool ThresholdTriggered(CarPart activatingPart)
         {
             if (activatingPart is Carburetor )  
             {
-                if (UnitsOwned >= UnitTriggerThreshold)
-                {
-                    return base.TryActivate(activatingPart);
-                }
+                return base.ThresholdTriggered(activatingPart);
             }
             return false;
         }

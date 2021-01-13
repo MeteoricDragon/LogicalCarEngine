@@ -1,7 +1,9 @@
 ﻿using LogicalEngine.EngineContainers;
+using LogicalEngine.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static LogicalEngine.EngineParts.CombustionChamber;
 
 namespace LogicalEngine.EngineParts
 {
@@ -18,6 +20,7 @@ namespace LogicalEngine.EngineParts
         virtual public int UnitsToConsume { get => 5; }
         virtual public int UnitTriggerThreshold { get => 1; }
 
+        protected bool TriggerOnlyIfTransferSuccess = true;
         public bool CanDrawFromBattery { get; set; }
         public bool CanChargeBattery { get; set; }
         // TODO: bools for fuel too?
@@ -48,29 +51,42 @@ namespace LogicalEngine.EngineParts
             foreach (CarPart connected in carPartSender.ConnectedParts)
             {
                 //Output.TransferReportHeader(carPartSender, connected);
-                if (TryTransferUnits(carPartSender, connected))
+                if ( HasFlow() )
                 {
-                    connected.ActivateToggles(carPartSender);
-                    connected.TryActivate(carPartSender);
+                    var transferSuccess = TryTransferUnits(carPartSender, connected);
+                    
+                    if (connected.ThresholdTriggered(carPartSender)
+                        && (transferSuccess == connected.TriggerOnlyIfTransferSuccess))
+                    {   
+                        if (connected.CanChangeFlow(carPartSender))
+                            connected.AdjustFlow();
+                        connected.InvokeActivate();
+                    }
                 }
             }
             Output.ConnectedPartsFooter(carPartSender);
         }
         protected virtual void InvokeActivate()
         {
-            Activate?.Invoke(this, new EventArgs());
+            if ((Engine as CombustionEngine).Chamber.StrokeCycle == CombustionStrokeCycle.Exhaust)
+                Engine.CycleComplete = true;
+            if (Engine.CycleComplete == false)
+                Activate?.Invoke(this, new EventArgs());
         }
 
-        protected virtual bool TryActivate(CarPart activatingPart) 
+        protected virtual bool ThresholdTriggered(CarPart activatingPart) 
         {
-            InvokeActivate();
+            return (UnitsOwned >= UnitTriggerThreshold);
+        }
+        protected virtual bool HasFlow()
+        {
             return true;
         }
-        /// <summary>
-        /// placeholder function for toggling things on/off
-        /// </summary>
-        /// <param name="activatingPart"></param>
-        protected virtual void ActivateToggles(CarPart activatingPart)
+        protected virtual bool CanChangeFlow(CarPart activatingPart)
+        {
+            return true;
+        }
+        protected virtual void AdjustFlow()
         {
 
         }

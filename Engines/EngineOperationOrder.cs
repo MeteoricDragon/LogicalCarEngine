@@ -51,7 +51,7 @@ namespace LogicalEngine.Engines
                 { AirCleaner, new List<CarPart> { } },
                 { Alternator, new List<CarPart> { Battery } },
                 { Battery, new List<CarPart> { } },
-                { CamShaft, new List<CarPart> { FuelPump, Distributor, ValveExhaust, ValveIntake } },
+                { CamShaft, new List<CarPart> { FuelPump, Distributor } },
                 { Carburetor, new List<CarPart> { ValveIntake } },
                 { Crankshaft, new List<CarPart> { Alternator, TimingChain} },
                 { CombustionChamber, new List<CarPart> { Pistons, ValveExhaust } },

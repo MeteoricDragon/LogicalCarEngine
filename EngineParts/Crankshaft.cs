@@ -3,6 +3,7 @@ using LogicalEngine.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static LogicalEngine.EngineParts.CombustionChamber;
 
 namespace LogicalEngine.EngineParts
 {
@@ -16,18 +17,6 @@ namespace LogicalEngine.EngineParts
             Engine = e;
             UnitsOwned = 5;
             FrictionResistance = 0;
-        }
-
-        protected override bool TryActivate( CarPart activatingPart)
-        {
-            if (activatingPart is Flywheel)
-            {
-                (Engine as CombustionEngine).StrokeCycleChange(CombustionEngine.CombustionStrokeCycle.Intake);
-            }
-
-            if (UnitsOwned >= UnitTriggerThreshold)
-                return base.TryActivate(activatingPart);
-            return false;
         }
     }
 }

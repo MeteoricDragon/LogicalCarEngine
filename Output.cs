@@ -13,12 +13,12 @@ namespace LogicalEngine
         public static void ConnectedPartsHeader(CarPart part)
         {
             Console.WriteLine(Indent + "<" + part.UserFriendlyName + ">");
-            Indent = "    " + Indent;
+            Indent = "  " + Indent;
         }
 
         public static void ConnectedPartsFooter(CarPart part)
         {
-            Indent = Indent[4..];
+            Indent = Indent[2..];
             Console.WriteLine(Indent + "</" + part.UserFriendlyName + ">");
         }
 
