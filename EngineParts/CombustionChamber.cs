@@ -62,6 +62,8 @@ namespace LogicalEngine.EngineParts
         protected override void AdjustFlow()
         {
             StrokeCycleChange();
+            // TODO: prevent cycle change If activating part was spark plug unless combustion to exhaust
+            // TODO: prevent cycle change if activating part wasn't spark plug and is any other change other than combustion to exhaust
         }
     }
 }
