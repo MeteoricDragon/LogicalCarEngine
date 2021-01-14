@@ -48,21 +48,18 @@ namespace LogicalEngine.EngineParts
         {           
             var carPartSender = (sender as CarPart);
             Output.ConnectedPartsHeader(carPartSender);
+            AdjustFlow();
             foreach (CarPart connected in carPartSender.ConnectedParts)
             {
                 //Output.TransferReportHeader(carPartSender, connected);
-                if ( HasFlow() )
-                {
-                    var transferSuccess = TryTransferUnits(carPartSender, connected);
+                var transferSuccess = TryTransferUnits(carPartSender, connected);
                     
-                    if (connected.ThresholdTriggered(carPartSender)
-                        && (transferSuccess == connected.TriggerOnlyIfTransferSuccess))
-                    {   
-                        if (connected.CanChangeFlow(carPartSender))
-                            connected.AdjustFlow();
-                        connected.InvokeActivate();
-                    }
+                if (connected.ThresholdTriggered(carPartSender)
+                    && (transferSuccess == connected.TriggerOnlyIfTransferSuccess))
+                {   
+                    connected.InvokeActivate();
                 }
+
             }
             Output.ConnectedPartsFooter(carPartSender);
         }
@@ -78,14 +75,7 @@ namespace LogicalEngine.EngineParts
         {
             return (UnitsOwned >= UnitTriggerThreshold);
         }
-        protected virtual bool HasFlow()
-        {
-            return true;
-        }
-        protected virtual bool CanChangeFlow(CarPart activatingPart)
-        {
-            return true;
-        }
+
         protected virtual void AdjustFlow()
         {
 

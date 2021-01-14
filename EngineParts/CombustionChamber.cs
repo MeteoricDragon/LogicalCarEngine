@@ -18,26 +18,14 @@ namespace LogicalEngine.EngineParts
             Exhaust
         };
         public CombustionStrokeCycle StrokeCycle { get; protected set; }
-        private ValveExhaust ExhaustValve;
-        private ValveIntake IntakeValve;
         public override string UserFriendlyName { get => "Combustion Chamber"; }
         public CombustionChamber(Engine e) : base(e)
         {
             Engine = e;
         }
-        public void InitializeRefs()
-        {
-            if (ExhaustValve == null || IntakeValve == null)
-            {
-                var parts = Engine.AllParts;
-                ExhaustValve = parts.Find(x => x is ValveExhaust) as ValveExhaust;
-                IntakeValve = parts.Find(x => x is ValveIntake) as ValveIntake;
-            }
-        }
+
         protected override bool ThresholdTriggered(CarPart activatingPart)
         {
-            InitializeRefs();
-
             if (StrokeCycle == CombustionStrokeCycle.Combustion)
                 Fill(UnitsToGive);
             

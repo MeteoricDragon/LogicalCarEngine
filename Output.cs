@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static LogicalEngine.EngineParts.CombustionChamber;
 using static LogicalEngine.Engines.CombustionEngine;
 
 namespace LogicalEngine
