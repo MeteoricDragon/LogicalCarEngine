@@ -54,7 +54,7 @@ namespace LogicalEngine.Engines
                 { CamShaft, new List<CarPart> { FuelPump, Distributor } },
                 { Carburetor, new List<CarPart> { ValveIntake } },
                 { Crankshaft, new List<CarPart> { Alternator, TimingChain} },
-                { CombustionChamber, new List<CarPart> { Pistons, ValveExhaust } },
+                { CombustionChamber, new List<CarPart> { ValveExhaust, Pistons} },
                 { Distributor, new List<CarPart> { SparkPlugs } },
                 { Flywheel, new List<CarPart> { Crankshaft } },
                 { FuelPump, new List<CarPart> { Carburetor } },

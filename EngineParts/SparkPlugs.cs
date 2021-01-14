@@ -13,5 +13,7 @@ namespace LogicalEngine.EngineParts
         public SparkPlugs(Engine e) : base(e)
         {          
         }
+
+        // todo: prevent this from changing cycle to compression
     }
 }

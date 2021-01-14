@@ -10,7 +10,7 @@ namespace LogicalEngine
     public abstract class Engine
     {
         public int CycleCount = 0;
-        public bool CycleComplete { get; set; }
+        public abstract bool CycleComplete { get; }
         protected EngineOperationOrder EngineOrder;
         public List<EngineSubsystem> Subsystems { get; protected set; }
 
@@ -32,7 +32,7 @@ namespace LogicalEngine
             // run engine while ignitionswitch is set, but it's not on this hierarchy
             {
                 TickEngine();
-                CycleComplete = false;
+                // don't need to reset cyclecomplete, it is get only
             }
                 
                 ;

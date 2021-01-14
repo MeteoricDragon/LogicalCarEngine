@@ -20,7 +20,5 @@ namespace LogicalEngine.EngineParts
         {
             Engine = e;
         }
-
-
     }
 }

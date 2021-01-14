@@ -12,6 +12,7 @@ namespace LogicalEngine.EngineParts
         public event EventHandler Activate;
         public List<CarPart> ConnectedParts;
         public Battery Battery { get; set; }
+        virtual public bool EngineCycleComplete { get => Engine.CycleComplete; }
         virtual public string UserFriendlyName { get => "Car Part"; }
         virtual public string UnitType { get => "Units"; }
         virtual public int UnitsMax { get => 50; }
@@ -49,26 +50,26 @@ namespace LogicalEngine.EngineParts
             var carPartSender = (sender as CarPart);
             Output.ConnectedPartsHeader(carPartSender);
             AdjustFlow();
-            foreach (CarPart connected in carPartSender.ConnectedParts)
+            ActivateConnectedParts(carPartSender);
+            Output.ConnectedPartsFooter(carPartSender);
+        }
+        protected virtual void ActivateConnectedParts(CarPart sender)
+        {
+            foreach (CarPart connected in sender.ConnectedParts)
             {
                 //Output.TransferReportHeader(carPartSender, connected);
-                var transferSuccess = TryTransferUnits(carPartSender, connected);
+                var transferSuccess = TryTransferUnits(sender, connected);
                     
-                if (connected.ThresholdTriggered(carPartSender)
+                if (connected.ThresholdTriggered(sender)
                     && (transferSuccess == connected.TriggerOnlyIfTransferSuccess))
                 {   
                     connected.InvokeActivate();
                 }
-
             }
-            Output.ConnectedPartsFooter(carPartSender);
         }
         protected virtual void InvokeActivate()
         {
-            if ((Engine as CombustionEngine).Chamber.StrokeCycle == CombustionStrokeCycle.Exhaust)
-                Engine.CycleComplete = true;
-            if (Engine.CycleComplete == false)
-                Activate?.Invoke(this, new EventArgs());
+            Activate?.Invoke(this, new EventArgs());
         }
 
         protected virtual bool ThresholdTriggered(CarPart activatingPart) 

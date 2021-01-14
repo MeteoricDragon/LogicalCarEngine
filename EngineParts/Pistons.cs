@@ -11,5 +11,11 @@ namespace LogicalEngine.EngineParts
         {
             Engine = e;
         }
+
+        protected override void InvokeActivate()
+        {
+            if (Engine.CycleComplete == false)
+                base.InvokeActivate();
+        }
     }
 }
