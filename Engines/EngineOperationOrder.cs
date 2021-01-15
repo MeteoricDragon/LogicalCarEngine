@@ -74,10 +74,13 @@ namespace LogicalEngine.Engines
         {
             var allParts = engine.AllParts;
             var battery = FindPart<Battery>(allParts);
+            var fuelTank = FindPart<FuelTank>(allParts);
             foreach (CarPart p in allParts)
             {
                 if (p.CanChargeBattery || p.CanDrawFromBattery)
-                    p.Battery = battery;
+                    p.Reservoir = battery;
+                else if (p.CanDrawFuel)
+                    p.Reservoir = fuelTank;
             }
         }
 

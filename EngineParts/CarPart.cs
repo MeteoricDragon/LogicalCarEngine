@@ -11,7 +11,7 @@ namespace LogicalEngine.EngineParts
     {
         public event EventHandler Activate;
         public List<CarPart> ConnectedParts;
-        public Battery Battery { get; set; }
+        public CarPart Reservoir { get; set; }
         virtual public bool EngineCycleComplete { get => Engine.CycleComplete; }
         virtual public string UserFriendlyName { get => "Car Part"; }
         virtual public string UnitType { get => "Units"; }
@@ -24,7 +24,7 @@ namespace LogicalEngine.EngineParts
         protected bool TriggerOnlyIfTransferSuccess = true;
         public bool CanDrawFromBattery { get; set; }
         public bool CanChargeBattery { get; set; }
-        // TODO: bools for fuel too?
+        public bool CanDrawFuel { get; set; }
 
         /// <summary>
         /// Reference to Engine that owns this part
@@ -49,7 +49,7 @@ namespace LogicalEngine.EngineParts
         {           
             var carPartSender = (sender as CarPart);
             Output.ConnectedPartsHeader(carPartSender);
-            AdjustFlow();
+            AdjustFlow(carPartSender);
             ActivateConnectedParts(carPartSender);
             Output.ConnectedPartsFooter(carPartSender);
         }
@@ -58,7 +58,9 @@ namespace LogicalEngine.EngineParts
             foreach (CarPart connected in sender.ConnectedParts)
             {
                 //Output.TransferReportHeader(carPartSender, connected);
-                var transferSuccess = TryTransferUnits(sender, connected);
+
+                // TODO: prevent transfer unless part CAN be activated yet.
+                var transferSuccess = TryTransferUnits(connected);
                     
                 if (connected.ThresholdTriggered(sender)
                     && (transferSuccess == connected.TriggerOnlyIfTransferSuccess))
@@ -77,43 +79,57 @@ namespace LogicalEngine.EngineParts
             return (UnitsOwned >= UnitTriggerThreshold);
         }
 
-        protected virtual void AdjustFlow()
+        protected virtual void AdjustFlow(CarPart sender)
         {
 
         }
 
-        public virtual bool TryTransferUnits(CarPart sender, CarPart receiver)
+        public virtual bool TryTransferUnits(CarPart receiver)
         {
-            if (sender.TryDrain(UnitsToConsume))
+            
+            if (CanDrain(UnitsToConsume))
             {
-                receiver.Fill(sender.UnitsToGive);
+                DrawForTransfer(UnitsToConsume);
+                Drain(UnitsToConsume);
+                receiver.Fill(UnitsToGive);
                 return true;
             }
             return false;
         }
-        public virtual bool TryDrain(int drainAmount)
+        private bool CanDrain(int drainAmount)
         {
-            int amountNeeded = Math.Max(drainAmount - UnitsOwned, 0);
-            if (amountNeeded > 0 && CanDrawFromBattery)
-            {
-                if (Battery.TryDrain(amountNeeded))
-                {
-                    Fill(amountNeeded);
-                }
-            }
-
-            if (UnitsOwned < drainAmount)
-            {
-                //Output.TransferReportDrainFail(UserFriendlyName);
-                return false;
-            }
-
+            return (drainAmount - UnitsOwned >= 0);
+        }
+        private void Drain(int drainAmount)
+        {
             Output.TransferReportDrain(this, drainAmount);
             UnitsOwned -= drainAmount;
-
-            return true;
         }
-        public virtual void Fill(int fillAmount)
+        private void DrawForTransfer(int drainAmount)
+        {
+            if (Reservoir == null)
+                return;
+
+            var needed = Math.Max(drainAmount - UnitsOwned, 0);
+            if (Reservoir.CanDrawOut(needed))
+            {
+                Reservoir.Drain(needed);
+                Fill(Reservoir.UnitsToGive);
+            }
+            else
+            {
+                // TODO: report failure
+            }
+        }
+        private bool CanDrawOut(int drawAmount)
+        {
+            if (Reservoir != null)
+            {
+                return Reservoir.CanDrain(drawAmount);
+            }
+            return false;
+        }
+        private void Fill(int fillAmount)
         {
             Output.TransferReportFill(this, fillAmount);
             UnitsOwned = Math.Min(UnitsOwned + fillAmount, UnitsMax);

@@ -26,13 +26,13 @@ namespace LogicalEngine.EngineParts
 
         protected override bool ThresholdTriggered(CarPart activatingPart)
         {
-            if (StrokeCycle == CombustionStrokeCycle.Combustion)
-                Fill(UnitsToGive);
+            //if (StrokeCycle == CombustionStrokeCycle.Combustion)
+                //Fill(UnitsToGive);
             
             return base.ThresholdTriggered(activatingPart);
         }
 
-        private void StrokeCycleChange()
+        private void NextStroke()
         {
             var cycle = StrokeCycle;
 
@@ -59,11 +59,15 @@ namespace LogicalEngine.EngineParts
             }
         }
 
-        protected override void AdjustFlow()
+        protected override void AdjustFlow(CarPart sender)
         {
-            StrokeCycleChange();
-            // TODO: prevent cycle change If activating part was spark plug unless combustion to exhaust
-            // TODO: prevent cycle change if activating part wasn't spark plug and is any other change other than combustion to exhaust
+            bool inCombustion = StrokeCycle == CombustionStrokeCycle.Combustion;
+            
+            if ((sender is SparkPlugs && inCombustion) // ready to ignite then exhaust
+                || (sender is SparkPlugs == false && !inCombustion)) // not igniting or ready to exhaust
+            {
+                NextStroke();
+            }
         }
     }
 }
