@@ -23,19 +23,19 @@ namespace LogicalEngine
             Console.WriteLine(Indent + "</" + part.UserFriendlyName + ">");
         }
 
-        public static void TransferReportHeader(CarPart partSender, CarPart partReceiver)
+        public static void TransferHeader(CarPart partSender, CarPart partReceiver)
         {
             Console.WriteLine(Indent + "[" + partReceiver.UserFriendlyName + "]");
         }
-        public static void TransferReportDrainFail(string name)
+        public static void TakeFromReservoirFailReport(string name)
         {
-            Console.WriteLine(Indent + TransferIndent + "ERROR: Failed to drain " + name);
+            Console.WriteLine(Indent + TransferIndent + "Insufficient units in " + name);
         }
-        public static void TransferReportDrain(CarPart p, int drainAmount)
+        public static void DrainReport(CarPart p, int drainAmount)
         {
             Console.WriteLine(Indent + "--" + p.UserFriendlyName + ": " + p.UnitsOwned + " - " + drainAmount + " " + p.UnitType);
         }
-        public static void TransferReportFill(CarPart p, int fillAmount)
+        public static void FillReport(CarPart p, int fillAmount)
         {
             Console.WriteLine(Indent + "++" + p.UserFriendlyName + ": " + p.UnitsOwned + " + " + fillAmount + " " + p.UnitType);
 

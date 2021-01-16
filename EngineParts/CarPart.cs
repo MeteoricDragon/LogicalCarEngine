@@ -57,10 +57,11 @@ namespace LogicalEngine.EngineParts
         {
             foreach (CarPart connected in sender.ConnectedParts)
             {
-                //Output.TransferReportHeader(carPartSender, connected);
+                bool transferSuccess = false;
+                bool transferAllowed = ConditionsForTransferMet(sender);
 
-                // TODO: prevent transfer unless part CAN be activated yet.
-                var transferSuccess = TryTransferUnits(connected);
+                if (transferAllowed)
+                    transferSuccess = TryTransferUnits(connected);
                     
                 if (connected.ThresholdTriggered(sender)
                     && (transferSuccess == connected.TriggerOnlyIfTransferSuccess))
@@ -74,6 +75,12 @@ namespace LogicalEngine.EngineParts
             Activate?.Invoke(this, new EventArgs());
         }
 
+        protected virtual bool ConditionsForTransferMet(CarPart activatingPart)
+        {
+
+
+            return true;
+        }
         protected virtual bool ThresholdTriggered(CarPart activatingPart) 
         {
             return (UnitsOwned >= UnitTriggerThreshold);
@@ -89,7 +96,7 @@ namespace LogicalEngine.EngineParts
             
             if (CanDrain(UnitsToConsume))
             {
-                DrawForTransfer(UnitsToConsume);
+                TakeFromReservoir(UnitsToConsume);
                 Drain(UnitsToConsume);
                 receiver.Fill(UnitsToGive);
                 return true;
@@ -102,10 +109,10 @@ namespace LogicalEngine.EngineParts
         }
         private void Drain(int drainAmount)
         {
-            Output.TransferReportDrain(this, drainAmount);
+            Output.DrainReport(this, drainAmount);
             UnitsOwned -= drainAmount;
         }
-        private void DrawForTransfer(int drainAmount)
+        private void TakeFromReservoir(int drainAmount)
         {
             if (Reservoir == null)
                 return;
@@ -118,7 +125,7 @@ namespace LogicalEngine.EngineParts
             }
             else
             {
-                // TODO: report failure
+                Output.TakeFromReservoirFailReport(Reservoir.UserFriendlyName);
             }
         }
         private bool CanDrawOut(int drawAmount)
@@ -131,7 +138,7 @@ namespace LogicalEngine.EngineParts
         }
         private void Fill(int fillAmount)
         {
-            Output.TransferReportFill(this, fillAmount);
+            Output.FillReport(this, fillAmount);
             UnitsOwned = Math.Min(UnitsOwned + fillAmount, UnitsMax);
         }
     }
