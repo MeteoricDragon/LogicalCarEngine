@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Text;
 using LogicalEngine.Engines;
 using LogicalEngine.EngineParts;
-using static LogicalEngine.EngineParts.CombustionChamber;
+using static LogicalEngine.EngineParts.CombustionChambers;
 
 namespace LogicalEngine
 {
     public class ICEOverheadValveEngine : CombustionEngine
     {
-        public override bool CycleComplete { get => Chamber.StrokeCycle == CombustionStrokeCycle.Exhaust; }
+        public override bool CycleComplete { get => Chamber.StrokeCycle == CombustionStrokeCycles.Exhaust; }
         public ICEOverheadValveEngine() : base()
         {
             EngineSubsystem[] systems = { new CombustionParts(this), new FuelParts(this), new PowerParts(this)};

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static LogicalEngine.EngineParts.CombustionChamber;
+using static LogicalEngine.EngineParts.CombustionChambers;
 using static LogicalEngine.Engines.CombustionEngine;
 
 namespace LogicalEngine
@@ -40,7 +40,7 @@ namespace LogicalEngine
             Console.WriteLine(Indent + "++" + p.UserFriendlyName + ": " + p.UnitsOwned + " + " + fillAmount + " " + p.UnitType);
 
         }
-        public static void ChangeCycleReport(CombustionStrokeCycle cycle)
+        public static void ChangeCycleReport(CombustionStrokeCycles cycle)
         {
             Console.WriteLine(Indent + "^^" + "Changed cycle to " + cycle);
         }

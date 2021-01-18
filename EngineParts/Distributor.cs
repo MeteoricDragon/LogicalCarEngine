@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static LogicalEngine.Engines.CombustionEngine;
+using static LogicalEngine.EngineParts.CombustionChambers;
 
 namespace LogicalEngine.EngineParts
 {
@@ -14,19 +14,25 @@ namespace LogicalEngine.EngineParts
         public Distributor(Engine e) : base(e)
         {
         }
-        protected override bool ThresholdTriggered(CarPart activatingPart)
+        protected override bool TriggerConditionsMet(CarPart activatingPart)
+        {
+
+                
+            return false;
+        }
+
+        protected override bool TransferConditionsMet(CarPart activatingPart)
         {
             CombustionEngine CE = (Engine as CombustionEngine);
             if (
-                (activatingPart is IgnitionCoil 
+                (activatingPart is IgnitionCoil
                 && CE.Ignition.IgnitionSwitchOn)
                 || 
-                (activatingPart is CamShaft 
-                && UnitsOwned >= UnitTriggerThreshold))
+                (activatingPart is CamShaft
+                && CE.Chamber.StrokeCycle == CombustionStrokeCycles.Combustion ))
             {
-                return base.ThresholdTriggered(activatingPart);
+                return true;
             }
-                
             return false;
         }
     }

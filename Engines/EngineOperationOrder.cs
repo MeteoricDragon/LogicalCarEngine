@@ -31,7 +31,7 @@ namespace LogicalEngine.Engines
             var CamShaft = FindPart<CamShaft>(parts);
             var Carburetor = FindPart<Carburetor>(parts);
             var Crankshaft = FindPart<Crankshaft>(parts);
-            var CombustionChamber = FindPart<CombustionChamber>(parts);
+            var CombustionChamber = FindPart<CombustionChambers>(parts);
             var Distributor = FindPart<Distributor>(parts);
             var Flywheel = FindPart<Flywheel>(parts);
             var FuelPump = FindPart<FuelPump>(parts);

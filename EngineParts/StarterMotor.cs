@@ -11,10 +11,10 @@ namespace LogicalEngine.EngineParts
         {
         }
 
-        protected override bool ThresholdTriggered(CarPart activatingPart)
+        protected override bool TriggerConditionsMet(CarPart activatingPart)
         {
             if ((activatingPart as IgnitionSwitch).StartupOn)
-                return base.ThresholdTriggered(activatingPart);
+                return base.TriggerConditionsMet(activatingPart);
             return false;
         }
     }

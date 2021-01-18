@@ -3,7 +3,7 @@ using LogicalEngine.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static LogicalEngine.EngineParts.CombustionChamber;
+using static LogicalEngine.EngineParts.CombustionChambers;
 
 namespace LogicalEngine.EngineParts
 {
@@ -12,7 +12,7 @@ namespace LogicalEngine.EngineParts
         public override string UserFriendlyName { get => "Exhaust Valve"; }
         public bool IsOpen { 
             get {
-                return ((Engine as CombustionEngine).Chamber.StrokeCycle == CombustionStrokeCycle.Exhaust);
+                return ((Engine as CombustionEngine).Chamber.StrokeCycle == CombustionStrokeCycles.Exhaust);
             } 
         }
 

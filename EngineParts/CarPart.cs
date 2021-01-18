@@ -3,7 +3,7 @@ using LogicalEngine.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static LogicalEngine.EngineParts.CombustionChamber;
+using static LogicalEngine.EngineParts.CombustionChambers;
 
 namespace LogicalEngine.EngineParts
 {
@@ -20,8 +20,7 @@ namespace LogicalEngine.EngineParts
         virtual public int UnitsToGive { get => 15; }
         virtual public int UnitsToConsume { get => 5; }
         virtual public int UnitTriggerThreshold { get => 1; }
-
-        protected bool TriggerOnlyIfTransferSuccess = true;
+        virtual protected bool AllowTriggerWithoutTransfer { get => false; }
         public bool CanDrawFromBattery { get; set; }
         public bool CanChargeBattery { get; set; }
         public bool CanDrawFuel { get; set; }
@@ -58,13 +57,13 @@ namespace LogicalEngine.EngineParts
             foreach (CarPart connected in sender.ConnectedParts)
             {
                 bool transferSuccess = false;
-                bool transferAllowed = ConditionsForTransferMet(sender);
+                bool transferAllowed = TransferConditionsMet(sender);
 
                 if (transferAllowed)
                     transferSuccess = TryTransferUnits(connected);
-                    
-                if (connected.ThresholdTriggered(sender)
-                    && (transferSuccess == connected.TriggerOnlyIfTransferSuccess))
+
+                if ((transferSuccess || connected.AllowTriggerWithoutTransfer)
+                    && (connected.TriggerConditionsMet(sender)))
                 {   
                     connected.InvokeActivate();
                 }
@@ -75,13 +74,12 @@ namespace LogicalEngine.EngineParts
             Activate?.Invoke(this, new EventArgs());
         }
 
-        protected virtual bool ConditionsForTransferMet(CarPart activatingPart)
+        protected virtual bool TransferConditionsMet(CarPart activatingPart)
         {
-
-
             return true;
         }
-        protected virtual bool ThresholdTriggered(CarPart activatingPart) 
+
+        protected virtual bool TriggerConditionsMet(CarPart activatingPart) 
         {
             return (UnitsOwned >= UnitTriggerThreshold);
         }
