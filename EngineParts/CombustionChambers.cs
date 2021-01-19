@@ -58,9 +58,13 @@ namespace LogicalEngine.EngineParts
             bool inCombustion = StrokeCycle == CombustionStrokeCycles.Combustion;
             
             if ((sender is SparkPlugs && inCombustion) // ready to ignite then exhaust
-                || (sender is SparkPlugs == false && !inCombustion)) // not igniting or ready to exhaust
+
+                || (sender is SparkPlugs == false && !inCombustion)) // not igniting or ready to ignite
             {
                 NextStroke();
+                // TODO: implement counteracting force from counterbalanced pistons
+                // that takes place of this command.
+                NextStroke(); 
             }
         }
         protected override bool TriggerConditionsMet(CarPart activatingPart)
