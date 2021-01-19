@@ -57,13 +57,13 @@ namespace LogicalEngine.EngineParts
             foreach (CarPart connected in sender.ConnectedParts)
             {
                 bool transferSuccess = false;
-                bool transferAllowed = TransferConditionsMet(sender);
+                bool transferAllowed = sender.TransferConditionsMet(connected);
 
                 if (transferAllowed)
-                    transferSuccess = TryTransferUnits(connected);
+                    transferSuccess = sender.TryTransferUnits(connected);
 
                 if ((transferSuccess || connected.AllowTriggerWithoutTransfer)
-                    && (connected.TriggerConditionsMet(sender)))
+                    && connected.TriggerConditionsMet(sender))
                 {   
                     connected.InvokeActivate();
                 }
@@ -90,49 +90,32 @@ namespace LogicalEngine.EngineParts
         }
 
         public virtual bool TryTransferUnits(CarPart receiver)
-        {
-            
-            if (CanDrain(UnitsToConsume))
+        {   
+            if ((CanDrawFromBattery || CanDrawFuel)
+                && Reservoir.CanDrain(UnitsToConsume)
+                && !CanDrain(UnitsToConsume))
             {
-                TakeFromReservoir(UnitsToConsume);
+                Reservoir.Drain(UnitsToConsume);
+                Fill(Reservoir.UnitsToGive);
+            }
+
+            if (CanDrain(UnitsToConsume))
+            {  
                 Drain(UnitsToConsume);
                 receiver.Fill(UnitsToGive);
                 return true;
             }
+
             return false;
         }
         private bool CanDrain(int drainAmount)
         {
-            return (drainAmount - UnitsOwned >= 0);
+            return (UnitsOwned - drainAmount >= 0);
         }
         private void Drain(int drainAmount)
         {
             Output.DrainReport(this, drainAmount);
             UnitsOwned -= drainAmount;
-        }
-        private void TakeFromReservoir(int drainAmount)
-        {
-            if (Reservoir == null)
-                return;
-
-            var needed = Math.Max(drainAmount - UnitsOwned, 0);
-            if (Reservoir.CanDrawOut(needed))
-            {
-                Reservoir.Drain(needed);
-                Fill(Reservoir.UnitsToGive);
-            }
-            else
-            {
-                Output.TakeFromReservoirFailReport(Reservoir.UserFriendlyName);
-            }
-        }
-        private bool CanDrawOut(int drawAmount)
-        {
-            if (Reservoir != null)
-            {
-                return Reservoir.CanDrain(drawAmount);
-            }
-            return false;
         }
         private void Fill(int fillAmount)
         {

@@ -23,7 +23,7 @@ namespace LogicalEngine.EngineParts
 
         protected override bool TriggerConditionsMet(CarPart activatingPart)
         {
-            if (activatingPart is Carburetor )  
+            if (activatingPart is Carburetor && IsOpen)  
             {
                 return base.TriggerConditionsMet(activatingPart);
             }

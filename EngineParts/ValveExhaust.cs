@@ -20,5 +20,13 @@ namespace LogicalEngine.EngineParts
         {
             Engine = e;
         }
+        protected override bool TriggerConditionsMet(CarPart activatingPart)
+        {
+            if (IsOpen)
+            {
+                return base.TriggerConditionsMet(activatingPart);
+            }
+            return false;
+        }
     }
 }

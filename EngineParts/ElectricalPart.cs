@@ -10,6 +10,7 @@ namespace LogicalEngine.EngineParts
 
         protected ElectricalPart(Engine engine) : base(engine)
         {
+            Engine = engine;
         }
     }
 }

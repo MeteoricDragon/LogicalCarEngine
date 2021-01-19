@@ -14,12 +14,6 @@ namespace LogicalEngine.EngineParts
         public Distributor(Engine e) : base(e)
         {
         }
-        protected override bool TriggerConditionsMet(CarPart activatingPart)
-        {
-
-                
-            return false;
-        }
 
         protected override bool TransferConditionsMet(CarPart activatingPart)
         {
