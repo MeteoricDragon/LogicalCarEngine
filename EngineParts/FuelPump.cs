@@ -11,5 +11,11 @@ namespace LogicalEngine.EngineParts
         {
             CanDrawFuel = true;
         }
+
+        protected override bool TriggerConditionsMet(CarPart activatingPart)
+        {
+            return base.TriggerConditionsMet(activatingPart)
+                && activatingPart is CamShaft;
+        }
     }
 }

@@ -20,7 +20,6 @@ namespace LogicalEngine.EngineParts
         virtual public int UnitsToGive { get => 15; }
         virtual public int UnitsToConsume { get => 5; }
         virtual public int UnitTriggerThreshold { get => 1; }
-        virtual protected bool AllowTriggerWithoutTransfer { get => false; }
         public bool CanDrawFromBattery { get; set; }
         public bool CanChargeBattery { get; set; }
         public bool CanDrawFuel { get; set; }
@@ -62,8 +61,7 @@ namespace LogicalEngine.EngineParts
                 if (transferAllowed)
                     transferSuccess = sender.TryTransferUnits(connected);
 
-                if ((transferSuccess || connected.AllowTriggerWithoutTransfer)
-                    && connected.TriggerConditionsMet(sender))
+                if (transferSuccess && connected.TriggerConditionsMet(sender))
                 {   
                     connected.InvokeActivate();
                 }
@@ -73,7 +71,7 @@ namespace LogicalEngine.EngineParts
         {
             Activate?.Invoke(this, new EventArgs());
         }
-
+        
         protected virtual bool TransferConditionsMet(CarPart transferingPart)
         {
             return true;

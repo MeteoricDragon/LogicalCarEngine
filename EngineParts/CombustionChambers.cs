@@ -69,14 +69,9 @@ namespace LogicalEngine.EngineParts
         }
         protected override bool TriggerConditionsMet(CarPart activatingPart)
         {
-            var baseCond = base.TriggerConditionsMet(activatingPart);
-            if (StrokeCycle == CombustionStrokeCycles.Combustion
-                && activatingPart is SparkPlugs)
-            {
-                return true && baseCond;
-            }
-
-            return baseCond;
+            return (StrokeCycle == CombustionStrokeCycles.Combustion
+                && activatingPart is SparkPlugs 
+                && base.TriggerConditionsMet(activatingPart));
         }
         protected override bool TransferConditionsMet(CarPart transferringPart)
         {
