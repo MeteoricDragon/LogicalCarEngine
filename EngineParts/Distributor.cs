@@ -15,14 +15,14 @@ namespace LogicalEngine.EngineParts
         {
         }
 
-        protected override bool TransferConditionsMet(CarPart activatingPart)
+        protected override bool TransferConditionsMet(CarPart transferringPart)
         {
             CombustionEngine CE = (Engine as CombustionEngine);
             if (
-                (activatingPart is IgnitionCoil
+                (transferringPart is IgnitionCoil
                 && CE.Ignition.IgnitionSwitchOn)
                 || 
-                (activatingPart is CamShaft
+                (transferringPart is CamShaft
                 && CE.Chamber.StrokeCycle == CombustionStrokeCycles.Combustion ))
             {
                 return true;

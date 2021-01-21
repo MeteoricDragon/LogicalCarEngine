@@ -70,17 +70,21 @@ namespace LogicalEngine.EngineParts
         protected override bool TriggerConditionsMet(CarPart activatingPart)
         {
             var baseCond = base.TriggerConditionsMet(activatingPart);
+            if (StrokeCycle == CombustionStrokeCycles.Combustion
+                && activatingPart is SparkPlugs)
+            {
+                return true && baseCond;
+            }
 
             return baseCond;
         }
-        protected override bool TransferConditionsMet(CarPart activatingPart)
+        protected override bool TransferConditionsMet(CarPart transferringPart)
         {
-            var Stroke = (Engine as CombustionEngine).Chamber.StrokeCycle;
-            if ((Stroke == CombustionStrokeCycles.Combustion 
-                && activatingPart is SparkPlugs) 
+            if ((StrokeCycle == CombustionStrokeCycles.Combustion 
+                && transferringPart is SparkPlugs) 
                 ||
-                ( Stroke == CombustionStrokeCycles.Intake
-                && activatingPart is ValveIntake ))
+                (StrokeCycle == CombustionStrokeCycles.Intake
+                && transferringPart is ValveIntake ))
                 return true;
             return false;
         }

@@ -16,7 +16,7 @@ namespace LogicalEngine.EngineParts
             Engine = e;
         }
 
-        protected override bool TransferConditionsMet(CarPart activatingPart)
+        protected override bool TransferConditionsMet(CarPart transferingPart)
         {
             var Chamber = (Engine as CombustionEngine).Chamber;
             if (Chamber.StrokeCycle == CombustionStrokeCycles.Combustion)

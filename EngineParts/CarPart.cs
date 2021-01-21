@@ -48,8 +48,8 @@ namespace LogicalEngine.EngineParts
         {           
             var carPartSender = (sender as CarPart);
             Output.ConnectedPartsHeader(carPartSender);
-            AdjustFlow(carPartSender);
             ActivateConnectedParts(carPartSender);
+            AdjustFlow(carPartSender);
             Output.ConnectedPartsFooter(carPartSender);
         }
         protected virtual void ActivateConnectedParts(CarPart sender)
@@ -57,7 +57,7 @@ namespace LogicalEngine.EngineParts
             foreach (CarPart connected in sender.ConnectedParts)
             {
                 bool transferSuccess = false;
-                bool transferAllowed = sender.TransferConditionsMet(connected);
+                bool transferAllowed = connected.TransferConditionsMet(sender);
 
                 if (transferAllowed)
                     transferSuccess = sender.TryTransferUnits(connected);
@@ -74,7 +74,7 @@ namespace LogicalEngine.EngineParts
             Activate?.Invoke(this, new EventArgs());
         }
 
-        protected virtual bool TransferConditionsMet(CarPart activatingPart)
+        protected virtual bool TransferConditionsMet(CarPart transferingPart)
         {
             return true;
         }

@@ -28,5 +28,13 @@ namespace LogicalEngine.EngineParts
             }
             return false;
         }
+        protected override bool TransferConditionsMet(CarPart transferingPart)
+        {
+            if ((Engine as CombustionEngine).Chamber.StrokeCycle == CombustionStrokeCycles.Exhaust)
+            {
+                return base.TransferConditionsMet(transferingPart);
+            }
+            return false;
+        }
     }
 }
