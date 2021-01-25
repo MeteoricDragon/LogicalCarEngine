@@ -18,5 +18,15 @@ namespace LogicalEngine.EngineParts
             UnitsOwned = 5;
             FrictionResistance = 0;
         }
+
+        protected override bool ShouldDoTrigger(CarPart activatingPart)
+        {
+            if (Engine.CycleComplete)
+                return false;
+
+            Output.StrokeReport((Engine as ICEOverheadValveEngine).Chamber.StrokeCount);
+            return true;
+            
+        }
     }
 }

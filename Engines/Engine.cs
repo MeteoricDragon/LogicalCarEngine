@@ -28,14 +28,10 @@ namespace LogicalEngine
 
         public virtual void RunEngine()
         {
-            while (CycleCount++ < 1) /* enginecycles < 0 */
-            // run engine while ignitionswitch is set, but it's not on this hierarchy
+            while (CycleCount++ < 1)
             {
                 TickEngine();
-                // don't need to reset cyclecomplete, it is get only
-            }
-                
-                ;
+            };
         }
         public virtual void TickEngine()
         {

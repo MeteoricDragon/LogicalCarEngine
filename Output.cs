@@ -44,5 +44,10 @@ namespace LogicalEngine
         {
             Console.WriteLine(Indent + "^^" + "Changed cycle to " + cycle);
         }
+
+        public static void StrokeReport(int strokes)
+        {
+            Console.WriteLine(Indent + "**" + "Combustion Strokes: " + strokes);
+        }
     }
 }

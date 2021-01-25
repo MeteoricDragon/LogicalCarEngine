@@ -10,6 +10,7 @@ namespace LogicalEngine.EngineParts
 {
     public class CombustionChambers : FuelPart
     {
+        // TODO: consume all fuel when changing from Combustion to exhaust and after transfer to pistons.
         public enum CombustionStrokeCycles
         {
             Intake,
@@ -18,17 +19,17 @@ namespace LogicalEngine.EngineParts
             Exhaust
         };
         public CombustionStrokeCycles StrokeCycle { get; protected set; }
+        public int StrokeCount { get; private set; }
         public override string UserFriendlyName { get => "Combustion Chambers"; }
         public CombustionChambers(Engine e) : base(e)
         {
             Engine = e;
         }
 
-
-
         private void NextStroke()
         {
             var cycle = StrokeCycle;
+            StrokeCount++;
 
             switch (cycle)
             {
@@ -67,11 +68,11 @@ namespace LogicalEngine.EngineParts
                 NextStroke(); 
             }
         }
-        protected override bool TriggerConditionsMet(CarPart activatingPart)
+        protected override bool ShouldDoTrigger(CarPart activatingPart)
         {
             return (StrokeCycle == CombustionStrokeCycles.Combustion
                 && activatingPart is SparkPlugs 
-                && base.TriggerConditionsMet(activatingPart));
+                && base.ShouldDoTrigger(activatingPart));
         }
         protected override bool TransferConditionsMet(CarPart transferringPart)
         {
@@ -82,6 +83,12 @@ namespace LogicalEngine.EngineParts
                 && transferringPart is ValveIntake ))
                 return true;
             return false;
+        }
+        protected override bool CanFill(CarPart givingPart)
+        {
+            if (givingPart is SparkPlugs)
+                return false;
+            return true;
         }
     }
 }

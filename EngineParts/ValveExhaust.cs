@@ -20,11 +20,11 @@ namespace LogicalEngine.EngineParts
         {
             Engine = e;
         }
-        protected override bool TriggerConditionsMet(CarPart activatingPart)
+        protected override bool ShouldDoTrigger(CarPart activatingPart)
         {
             if (IsOpen)
             {
-                return base.TriggerConditionsMet(activatingPart);
+                return base.ShouldDoTrigger(activatingPart);
             }
             return false;
         }
@@ -33,6 +33,8 @@ namespace LogicalEngine.EngineParts
             if ((Engine as CombustionEngine).Chamber.StrokeCycle == CombustionStrokeCycles.Exhaust)
             {
                 return base.TransferConditionsMet(transferingPart);
+                // TODO: divide transfer conditions and trigger conditions
+                // every part has different order with transfer and trigger?
             }
             return false;
         }

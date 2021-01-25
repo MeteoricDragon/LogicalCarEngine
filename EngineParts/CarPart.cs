@@ -45,10 +45,9 @@ namespace LogicalEngine.EngineParts
 
         protected virtual void OnActivate(object sender, EventArgs e)
         {           
-            var carPartSender = (sender as CarPart);
+            var carPartSender = sender as CarPart;
             Output.ConnectedPartsHeader(carPartSender);
             ActivateConnectedParts(carPartSender);
-            AdjustFlow(carPartSender);
             Output.ConnectedPartsFooter(carPartSender);
         }
         protected virtual void ActivateConnectedParts(CarPart sender)
@@ -61,8 +60,9 @@ namespace LogicalEngine.EngineParts
                 if (transferAllowed)
                     transferSuccess = sender.TryTransferUnits(connected);
 
-                if (transferSuccess && connected.TriggerConditionsMet(sender))
-                {   
+                if (transferSuccess && connected.ShouldDoTrigger(sender))
+                {
+                    connected.AdjustFlow(sender);
                     connected.InvokeActivate();
                 }
             }
@@ -77,7 +77,7 @@ namespace LogicalEngine.EngineParts
             return true;
         }
 
-        protected virtual bool TriggerConditionsMet(CarPart activatingPart) 
+        protected virtual bool ShouldDoTrigger(CarPart activatingPart) 
         {
             return (UnitsOwned >= UnitTriggerThreshold);
         }
@@ -88,32 +88,45 @@ namespace LogicalEngine.EngineParts
         }
 
         public virtual bool TryTransferUnits(CarPart receiver)
-        {   
+        {
+            var success = false;
+            if (CanDrain() == false)
+                return success;
+
             if ((CanDrawFromBattery || CanDrawFuel)
-                && Reservoir.CanDrain(UnitsToConsume)
-                && !CanDrain(UnitsToConsume))
+                && Reservoir.HasEnoughToDrain(UnitsToConsume)
+                && !HasEnoughToDrain(UnitsToConsume))
             {
                 Reservoir.Drain(UnitsToConsume);
                 Fill(Reservoir.UnitsToGive);
             }
 
-            if (CanDrain(UnitsToConsume))
-            {  
+            if (HasEnoughToDrain(UnitsToConsume))
+            {
+                success = true;
                 Drain(UnitsToConsume);
-                receiver.Fill(UnitsToGive);
-                return true;
+                if (receiver.CanFill(this))
+                    receiver.Fill(UnitsToGive);
             }
 
-            return false;
+            return success;
         }
-        private bool CanDrain(int drainAmount)
+        private bool HasEnoughToDrain(int drainAmount)
         {
             return (UnitsOwned - drainAmount >= 0);
+        }
+        protected virtual bool CanDrain()
+        {
+            return true;
         }
         private void Drain(int drainAmount)
         {
             Output.DrainReport(this, drainAmount);
             UnitsOwned -= drainAmount;
+        }
+        protected virtual bool CanFill(CarPart givingPart)
+        {
+            return true;
         }
         private void Fill(int fillAmount)
         {

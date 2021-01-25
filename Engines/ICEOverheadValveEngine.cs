@@ -11,7 +11,7 @@ namespace LogicalEngine
 {
     public class ICEOverheadValveEngine : CombustionEngine
     {
-        public override bool CycleComplete { get => Chamber.StrokeCycle == CombustionStrokeCycles.Exhaust; }
+        public override bool CycleComplete { get => Chamber.StrokeCount >= 3; }
         public ICEOverheadValveEngine() : base()
         {
             EngineSubsystem[] systems = { new CombustionParts(this), new FuelParts(this), new PowerParts(this)};
