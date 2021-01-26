@@ -37,10 +37,7 @@ namespace LogicalEngine.EngineParts
         public void AssignTargetPart(List<CarPart> subscribers)
         {
             ConnectedParts = subscribers;
-            foreach (CarPart p in ConnectedParts)
-            {
-                Activate += p.OnActivate;
-            }
+            Activate += OnActivate;
         }
 
         private void OnActivate(object sender, EventArgs e)
