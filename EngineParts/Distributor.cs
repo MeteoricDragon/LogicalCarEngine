@@ -15,19 +15,11 @@ namespace LogicalEngine.EngineParts
         {
         }
 
-        protected override bool TransferConditionsMet(CarPart transferringPart)
+        protected override bool CanFill(CarPart givingPart)
         {
-            CombustionEngine CE = (Engine as CombustionEngine);
-            if (
-                (transferringPart is IgnitionCoil
-                && CE.Ignition.IgnitionSwitchOn)
-                || 
-                (transferringPart is CamShaft
-                && CE.Chamber.StrokeCycle == CombustionStrokeCycles.Combustion ))
-            {
-                return true;
-            }
-            return false;
+            if (givingPart is CamShaft)
+                return false;
+            return true;
         }
     }
 }

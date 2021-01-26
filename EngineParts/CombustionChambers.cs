@@ -54,7 +54,7 @@ namespace LogicalEngine.EngineParts
             }
         }
 
-        protected override void AdjustFlow(CarPart sender)
+        protected override void AdjustEngineStage(CarPart sender)
         {
             bool inCombustion = StrokeCycle == CombustionStrokeCycles.Combustion;
             
@@ -67,6 +67,10 @@ namespace LogicalEngine.EngineParts
                 // that takes place of this command.
                 NextStroke(); 
             }
+        }
+        protected override bool ShouldAdjustEngineStage(CarPart sender)
+        {
+            return true;
         }
         protected override bool ShouldDoTrigger(CarPart activatingPart)
         {

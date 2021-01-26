@@ -60,9 +60,11 @@ namespace LogicalEngine.EngineParts
                 if (transferAllowed)
                     transferSuccess = sender.TryTransferUnits(connected);
 
+                if (connected.ShouldAdjustEngineStage(sender))
+                    connected.AdjustEngineStage(sender);
+
                 if (transferSuccess && connected.ShouldDoTrigger(sender))
                 {
-                    connected.AdjustFlow(sender);
                     connected.InvokeActivate();
                 }
             }
@@ -82,7 +84,12 @@ namespace LogicalEngine.EngineParts
             return (UnitsOwned >= UnitTriggerThreshold);
         }
 
-        protected virtual void AdjustFlow(CarPart sender)
+        protected virtual bool ShouldAdjustEngineStage(CarPart sender)
+        {
+
+            return false;
+        }
+        protected virtual void AdjustEngineStage(CarPart sender)
         {
 
         }
