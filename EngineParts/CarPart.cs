@@ -43,14 +43,14 @@ namespace LogicalEngine.EngineParts
             }
         }
 
-        protected virtual void OnActivate(object sender, EventArgs e)
+        private void OnActivate(object sender, EventArgs e)
         {           
             var carPartSender = sender as CarPart;
             Output.ConnectedPartsHeader(carPartSender);
-            ActivateConnectedParts(carPartSender);
+            TriggerConnectedParts(carPartSender);
             Output.ConnectedPartsFooter(carPartSender);
         }
-        protected virtual void ActivateConnectedParts(CarPart sender)
+        private void TriggerConnectedParts(CarPart sender)
         {
             foreach (CarPart connected in sender.ConnectedParts)
             {

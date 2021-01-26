@@ -31,6 +31,7 @@ namespace LogicalEngine
             while (CycleCount++ < 1)
             {
                 TickEngine();
+                Console.WriteLine("CycleCount " + CycleCount);
             };
         }
         public virtual void TickEngine()
