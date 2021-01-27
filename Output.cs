@@ -10,16 +10,21 @@ namespace LogicalEngine
     public static class Output
     {
         public static string Indent = "";
-        public static string TransferIndent = "==";
+        public const int IndentStep = 3;
+        public const string Prefix_Transfer = "==";
+        public const string Prefix_Drain = "--";
+        public const string Prefix_Fill = "++";
+        public const string Prefix_ChangeStroke = "^^";
+        public const string Prefix_CycleCount = "**";
         public static void ConnectedPartsHeader(CarPart part)
         {
             Console.WriteLine(Indent + "<" + part.UserFriendlyName + ">");
-            Indent = "  " + Indent;
+            Indent = new string(' ', IndentStep) + Indent;
         }
 
         public static void ConnectedPartsFooter(CarPart part)
         {
-            Indent = Indent[2..];
+            Indent = Indent[IndentStep..];
             Console.WriteLine(Indent + "</" + part.UserFriendlyName + ">");
         }
 
@@ -29,25 +34,31 @@ namespace LogicalEngine
         }
         public static void TakeFromReservoirFailReport(string name)
         {
-            Console.WriteLine(Indent + TransferIndent + "Insufficient units in " + name);
+            Console.WriteLine(Indent + Prefix_Transfer + "Insufficient units in " + name);
         }
         public static void DrainReport(CarPart p, int drainAmount)
         {
-            Console.WriteLine(Indent + "--" + p.UserFriendlyName + ": " + p.UnitsOwned + " - " + drainAmount + " " + p.UnitType);
+            Console.WriteLine(Indent + Prefix_Drain + p.UserFriendlyName + ": " + p.UnitsOwned + " - " + drainAmount + " = " + (p.UnitsOwned - drainAmount) + " " + p.UnitType);
         }
         public static void FillReport(CarPart p, int fillAmount)
         {
-            Console.WriteLine(Indent + "++" + p.UserFriendlyName + ": " + p.UnitsOwned + " + " + fillAmount + " " + p.UnitType);
+            Console.WriteLine(Indent + Prefix_Fill + p.UserFriendlyName + ": " + p.UnitsOwned + " + " + fillAmount + " = " + (p.UnitsOwned + fillAmount) + " " + p.UnitType);
 
         }
         public static void ChangeCycleReport(CombustionStrokeCycles cycle)
         {
-            Console.WriteLine(Indent + "^^" + "Changed cycle to " + cycle);
+            Console.WriteLine(Indent + Prefix_ChangeStroke + "Stroke: " + cycle);
         }
 
         public static void EngineCycleCount(int cycles)
         {
-            Console.WriteLine(Indent + "**" + "Engine Cycles: " + cycles);
+            Console.WriteLine(Indent + Prefix_CycleCount + "# Cycles: " + cycles);
+        }
+
+        public static void Legend()
+        {
+            // print a legend
+
         }
     }
 }

@@ -30,7 +30,7 @@ namespace LogicalEngine.EngineParts
         }
         protected override bool TransferConditionsMet(CarPart transferingPart)
         {
-            if ((Engine as CombustionEngine).Chamber.StrokeCycle == CombustionStrokeCycles.Exhaust)
+            if (IsOpen)
             {
                 return base.TransferConditionsMet(transferingPart);
             }

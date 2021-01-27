@@ -7,6 +7,7 @@ namespace LogicalEngine
     {
         static void Main(string[] args)
         {
+            Output.Legend();
             var engine = new ICEOverheadValveEngine();
             engine.StartEngine();
             engine.RunEngine();
