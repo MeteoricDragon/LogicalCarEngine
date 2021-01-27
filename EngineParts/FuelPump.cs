@@ -12,10 +12,10 @@ namespace LogicalEngine.EngineParts
             CanDrawFuel = true;
         }
 
-        protected override bool ShouldDoTrigger(CarPart activatingPart)
+        protected override bool ShouldActivate(CarPart activatingPart)
         {
             return (activatingPart is CamShaft
-                || base.ShouldDoTrigger(activatingPart)); ;
+                || base.ShouldActivate(activatingPart)); ;
         }
 
         protected override bool CanFill(CarPart givingPart)

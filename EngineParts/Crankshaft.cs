@@ -19,14 +19,24 @@ namespace LogicalEngine.EngineParts
             FrictionResistance = 0;
         }
 
-        protected override bool ShouldDoTrigger(CarPart activatingPart)
+        protected override bool ShouldActivate(CarPart activatingPart)
         {
-            if (Engine.CycleComplete)
-                return false;
+            if (Engine.CycleComplete) 
+                return false;         
 
-            Output.StrokeReport((Engine as ICEOverheadValveEngine).Chamber.StrokeCount);
             return true;
-            
+        }
+
+        protected override bool BackToEngineLoop(CarPart sender)
+        {
+            if (sender is Pistons && Engine.CycleComplete)
+                return true;
+            return false;
+        }
+
+        public void Tick()
+        {
+            InvokeActivate();
         }
     }
 }

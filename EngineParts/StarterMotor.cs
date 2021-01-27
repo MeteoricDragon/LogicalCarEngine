@@ -11,10 +11,10 @@ namespace LogicalEngine.EngineParts
         {
         }
 
-        protected override bool ShouldDoTrigger(CarPart activatingPart)
+        protected override bool ShouldActivate(CarPart activatingPart)
         {
             if ((activatingPart as IgnitionSwitch).StartupOn)
-                return base.ShouldDoTrigger(activatingPart);
+                return base.ShouldActivate(activatingPart);
             return false;
         }
     }

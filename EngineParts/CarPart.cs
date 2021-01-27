@@ -53,20 +53,26 @@ namespace LogicalEngine.EngineParts
             {
                 bool transferSuccess = false;
                 bool transferAllowed = connected.TransferConditionsMet(sender);
+                bool shouldAdjust = connected.ShouldAdjustEngineStage(sender);
+                bool shouldActivate = false;
+                bool backToEngine = BackToEngineLoop(sender);
 
                 if (transferAllowed)
                     transferSuccess = sender.TryTransferUnits(connected);
 
-                if (connected.ShouldAdjustEngineStage(sender))
+                if ( !backToEngine )
+                    shouldActivate = connected.ShouldActivate(sender);
+
+                if (shouldAdjust)
                     connected.AdjustEngineStage(sender);
 
-                if (transferSuccess && connected.ShouldDoTrigger(sender))
+                if (transferSuccess && shouldActivate)
                 {
                     connected.InvokeActivate();
                 }
             }
         }
-        protected virtual void InvokeActivate()
+        protected void InvokeActivate()
         {
             Activate?.Invoke(this, new EventArgs());
         }
@@ -76,21 +82,20 @@ namespace LogicalEngine.EngineParts
             return true;
         }
 
-        protected virtual bool ShouldDoTrigger(CarPart activatingPart) 
+        protected virtual bool ShouldActivate(CarPart activatingPart) 
         {
             return (UnitsOwned >= UnitTriggerThreshold);
         }
 
         protected virtual bool ShouldAdjustEngineStage(CarPart sender)
         {
-
             return false;
         }
-        protected virtual void AdjustEngineStage(CarPart sender)
+        protected virtual void AdjustEngineStage(CarPart sender) { }
+        protected virtual bool BackToEngineLoop(CarPart sender)
         {
-
+            return false;
         }
-
         public virtual bool TryTransferUnits(CarPart receiver)
         {
             var success = false;

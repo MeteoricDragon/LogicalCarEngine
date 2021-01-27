@@ -12,10 +12,10 @@ namespace LogicalEngine.EngineParts
         {
             CanDrawFromBattery = true;
         }
-        protected override bool ShouldDoTrigger(CarPart activatingPart)
+        protected override bool ShouldActivate(CarPart activatingPart)
         {
             if ((activatingPart as IgnitionSwitch).IgnitionSwitchOn)
-                return base.ShouldDoTrigger(activatingPart);
+                return base.ShouldActivate(activatingPart);
             return false;
         }
     }

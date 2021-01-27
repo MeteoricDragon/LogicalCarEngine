@@ -19,7 +19,7 @@ namespace LogicalEngine.EngineParts
             Exhaust
         };
         public CombustionStrokeCycles StrokeCycle { get; protected set; }
-        public int StrokeCount { get; private set; }
+
         public override string UserFriendlyName { get => "Combustion Chambers"; }
         public CombustionChambers(Engine e) : base(e)
         {
@@ -29,7 +29,6 @@ namespace LogicalEngine.EngineParts
         private void NextStroke()
         {
             var cycle = StrokeCycle;
-            StrokeCount++;
 
             switch (cycle)
             {
@@ -54,6 +53,11 @@ namespace LogicalEngine.EngineParts
             }
         }
 
+        public void ResetStrokeCycle()
+        {
+            StrokeCycle = CombustionStrokeCycles.Intake;
+        }
+
         protected override void AdjustEngineStage(CarPart sender)
         {
             bool inCombustion = StrokeCycle == CombustionStrokeCycles.Combustion;
@@ -65,18 +69,21 @@ namespace LogicalEngine.EngineParts
                 NextStroke();
                 // TODO: implement counteracting force from counterbalanced pistons
                 // that takes place of this command.
-                NextStroke(); 
+
+                // TODO: Get a better fix than this for staying on Exhaust for end 4 stroke cycle
+                if (StrokeCycle != CombustionStrokeCycles.Exhaust) 
+                    NextStroke(); 
             }
         }
         protected override bool ShouldAdjustEngineStage(CarPart sender)
         {
             return true;
         }
-        protected override bool ShouldDoTrigger(CarPart activatingPart)
+        protected override bool ShouldActivate(CarPart activatingPart)
         {
             return (StrokeCycle == CombustionStrokeCycles.Combustion
                 && activatingPart is SparkPlugs 
-                && base.ShouldDoTrigger(activatingPart));
+                && base.ShouldActivate(activatingPart));
         }
         protected override bool TransferConditionsMet(CarPart transferringPart)
         {

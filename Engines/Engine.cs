@@ -28,10 +28,10 @@ namespace LogicalEngine
 
         public virtual void RunEngine()
         {
-            while (CycleCount++ < 1)
+            while (CycleCount++ < 2)
             {
                 TickEngine();
-                Console.WriteLine("CycleCount " + CycleCount);
+                Output.EngineCycleCount(CycleCount);
             };
         }
         public virtual void TickEngine()
