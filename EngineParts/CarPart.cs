@@ -15,9 +15,9 @@ namespace LogicalEngine.EngineParts
         virtual public bool EngineCycleComplete { get => Engine.CycleComplete; }
         virtual public string UserFriendlyName { get => "Car Part"; }
         virtual public string UnitType { get => "Units"; }
-        virtual public int UnitsMax { get => 50; }
+        virtual public int UnitsMax { get => 20; }
         public int UnitsOwned { get; protected set; }
-        virtual public int UnitsToGive { get => 15; }
+        virtual public int UnitsToGive { get => 5; }
         virtual public int UnitsToConsume { get => 5; }
         virtual public int UnitTriggerThreshold { get => 1; }
         public bool CanDrawFromBattery { get; set; }
@@ -28,6 +28,8 @@ namespace LogicalEngine.EngineParts
         /// Reference to Engine that owns this part
         /// </summary>
         public Engine Engine { get; protected set; }
+        public bool IsBackupSource { get; internal set; }
+        public bool HasBackupSource { get; internal set; }
 
         public CarPart(Engine engine)
         {
@@ -100,7 +102,10 @@ namespace LogicalEngine.EngineParts
         {
             var success = false;
             if (CanDrain() == false)
+            {
+                Output.TakeFromReservoirFailReport(UserFriendlyName);
                 return success;
+            }   
 
             if ((CanDrawFromBattery || CanDrawFuel)
                 && Reservoir.HasEnoughToDrain(UnitsToConsume)

@@ -77,10 +77,20 @@ namespace LogicalEngine.Engines
             var fuelTank = FindPart<FuelTank>(allParts);
             foreach (CarPart p in allParts)
             {
+
                 if (p.CanChargeBattery || p.CanDrawFromBattery)
                     p.Reservoir = battery;
                 else if (p.CanDrawFuel)
                     p.Reservoir = fuelTank;
+
+                //var activatingParts = GetActivatingPartsOf(p);
+                //foreach (CarPart aP in activatingParts)
+                //{
+                //    if (p.HasBackupSource && aP.IsBackupSource)
+                //        p.Reservoir = aP;
+                //
+                //}
+                
             }
         }
 

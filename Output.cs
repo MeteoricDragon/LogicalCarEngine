@@ -34,7 +34,7 @@ namespace LogicalEngine
         }
         public static void TakeFromReservoirFailReport(string name)
         {
-            Console.WriteLine(Indent + Prefix_Transfer + "Insufficient units in " + name);
+            Console.WriteLine(Indent + Prefix_Transfer + name + " EMPTY!");
         }
         public static void DrainReport(CarPart p, int drainAmount)
         {
