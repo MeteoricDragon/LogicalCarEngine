@@ -10,11 +10,12 @@ namespace LogicalEngine.EngineParts
     public abstract class CarPart
     {
         public event EventHandler Activate;
-        public List<CarPart> ConnectedParts;
+        public List<CarPart> ConnectedParts { get; set; }
+        public List<CarPart> BackupSources { get; set; }
         public CarPart Reservoir { get; set; }
         virtual public bool EngineCycleComplete { get => Engine.CycleComplete; }
         virtual public string UserFriendlyName { get => "Car Part"; }
-        virtual public string UnitType { get => "Units"; }
+        virtual public string UnitTypeSent { get => "Units"; }
         virtual public int UnitsMax { get => 20; }
         public int UnitsOwned { get; protected set; }
         virtual public int UnitsToGive { get => 5; }
@@ -28,12 +29,13 @@ namespace LogicalEngine.EngineParts
         /// Reference to Engine that owns this part
         /// </summary>
         public Engine Engine { get; protected set; }
-        public bool IsBackupSource { get; internal set; }
+        public bool IsBackupSource { get; protected set; }
         public bool HasBackupSource { get; internal set; }
 
         public CarPart(Engine engine)
         {
             Engine = engine;
+            BackupSources = new List<CarPart>();
         }
 
         public void AssignTargetPart(List<CarPart> subscribers)

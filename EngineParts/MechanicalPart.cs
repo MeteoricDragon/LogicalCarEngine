@@ -4,10 +4,13 @@ using System.Text;
 
 namespace LogicalEngine.EngineParts
 {
+    /// <summary>
+    /// Mechanical parts send physical units
+    /// </summary>
     public abstract class MechanicalPart : CarPart
     {
         public int FrictionResistance { get; protected set; }
-        public override string UnitType { get => "Momentum"; }
+        public override string UnitTypeSent { get => "Momentum"; }
         protected MechanicalPart(Engine engine) : base(engine)
         {
         }

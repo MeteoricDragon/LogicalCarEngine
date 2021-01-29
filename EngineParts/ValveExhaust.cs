@@ -7,7 +7,7 @@ using static LogicalEngine.EngineParts.CombustionChambers;
 
 namespace LogicalEngine.EngineParts
 {
-    public class ValveExhaust : CarPart, IValve
+    public class ValveExhaust : FuelPart, IValve
     {
         public override string UserFriendlyName { get => "Exhaust Valve"; }
         public bool IsOpen { 

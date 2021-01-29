@@ -38,11 +38,11 @@ namespace LogicalEngine
         }
         public static void DrainReport(CarPart p, int drainAmount)
         {
-            Console.WriteLine(Indent + Prefix_Drain + p.UserFriendlyName + ": " + p.UnitsOwned + " - " + drainAmount + " = " + (p.UnitsOwned - drainAmount) + " " + p.UnitType);
+            Console.WriteLine(Indent + Prefix_Drain + p.UserFriendlyName + ": " + p.UnitsOwned + " - " + drainAmount + " = " + (p.UnitsOwned - drainAmount) + " " + p.UnitTypeSent);
         }
         public static void FillReport(CarPart p, int fillAmount)
         {
-            Console.WriteLine(Indent + Prefix_Fill + p.UserFriendlyName + ": " + p.UnitsOwned + " + " + fillAmount + " = " + (p.UnitsOwned + fillAmount) + " " + p.UnitType);
+            Console.WriteLine(Indent + Prefix_Fill + p.UserFriendlyName + ": " + p.UnitsOwned + " + " + fillAmount + " = " + (p.UnitsOwned + fillAmount) + " " + p.UnitTypeSent);
 
         }
         public static void ChangeCycleReport(CombustionStrokeCycles cycle)

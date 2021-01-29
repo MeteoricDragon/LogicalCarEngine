@@ -70,7 +70,7 @@ namespace LogicalEngine.Engines
             };
         }
 
-        public void ConnectBattery(Engine engine)
+        public void ConnectBackup(Engine engine)
         {
             var allParts = engine.AllParts;
             var battery = FindPart<Battery>(allParts);
@@ -83,13 +83,16 @@ namespace LogicalEngine.Engines
                 else if (p.CanDrawFuel)
                     p.Reservoir = fuelTank;
 
-                //var activatingParts = GetActivatingPartsOf(p);
-                //foreach (CarPart aP in activatingParts)
-                //{
-                //    if (p.HasBackupSource && aP.IsBackupSource)
-                //        p.Reservoir = aP;
-                //
-                //}
+                var activatingParts = GetActivatingPartsOf(p);
+                foreach (CarPart aP in activatingParts)
+                {
+                    if (p.HasBackupSource && aP.IsBackupSource)
+                        p.BackupSources.Add(aP);   
+                    // TODO: but what if the backup source has different units than what is needed?
+                    // Like Distributor getting Momentum from camshaft, when needing electricity from Ignition Coil?
+
+                
+                }
                 
             }
         }

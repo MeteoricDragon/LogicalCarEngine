@@ -24,7 +24,7 @@ namespace LogicalEngine
         public void DefineEngineSequence() // TODO: make this method in CombustionEngine instead. 
         {
             EngineOrder.ConfigureICEOverheadValveEngine(this);
-            EngineOrder.ConnectBattery(this);
+            EngineOrder.ConnectBackup(this);
         }
 
         protected override void AssignPartListToPart(CarPart part)
