@@ -28,11 +28,11 @@ namespace LogicalEngine.EngineParts
             }
             return false;
         }
-        protected override bool TransferConditionsMet(CarPart transferingPart)
+        protected override bool CanTransfer(UnitContainer transferingPart)
         {
             if (IsOpen)
             {
-                return base.TransferConditionsMet(transferingPart);
+                return base.CanTransfer(transferingPart);
             }
             return false;
         }

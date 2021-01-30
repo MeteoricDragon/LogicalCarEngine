@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using static LogicalEngine.EngineParts.CombustionChambers;
-using static LogicalEngine.Engines.CombustionEngine;
 
 namespace LogicalEngine
 {
@@ -16,19 +15,19 @@ namespace LogicalEngine
         public const string Prefix_Fill = "++";
         public const string Prefix_ChangeStroke = "^^";
         public const string Prefix_CycleCount = "**";
-        public static void ConnectedPartsHeader(CarPart part)
+        public static void ConnectedPartsHeader(UnitContainer part)
         {
             Console.WriteLine(Indent + "<" + part.UserFriendlyName + ">");
             Indent = new string(' ', IndentStep) + Indent;
         }
 
-        public static void ConnectedPartsFooter(CarPart part)
+        public static void ConnectedPartsFooter(UnitContainer part)
         {
             Indent = Indent[IndentStep..];
             Console.WriteLine(Indent + "</" + part.UserFriendlyName + ">");
         }
 
-        public static void TransferHeader(CarPart partSender, CarPart partReceiver)
+        public static void TransferHeader(UnitContainer partSender, CarPart partReceiver)
         {
             Console.WriteLine(Indent + "[" + partReceiver.UserFriendlyName + "]");
         }
@@ -36,11 +35,11 @@ namespace LogicalEngine
         {
             Console.WriteLine(Indent + Prefix_Transfer + name + " EMPTY!");
         }
-        public static void DrainReport(CarPart p, int drainAmount)
+        public static void DrainReport(UnitContainer p, int drainAmount)
         {
             Console.WriteLine(Indent + Prefix_Drain + p.UserFriendlyName + ": " + p.UnitsOwned + " - " + drainAmount + " = " + (p.UnitsOwned - drainAmount) + " " + p.UnitTypeSent);
         }
-        public static void FillReport(CarPart p, int fillAmount)
+        public static void FillReport(UnitContainer p, int fillAmount)
         {
             Console.WriteLine(Indent + Prefix_Fill + p.UserFriendlyName + ": " + p.UnitsOwned + " + " + fillAmount + " = " + (p.UnitsOwned + fillAmount) + " " + p.UnitTypeSent);
 

@@ -29,7 +29,7 @@ namespace LogicalEngine.EngineParts
             }
             return false;
         }
-        protected override bool CanFill(CarPart givingPart)
+        protected override bool CanFill(UnitContainer givingPart)
         {
             return IsOpen;
         }

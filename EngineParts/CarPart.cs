@@ -7,30 +7,18 @@ using static LogicalEngine.EngineParts.CombustionChambers;
 
 namespace LogicalEngine.EngineParts
 {
-    public abstract class CarPart
+    public abstract class CarPart : UnitContainer
     {
         public event EventHandler Activate;
         public List<CarPart> ConnectedParts { get; set; }
-        public List<CarPart> BackupSources { get; set; }
-        public CarPart Reservoir { get; set; }
+
         virtual public bool EngineCycleComplete { get => Engine.CycleComplete; }
-        virtual public string UserFriendlyName { get => "Car Part"; }
-        virtual public string UnitTypeSent { get => "Units"; }
-        virtual public int UnitsMax { get => 20; }
-        public int UnitsOwned { get; protected set; }
-        virtual public int UnitsToGive { get => 5; }
-        virtual public int UnitsToConsume { get => 5; }
-        virtual public int UnitTriggerThreshold { get => 1; }
-        public bool CanDrawFromBattery { get; set; }
-        public bool CanChargeBattery { get; set; }
-        public bool CanDrawFuel { get; set; }
 
         /// <summary>
         /// Reference to Engine that owns this part
         /// </summary>
         public Engine Engine { get; protected set; }
-        public bool IsBackupSource { get; protected set; }
-        public bool HasBackupSource { get; internal set; }
+
 
         public CarPart(Engine engine)
         {
@@ -56,7 +44,7 @@ namespace LogicalEngine.EngineParts
             foreach (CarPart connected in sender.ConnectedParts)
             {
                 bool transferSuccess = false;
-                bool transferAllowed = connected.TransferConditionsMet(sender);
+                bool transferAllowed = connected.CanTransfer(sender);
                 bool shouldAdjust = connected.ShouldAdjustEngineStage(sender);
                 bool shouldActivate = false;
                 bool backToEngine = BackToEngineLoop(sender);
@@ -81,11 +69,6 @@ namespace LogicalEngine.EngineParts
             Activate?.Invoke(this, new EventArgs());
         }
         
-        protected virtual bool TransferConditionsMet(CarPart transferingPart)
-        {
-            return true;
-        }
-
         protected virtual bool ShouldActivate(CarPart activatingPart) 
         {
             return (UnitsOwned >= UnitTriggerThreshold);
@@ -100,54 +83,6 @@ namespace LogicalEngine.EngineParts
         {
             return false;
         }
-        public virtual bool TryTransferUnits(CarPart receiver)
-        {
-            var success = false;
-            if (CanDrain() == false)
-            {
-                Output.TakeFromReservoirFailReport(UserFriendlyName);
-                return success;
-            }   
 
-            if ((CanDrawFromBattery || CanDrawFuel)
-                && Reservoir.HasEnoughToDrain(UnitsToConsume)
-                && !HasEnoughToDrain(UnitsToConsume))
-            {
-                Reservoir.Drain(UnitsToConsume);
-                Fill(Reservoir.UnitsToGive);
-            }
-
-            if (HasEnoughToDrain(UnitsToConsume))
-            {
-                success = true;
-                Drain(UnitsToConsume);
-                if (receiver.CanFill(this))
-                    receiver.Fill(UnitsToGive);
-            }
-
-            return success;
-        }
-        private bool HasEnoughToDrain(int drainAmount)
-        {
-            return (UnitsOwned - drainAmount >= 0);
-        }
-        protected virtual bool CanDrain()
-        {
-            return true;
-        }
-        private void Drain(int drainAmount)
-        {
-            Output.DrainReport(this, drainAmount);
-            UnitsOwned -= drainAmount;
-        }
-        protected virtual bool CanFill(CarPart givingPart)
-        {
-            return true;
-        }
-        private void Fill(int fillAmount)
-        {
-            Output.FillReport(this, fillAmount);
-            UnitsOwned = Math.Min(UnitsOwned + fillAmount, UnitsMax);
-        }
     }
 }

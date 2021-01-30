@@ -85,7 +85,7 @@ namespace LogicalEngine.EngineParts
                 && activatingPart is SparkPlugs 
                 && base.ShouldActivate(activatingPart));
         }
-        protected override bool TransferConditionsMet(CarPart transferringPart)
+        protected override bool CanTransfer(UnitContainer transferringPart)
         {
             if ((StrokeCycle == CombustionStrokeCycles.Combustion 
                 && transferringPart is SparkPlugs) 
@@ -95,7 +95,7 @@ namespace LogicalEngine.EngineParts
                 return true;
             return false;
         }
-        protected override bool CanFill(CarPart givingPart)
+        protected override bool CanFill(UnitContainer givingPart)
         {
             if (givingPart is SparkPlugs)
                 return false;

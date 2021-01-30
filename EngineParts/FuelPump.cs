@@ -18,7 +18,7 @@ namespace LogicalEngine.EngineParts
                 || base.ShouldActivate(activatingPart)); ;
         }
 
-        protected override bool CanFill(CarPart givingPart)
+        protected override bool CanFill(UnitContainer givingPart)
         {
             if (givingPart is CamShaft)
                 return false;
