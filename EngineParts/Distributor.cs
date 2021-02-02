@@ -15,11 +15,12 @@ namespace LogicalEngine.EngineParts
         {
         }
 
-        protected override bool CanFill(UnitContainer givingPart)
+        protected override bool CanTransfer(UnitContainer receivingPart)
         {
-            if (givingPart is CamShaft)
-                return false;
-            return true;
+            var cycle = (Engine as CombustionEngine).Chamber.StrokeCycle;
+            if (cycle == CombustionStrokeCycles.Combustion)
+                return true;
+            return false;
         }
     }
 }

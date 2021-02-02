@@ -23,7 +23,7 @@ namespace LogicalEngine.EngineParts
         public virtual bool TryTransferUnits(UnitContainer receiver)
         {
             var success = false;
-            if (CanDrain() == false)
+            if (CanDrain(receiver) == false)
             {
                 Output.TakeFromReservoirFailReport(UserFriendlyName);
                 return success;
@@ -41,7 +41,7 @@ namespace LogicalEngine.EngineParts
             {
                 success = true;
                 Drain(UnitsToConsume);
-                if (receiver.CanFill(this))
+                if (CanFill(receiver))
                     receiver.Fill(UnitsToGive);
             }
 
@@ -55,7 +55,7 @@ namespace LogicalEngine.EngineParts
         {
             return (UnitsOwned - drainAmount >= 0);
         }
-        protected virtual bool CanDrain()
+        protected virtual bool CanDrain(UnitContainer receiver)
         {
             return true;
         }
@@ -64,7 +64,7 @@ namespace LogicalEngine.EngineParts
             Output.DrainReport(this, drainAmount);
             UnitsOwned -= drainAmount;
         }
-        protected virtual bool CanFill(UnitContainer givingPart)
+        protected virtual bool CanFill(UnitContainer receiver)
         {
             return true;
         }

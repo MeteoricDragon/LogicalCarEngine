@@ -10,5 +10,13 @@ namespace LogicalEngine.EngineParts
         public Flywheel(Engine e) : base(e)
         {
         }
+
+        protected override bool ShouldActivate(CarPart target)
+        {
+            if (Engine.CycleComplete)
+                return false;
+            // TODO: activate Crankshaft if starting up, but torque converter if cycle completed (not yet)
+            return true;
+        }
     }
 }

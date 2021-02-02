@@ -15,11 +15,21 @@ namespace LogicalEngine.EngineParts
             Engine = e;
         }
 
-        protected override bool CanTransfer(UnitContainer transferingPart)
+        protected override bool ShouldActivate(CarPart target)
         {
-            var Chamber = (Engine as CombustionEngine).Chamber;
-            if (Chamber.StrokeCycle == CombustionStrokeCycles.Combustion)
+            var stroke = (target as CombustionChambers).StrokeCycle;
+            return stroke == CombustionStrokeCycles.Combustion;
+        }
+        protected override bool CanTransfer(UnitContainer receiver)
+        {
+            var stroke = (receiver as CombustionChambers).StrokeCycle;
+
+            if (stroke == CombustionStrokeCycles.Combustion)
                 return true;
+            return false;
+        }
+        protected override bool CanFill(UnitContainer receiver)
+        {
             return false;
         }
     }

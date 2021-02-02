@@ -18,17 +18,19 @@ namespace LogicalEngine.EngineParts
             FrictionResistance = 0;
         }
 
-        protected override bool ShouldActivate(CarPart activatingPart)
+        protected override bool ShouldActivate(CarPart target)
         {
-            if (Engine.CycleComplete) 
-                return false;         
+            if (Engine.CycleComplete)
+                return false;
 
+            // TODO: activate Flywheel if we're going to torque converter (not yet)
             return true;
         }
 
         protected override bool BackToEngineLoop(CarPart sender)
-        {
-            if (sender is Pistons && Engine.CycleComplete)
+        {// TODO: if doing Torque Converter, readdress how the engine 
+            //goes back to loop? Will torque converter be triggered by other strokes?
+            if (sender is Pistons && Engine.CycleComplete) 
                 return true;
             return false;
         }

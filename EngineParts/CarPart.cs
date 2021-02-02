@@ -44,19 +44,19 @@ namespace LogicalEngine.EngineParts
             foreach (CarPart connected in sender.ConnectedParts)
             {
                 bool transferSuccess = false;
-                bool transferAllowed = connected.CanTransfer(sender);
-                bool shouldAdjust = connected.ShouldAdjustEngineStage(sender);
+                bool transferAllowed = CanTransfer(connected);
+                bool shouldAdjust = ShouldChangeEngineStage(connected);
                 bool shouldActivate = false;
                 bool backToEngine = BackToEngineLoop(sender);
 
                 if (transferAllowed)
-                    transferSuccess = sender.TryTransferUnits(connected);
+                    transferSuccess = TryTransferUnits(connected);
 
                 if ( !backToEngine )
-                    shouldActivate = connected.ShouldActivate(sender);
+                    shouldActivate = ShouldActivate(connected);
 
                 if (shouldAdjust)
-                    connected.AdjustEngineStage(sender);
+                    ChangeEngineStage(connected);
 
                 if (transferSuccess && shouldActivate)
                 {
@@ -69,16 +69,16 @@ namespace LogicalEngine.EngineParts
             Activate?.Invoke(this, new EventArgs());
         }
         
-        protected virtual bool ShouldActivate(CarPart activatingPart) 
+        protected virtual bool ShouldActivate(CarPart target) 
         {
-            return (UnitsOwned >= UnitTriggerThreshold);
+            return (target.UnitsOwned >= target.UnitTriggerThreshold);
         }
 
-        protected virtual bool ShouldAdjustEngineStage(CarPart sender)
+        protected virtual bool ShouldChangeEngineStage(CarPart sender)
         {
             return false;
         }
-        protected virtual void AdjustEngineStage(CarPart sender) { }
+        protected virtual void ChangeEngineStage(CarPart sender) { }
         protected virtual bool BackToEngineLoop(CarPart sender)
         {
             return false;

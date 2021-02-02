@@ -20,19 +20,19 @@ namespace LogicalEngine.EngineParts
         {
             Engine = e;
         }
-        protected override bool ShouldActivate(CarPart activatingPart)
+        protected override bool ShouldActivate(CarPart target)
         {
             if (IsOpen)
             {
-                return base.ShouldActivate(activatingPart);
+                return base.ShouldActivate(target);
             }
             return false;
         }
-        protected override bool CanTransfer(UnitContainer transferingPart)
+        protected override bool CanTransfer(UnitContainer target)
         {
             if (IsOpen)
             {
-                return base.CanTransfer(transferingPart);
+                return base.CanTransfer(target);
             }
             return false;
         }

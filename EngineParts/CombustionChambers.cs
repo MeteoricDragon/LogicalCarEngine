@@ -13,10 +13,12 @@ namespace LogicalEngine.EngineParts
         // TODO: consume all fuel when changing from Combustion to exhaust and after transfer to pistons.
         public enum CombustionStrokeCycles
         {
+            Start,
             Intake,
             Compression,
             Combustion,
-            Exhaust
+            Exhaust,
+            End
         };
         public CombustionStrokeCycles StrokeCycle { get; protected set; }
 
@@ -26,13 +28,13 @@ namespace LogicalEngine.EngineParts
             Engine = e;
         }
 
-        private void NextStroke()
+        public void NextStroke()
         {
             var cycle = StrokeCycle;
 
             switch (cycle)
             {
-                case CombustionStrokeCycles.Exhaust:
+                case CombustionStrokeCycles.Start:
                     cycle = CombustionStrokeCycles.Intake;
                     break;
                 case CombustionStrokeCycles.Intake:
@@ -43,6 +45,12 @@ namespace LogicalEngine.EngineParts
                     break;
                 case CombustionStrokeCycles.Combustion:
                     cycle = CombustionStrokeCycles.Exhaust;
+                    break;
+                case CombustionStrokeCycles.Exhaust:
+                    cycle = CombustionStrokeCycles.End;
+                    break;
+                case CombustionStrokeCycles.End:
+                    cycle = CombustionStrokeCycles.Start;
                     break;
             }
 
@@ -58,48 +66,24 @@ namespace LogicalEngine.EngineParts
             StrokeCycle = CombustionStrokeCycles.Intake;
         }
 
-        protected override void AdjustEngineStage(CarPart sender)
+        protected override bool ShouldActivate(CarPart target)
         {
-            bool inCombustion = StrokeCycle == CombustionStrokeCycles.Combustion;
-            
-            if ((sender is SparkPlugs && inCombustion) // ready to ignite then exhaust
-
-                || (sender is SparkPlugs == false && !inCombustion)) // not igniting or ready to ignite
-            {
-                NextStroke();
-                // TODO: implement counteracting force from counterbalanced pistons
-                // that takes place of this command.
-
-                // TODO: Get a better fix than this for staying on Exhaust for end 4 stroke cycle
-                if (StrokeCycle != CombustionStrokeCycles.Exhaust) 
-                    NextStroke(); 
-            }
+            return (target is ValveExhaust exhaust && exhaust.IsOpen) 
+                || (target is Pistons && base.ShouldActivate(target));
         }
-        protected override bool ShouldAdjustEngineStage(CarPart sender)
+        protected override bool CanTransfer(UnitContainer receiver)
         {
-            return true;
-        }
-        protected override bool ShouldActivate(CarPart activatingPart)
-        {
-            return (StrokeCycle == CombustionStrokeCycles.Combustion
-                && activatingPart is SparkPlugs 
-                && base.ShouldActivate(activatingPart));
-        }
-        protected override bool CanTransfer(UnitContainer transferringPart)
-        {
-            if ((StrokeCycle == CombustionStrokeCycles.Combustion 
-                && transferringPart is SparkPlugs) 
-                ||
-                (StrokeCycle == CombustionStrokeCycles.Intake
-                && transferringPart is ValveIntake ))
+            if ((receiver is ValveExhaust exhaust && exhaust.IsOpen) 
+                || (receiver is Pistons))
                 return true;
             return false;
         }
-        protected override bool CanFill(UnitContainer givingPart)
+        protected override bool CanFill(UnitContainer receiver)
         {
-            if (givingPart is SparkPlugs)
-                return false;
-            return true;
+            if ((receiver is ValveExhaust exhaust && exhaust.IsOpen)
+                || (receiver is Pistons))
+                return true;
+            return false;
         }
     }
 }

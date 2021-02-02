@@ -21,15 +21,7 @@ namespace LogicalEngine.EngineParts
             Engine = e;
         }
 
-        protected override bool ShouldActivate(CarPart activatingPart)
-        {
-            if (activatingPart is Carburetor && IsOpen)  
-            {
-                return base.ShouldActivate(activatingPart);
-            }
-            return false;
-        }
-        protected override bool CanFill(UnitContainer givingPart)
+        protected override bool CanFill(UnitContainer receiver)
         {
             return IsOpen;
         }
