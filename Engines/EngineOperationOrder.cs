@@ -51,7 +51,7 @@ namespace LogicalEngine.Engines
                 { AirCleaner, new List<CarPart> { } },
                 { Alternator, new List<CarPart> { Battery } },
                 { Battery, new List<CarPart> { } },
-                { CamShaft, new List<CarPart> { FuelPump, Distributor } },
+                { CamShaft, new List<CarPart> { FuelPump, ValveIntake, Distributor, ValveExhaust} },
                 { Carburetor, new List<CarPart> { ValveIntake } },
                 { Crankshaft, new List<CarPart> { Alternator, TimingChain} },
                 { CombustionChamber, new List<CarPart> { ValveExhaust, Pistons} },
@@ -65,7 +65,7 @@ namespace LogicalEngine.Engines
                 { SparkPlugs, new List<CarPart> { CombustionChamber } },
                 { StarterMotor, new List<CarPart> { Flywheel } }, 
                 { TimingChain, new List<CarPart> { CamShaft } },
-                { ValveExhaust, new List<CarPart> { /* outside scope of program */ } },
+                { ValveExhaust, new List<CarPart> { CombustionChamber /* Exhaust System parts */ } },
                 { ValveIntake, new List<CarPart> { CombustionChamber } } 
             };
         }

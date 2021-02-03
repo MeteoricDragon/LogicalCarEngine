@@ -32,12 +32,15 @@ namespace LogicalEngine.EngineParts
         }
         protected override bool ShouldActivate(CarPart target)
         {
+            // TODO: Properly trigger parts based on engine cycle.  Engine cycle is
+            // changing through each cycle but no triggers seem to happen in each part
+            // connected to camshaft.
             var CE = (Engine as CombustionEngine);
             var stroke = CE.Chamber.StrokeCycle;
             return (
                 (target is FuelPump && stroke == CombustionStrokeCycles.Intake) && base.ShouldActivate(target))
+                || (target is ValveIntake && stroke == CombustionStrokeCycles.Compression) 
                 || (target is Distributor && stroke == CombustionStrokeCycles.Combustion)
-                || (target is ValveIntake && stroke == CombustionStrokeCycles.Compression)
                 || (target is ValveExhaust && stroke == CombustionStrokeCycles.Exhaust);
                 
         }

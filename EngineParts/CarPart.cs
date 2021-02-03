@@ -52,13 +52,13 @@ namespace LogicalEngine.EngineParts
                 if (transferAllowed)
                     transferSuccess = TryTransferUnits(connected);
 
-                if ( !backToEngine )
-                    shouldActivate = ShouldActivate(connected);
-
                 if (shouldAdjust)
                     ChangeEngineStage(connected);
 
-                if (transferSuccess && shouldActivate)
+                if ( !backToEngine )
+                    shouldActivate = ShouldActivate(connected);
+
+                if ((transferSuccess || shouldAdjust) && shouldActivate)
                 {
                     connected.InvokeActivate();
                 }

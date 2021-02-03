@@ -25,5 +25,18 @@ namespace LogicalEngine.EngineParts
         {
             return IsOpen;
         }
+
+        protected override bool CanTransfer(UnitContainer receivingPart)
+        {
+            if (IsOpen)
+                return base.CanTransfer(receivingPart);
+            else
+                return false;
+        }
+
+        protected override bool ShouldActivate(CarPart target)
+        {
+            return base.ShouldActivate(target);
+        }
     }
 }

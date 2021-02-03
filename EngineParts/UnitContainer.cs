@@ -47,7 +47,7 @@ namespace LogicalEngine.EngineParts
 
             return success;
         }
-        protected virtual bool CanTransfer(UnitContainer transferingPart)
+        protected virtual bool CanTransfer(UnitContainer receivingPart)
         {
             return true;
         }
