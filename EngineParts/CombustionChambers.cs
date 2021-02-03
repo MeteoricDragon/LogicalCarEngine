@@ -10,6 +10,8 @@ namespace LogicalEngine.EngineParts
 {
     public class CombustionChambers : FuelPart
     {
+        public override int UnitsToGive => 20;
+
         // TODO: consume all fuel when changing from Combustion to exhaust and after transfer to pistons.
         public enum CombustionStrokeCycles
         {
@@ -63,13 +65,13 @@ namespace LogicalEngine.EngineParts
 
         public void ResetStrokeCycle()
         {
-            StrokeCycle = CombustionStrokeCycles.Intake;
+            StrokeCycle = CombustionStrokeCycles.Start;
         }
 
         protected override bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment)
         {
-            return (target is ValveExhaust exhaust && exhaust.IsOpen) 
-                || (target is Pistons && base.ShouldActivate(target, transferSuccess, didAdjustment));
+            return (target is ValveExhaust exhaust && exhaust.IsOpen)
+                || (target is Pistons && IsAtUnitThreshold(target));
         }
         protected override bool CanTransfer(UnitContainer receiver)
         {

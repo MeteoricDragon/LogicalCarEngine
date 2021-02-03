@@ -72,10 +72,10 @@ namespace LogicalEngine.EngineParts
         protected virtual bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment) 
         {
             return (transferSuccess || didAdjustment)
-                && UnitsAtThreshold(target);
+                && target.IsAtUnitThreshold(target);
         }
 
-        protected bool UnitsAtThreshold(CarPart target)
+        protected bool IsAtUnitThreshold(CarPart target)
         {
             return (target.UnitsOwned >= target.UnitTriggerThreshold);
         }
