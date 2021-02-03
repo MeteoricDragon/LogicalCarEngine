@@ -30,7 +30,7 @@ namespace LogicalEngine.EngineParts
         {
             (Engine as CombustionEngine).Chamber.NextStroke();
         }
-        protected override bool ShouldActivate(CarPart target)
+        protected override bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment)
         {
             // TODO: Properly trigger parts based on engine cycle.  Engine cycle is
             // changing through each cycle but no triggers seem to happen in each part
@@ -38,7 +38,7 @@ namespace LogicalEngine.EngineParts
             var CE = (Engine as CombustionEngine);
             var stroke = CE.Chamber.StrokeCycle;
             return (
-                (target is FuelPump && stroke == CombustionStrokeCycles.Intake) && base.ShouldActivate(target))
+                (target is FuelPump && stroke == CombustionStrokeCycles.Intake) && base.ShouldActivate(target, transferSuccess, didAdjustment))
                 || (target is ValveIntake && stroke == CombustionStrokeCycles.Compression) 
                 || (target is Distributor && stroke == CombustionStrokeCycles.Combustion)
                 || (target is ValveExhaust && stroke == CombustionStrokeCycles.Exhaust);

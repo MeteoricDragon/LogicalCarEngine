@@ -66,10 +66,10 @@ namespace LogicalEngine.EngineParts
             StrokeCycle = CombustionStrokeCycles.Intake;
         }
 
-        protected override bool ShouldActivate(CarPart target)
+        protected override bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment)
         {
             return (target is ValveExhaust exhaust && exhaust.IsOpen) 
-                || (target is Pistons && base.ShouldActivate(target));
+                || (target is Pistons && base.ShouldActivate(target, transferSuccess, didAdjustment));
         }
         protected override bool CanTransfer(UnitContainer receiver)
         {

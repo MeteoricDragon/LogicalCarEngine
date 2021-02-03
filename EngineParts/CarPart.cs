@@ -44,21 +44,21 @@ namespace LogicalEngine.EngineParts
             foreach (CarPart connected in sender.ConnectedParts)
             {
                 bool transferSuccess = false;
-                bool transferAllowed = CanTransfer(connected);
-                bool shouldAdjust = ShouldChangeEngineStage(connected);
-                bool shouldActivate = false;
+                bool doTransfer = CanTransfer(connected);
+                bool doAdjustment = ShouldChangeEngineStage(connected);
+                bool doActivate = false;
                 bool backToEngine = BackToEngineLoop(sender);
 
-                if (transferAllowed)
+                if (doTransfer)
                     transferSuccess = TryTransferUnits(connected);
 
-                if (shouldAdjust)
+                if (doAdjustment)
                     ChangeEngineStage(connected);
 
                 if ( !backToEngine )
-                    shouldActivate = ShouldActivate(connected);
+                    doActivate = ShouldActivate(connected, transferSuccess, doAdjustment);
 
-                if ((transferSuccess || shouldAdjust) && shouldActivate)
+                if (doActivate)
                 {
                     connected.InvokeActivate();
                 }
@@ -69,7 +69,13 @@ namespace LogicalEngine.EngineParts
             Activate?.Invoke(this, new EventArgs());
         }
         
-        protected virtual bool ShouldActivate(CarPart target) 
+        protected virtual bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment) 
+        {
+            return (transferSuccess || didAdjustment)
+                && UnitsAtThreshold(target);
+        }
+
+        protected bool UnitsAtThreshold(CarPart target)
         {
             return (target.UnitsOwned >= target.UnitTriggerThreshold);
         }

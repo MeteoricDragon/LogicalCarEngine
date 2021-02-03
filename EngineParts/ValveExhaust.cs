@@ -20,11 +20,11 @@ namespace LogicalEngine.EngineParts
         {
             Engine = e;
         }
-        protected override bool ShouldActivate(CarPart target)
+        protected override bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment)
         {
             if (IsOpen)
             {
-                return base.ShouldActivate(target);
+                return base.ShouldActivate(target, transferSuccess, didAdjustment);
             }
             return false;
         }

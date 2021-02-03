@@ -56,12 +56,11 @@ namespace LogicalEngine.EngineParts
                 IgnitionSwitchOn = false;
         }
 
-        protected override bool ShouldActivate(CarPart target)
+        protected override bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment)
         {
-            if (target is StarterMotor && StartupOn)
-                return base.ShouldActivate(target);
-            else if (target is IgnitionCoil && IgnitionSwitchOn)
-                return base.ShouldActivate(target);
+            if ((target is StarterMotor && StartupOn)
+                || (target is IgnitionCoil && IgnitionSwitchOn))
+                return base.ShouldActivate(target, transferSuccess, didAdjustment);
             return false;
         }
     }

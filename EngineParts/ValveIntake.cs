@@ -34,9 +34,9 @@ namespace LogicalEngine.EngineParts
                 return false;
         }
 
-        protected override bool ShouldActivate(CarPart target)
+        protected override bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment)
         {
-            return base.ShouldActivate(target);
+            return base.ShouldActivate(target, transferSuccess, didAdjustment);
         }
     }
 }

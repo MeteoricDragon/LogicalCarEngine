@@ -18,7 +18,7 @@ namespace LogicalEngine.EngineParts
             FrictionResistance = 0;
         }
 
-        protected override bool ShouldActivate(CarPart target)
+        protected override bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment)
         {
             if (Engine.CycleComplete)
                 return false;
