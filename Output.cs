@@ -56,8 +56,14 @@ namespace LogicalEngine
 
         public static void Legend()
         {
-            // print a legend
+            var output = "<PartName>  -> beginning of PartName being triggered \n"
+                       + "</PartName> -> end of PartName being triggered. \n"
+                       + "indentation -> things that happen within the triggering of the part\n"
+                       + "--PartName  -> this line indicates units being subtracted from PartName\n"
+                       + "++PartName  -> this line indicates units being added to PartName\n"
+                       + "^^          -> indicates a change in stroke cycle";
 
+            Console.WriteLine(output);
         }
     }
 }
