@@ -45,18 +45,16 @@ namespace LogicalEngine.EngineParts
             {
                 bool transferSuccess = false;
                 bool doTransfer = CanTransfer(connected);
-                bool doAdjustment = ShouldChangeEngineStage(connected);
                 bool doActivate = false;
                 bool backToEngine = BackToEngineLoop(sender);
 
                 if (doTransfer)
                     transferSuccess = TryTransferUnits(connected);
 
-                if (doAdjustment)
-                    ChangeEngineStage(connected);
+                RefreshEngineStage(connected);
 
                 if ( !backToEngine )
-                    doActivate = ShouldActivate(connected, transferSuccess, doAdjustment);
+                    doActivate = ShouldActivate(connected, transferSuccess);
 
                 if (doActivate)
                 {
@@ -69,10 +67,9 @@ namespace LogicalEngine.EngineParts
             Activate?.Invoke(this, new EventArgs());
         }
         
-        protected virtual bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment) 
+        protected virtual bool ShouldActivate(CarPart target, in bool transferSuccess) 
         {
-            return (transferSuccess || didAdjustment)
-                && target.IsAtUnitThreshold(target);
+            return transferSuccess && target.IsAtUnitThreshold(target);
         }
 
         public bool IsAtUnitThreshold(CarPart target)
@@ -80,11 +77,11 @@ namespace LogicalEngine.EngineParts
             return (target.UnitsOwned >= target.UnitTriggerThreshold);
         }
 
-        protected virtual bool ShouldChangeEngineStage(CarPart sender)
-        {
-            return false;
-        }
-        protected virtual void ChangeEngineStage(CarPart sender) { }
+        //protected virtual bool ShouldChangeEngineStage(CarPart sender)
+        //{
+        //   return false;
+        //}
+        protected virtual void RefreshEngineStage(CarPart sender) { }
         protected virtual bool BackToEngineLoop(CarPart sender)
         {
             return false;

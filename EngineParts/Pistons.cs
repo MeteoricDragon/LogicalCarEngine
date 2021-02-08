@@ -1,6 +1,8 @@
-﻿using System;
+﻿using LogicalEngine.Engines;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using static LogicalEngine.EngineParts.Cylinders;
 
 namespace LogicalEngine.EngineParts
 {

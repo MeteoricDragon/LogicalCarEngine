@@ -68,7 +68,7 @@ namespace LogicalEngine.EngineParts
             StrokeCycle = CombustionStrokeCycles.Start;
         }
 
-        protected override bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment)
+        protected override bool ShouldActivate(CarPart target, in bool transferSuccess)
         {
             var threshold = IsAtUnitThreshold(target);
             
