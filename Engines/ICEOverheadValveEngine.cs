@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using LogicalEngine.Engines;
 using LogicalEngine.EngineParts;
-using static LogicalEngine.EngineParts.CombustionChambers;
+using static LogicalEngine.EngineParts.Cylinders;
 
 namespace LogicalEngine
 {
@@ -14,7 +14,8 @@ namespace LogicalEngine
         public override bool CycleComplete { get => Chamber.StrokeCycle == CombustionStrokeCycles.End; }
         public ICEOverheadValveEngine() : base()
         {
-            EngineSubsystem[] systems = { new CombustionParts(this), new FuelParts(this), new PowerParts(this)};
+            EngineSubsystem[] systems = { new CombustionParts(this), new FuelParts(this), new PowerParts(this),
+                                          new ExhaustParts(this)};
             Subsystems.AddRange(systems);
 
             DefineEngineSequence();

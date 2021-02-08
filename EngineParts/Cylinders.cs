@@ -8,7 +8,7 @@ using static LogicalEngine.Engines.CombustionEngine;
 
 namespace LogicalEngine.EngineParts
 {
-    public class CombustionChambers : FuelPart
+    public class Cylinders : FuelPart
     {
         public override int UnitsToGive => 20;
 
@@ -24,8 +24,8 @@ namespace LogicalEngine.EngineParts
         };
         public CombustionStrokeCycles StrokeCycle { get; protected set; }
 
-        public override string UserFriendlyName { get => "Combustion Chambers"; }
-        public CombustionChambers(Engine e) : base(e)
+        public override string UserFriendlyName { get => "Cylinders"; }
+        public Cylinders(Engine e) : base(e)
         {
             Engine = e;
         }
@@ -70,12 +70,15 @@ namespace LogicalEngine.EngineParts
 
         protected override bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment)
         {
-            return (target is ValveExhaust exhaust && exhaust.IsOpen)
-                || (target is Pistons && IsAtUnitThreshold(target));
+            var threshold = IsAtUnitThreshold(target);
+            
+            return (target is ValveExhaust exhaust && exhaust.IsOpen && threshold) 
+                || (target is Pistons && threshold);
+
         }
         protected override bool CanTransfer(UnitContainer receiver)
         {
-            if ((receiver is ValveExhaust exhaust && exhaust.IsOpen) 
+            if ((receiver is ValveExhaust exhaust && exhaust.IsOpen ) 
                 || (receiver is Pistons))
                 return true;
             return false;

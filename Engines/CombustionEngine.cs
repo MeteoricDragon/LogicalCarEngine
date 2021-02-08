@@ -8,7 +8,7 @@ namespace LogicalEngine.Engines
 {
     public abstract class CombustionEngine : Engine
     {
-        public CombustionChambers Chamber { get; protected set; }
+        public Cylinders Chamber { get; protected set; }
         public IgnitionSwitch Ignition { get; protected set; }
         public Crankshaft Crankshaft { get; protected set; }
         public bool CombustionActive { get; protected set; }
@@ -21,7 +21,7 @@ namespace LogicalEngine.Engines
             if (Ignition == null)
                 Ignition = AllParts.Find(x => x is IgnitionSwitch) as IgnitionSwitch;
             if (Chamber == null)
-                Chamber = AllParts.Find(x => x is CombustionChambers) as CombustionChambers;
+                Chamber = AllParts.Find(x => x is Cylinders) as Cylinders;
             if (Crankshaft == null)
                 Crankshaft = AllParts.Find(x => x is Crankshaft) as Crankshaft;
         }

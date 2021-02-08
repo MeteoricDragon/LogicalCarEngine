@@ -3,11 +3,11 @@ using LogicalEngine.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static LogicalEngine.EngineParts.CombustionChambers;
+using static LogicalEngine.EngineParts.Cylinders;
 
 namespace LogicalEngine.EngineParts
 {
-    public class ValveExhaust : FuelPart, IValve
+    public class ValveExhaust : ExhaustPart, IValve
     {
         public override string UserFriendlyName { get => "Exhaust Valve"; }
         public bool IsOpen { 
@@ -20,14 +20,6 @@ namespace LogicalEngine.EngineParts
         {
             Engine = e;
         }
-        protected override bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment)
-        {
-            if (IsOpen)
-            {
-                return base.ShouldActivate(target, transferSuccess, didAdjustment);
-            }
-            return false;
-        }
         protected override bool CanTransfer(UnitContainer target)
         {
             if (IsOpen)
@@ -35,6 +27,20 @@ namespace LogicalEngine.EngineParts
                 return base.CanTransfer(target);
             }
             return false;
+        }
+        protected override bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment)
+        {
+            if (target is Cylinders && IsOpen && !IsAtUnitThreshold(target)
+                || target is ExhaustDownPipe)
+                return true;
+            return false;
+        }
+
+        public override bool TryTransferUnits(UnitContainer receiver)
+        {
+            if (receiver is Cylinders)
+                return false;
+            return base.TryTransferUnits(receiver);
         }
     }
 }

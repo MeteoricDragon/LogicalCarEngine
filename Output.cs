@@ -2,19 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static LogicalEngine.EngineParts.CombustionChambers;
+using static LogicalEngine.EngineParts.Cylinders;
 
 namespace LogicalEngine
 {
     public static class Output
     {
-        public static string Indent = "";
-        public const int IndentStep = 3;
-        public const string Prefix_Transfer = "==";
-        public const string Prefix_Drain = "--";
-        public const string Prefix_Fill = "++";
-        public const string Prefix_ChangeStroke = "^^";
-        public const string Prefix_CycleCount = "**";
+        private static string Indent = "";
+        private const int IndentStep = 3;
+        private const string Prefix_Transfer = "==";
+        private const string Prefix_Drain = "--";
+        private const string Prefix_Fill = "++";
+        private const string Prefix_ChangeStroke = "^^";
+        private const string Prefix_CycleCount = "**";
         public static void ConnectedPartsHeader(UnitContainer part)
         {
             Console.WriteLine(Indent + "<" + part.UserFriendlyName + ">");
@@ -46,7 +46,7 @@ namespace LogicalEngine
         }
         public static void ChangeCycleReport(CombustionStrokeCycles cycle)
         {
-            Console.WriteLine(Indent + Prefix_ChangeStroke + "Stroke: " + cycle);
+            Console.WriteLine(Indent + Prefix_ChangeStroke + "Stroke: " + cycle + "===============");
         }
 
         public static void EngineCycleCount(int cycles)
@@ -61,7 +61,7 @@ namespace LogicalEngine
                        + "indentation -> things that happen within the triggering of the part\n"
                        + "--PartName  -> this line indicates units being subtracted from PartName\n"
                        + "++PartName  -> this line indicates units being added to PartName\n"
-                       + "^^          -> indicates a change in stroke cycle";
+                       + "^^Stroke:   -> indicates a change in stroke cycle";
 
             Console.WriteLine(output);
         }

@@ -3,7 +3,7 @@ using LogicalEngine.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static LogicalEngine.EngineParts.CombustionChambers;
+using static LogicalEngine.EngineParts.Cylinders;
 
 namespace LogicalEngine.EngineParts
 {
@@ -17,12 +17,12 @@ namespace LogicalEngine.EngineParts
 
         protected override bool ShouldActivate(CarPart target, in bool transferSuccess, in bool didAdjustment)
         {
-            var stroke = (target as CombustionChambers).StrokeCycle;
+            var stroke = (target as Cylinders).StrokeCycle;
             return stroke == CombustionStrokeCycles.Combustion;
         }
         protected override bool CanTransfer(UnitContainer receiver)
         {
-            var stroke = (receiver as CombustionChambers).StrokeCycle;
+            var stroke = (receiver as Cylinders).StrokeCycle;
 
             if (stroke == CombustionStrokeCycles.Combustion)
                 return true;

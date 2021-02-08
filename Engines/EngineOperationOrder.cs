@@ -31,7 +31,7 @@ namespace LogicalEngine.Engines
             var CamShaft = FindPart<CamShaft>(parts);
             var Carburetor = FindPart<Carburetor>(parts);
             var Crankshaft = FindPart<Crankshaft>(parts);
-            var CombustionChamber = FindPart<CombustionChambers>(parts);
+            var CombustionChamber = FindPart<Cylinders>(parts);
             var Distributor = FindPart<Distributor>(parts);
             var Flywheel = FindPart<Flywheel>(parts);
             var FuelPump = FindPart<FuelPump>(parts);
@@ -44,6 +44,7 @@ namespace LogicalEngine.Engines
             var TimingChain = FindPart<TimingChain>(parts);
             var ValveExhaust = FindPart<ValveExhaust>(parts);
             var ValveIntake = FindPart<ValveIntake>(parts);
+            var ExhaustDown = FindPart<ExhaustDownPipe>(parts);
 
             PartChain = new Dictionary<CarPart, List<CarPart>>()
             {
@@ -65,7 +66,7 @@ namespace LogicalEngine.Engines
                 { SparkPlugs, new List<CarPart> { CombustionChamber } },
                 { StarterMotor, new List<CarPart> { Flywheel } }, 
                 { TimingChain, new List<CarPart> { CamShaft } },
-                { ValveExhaust, new List<CarPart> { CombustionChamber /* Exhaust System parts */ } },
+                { ValveExhaust, new List<CarPart> { CombustionChamber, ExhaustDown } },
                 { ValveIntake, new List<CarPart> { CombustionChamber } } 
             };
         }
