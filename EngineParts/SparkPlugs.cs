@@ -1,4 +1,5 @@
-﻿using LogicalEngine.EngineContainers;
+﻿using LogicalCarEngine.Engines;
+using LogicalEngine.EngineContainers;
 using LogicalEngine.Engines;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,12 @@ namespace LogicalEngine.EngineParts
 
         protected override bool ShouldActivate(CarPart target, in bool transferSuccess)
         {
-            var stroke = (target as Cylinders).StrokeCycle;
+            var stroke = (Engine as CombustionEngine).StrokeCycler.StrokeCycle;
             return stroke == CombustionStrokeCycles.Combustion;
         }
         protected override bool CanTransfer(UnitContainer receiver)
         {
-            var stroke = (receiver as Cylinders).StrokeCycle;
+            var stroke = (Engine as CombustionEngine).StrokeCycler.StrokeCycle;
 
             if (stroke == CombustionStrokeCycles.Combustion)
                 return true;

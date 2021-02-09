@@ -40,7 +40,7 @@ namespace LogicalEngine.EngineParts
             TriggerConnectedParts(carPartSender);
             Output.ConnectedPartsFooter(carPartSender);
         }
-        private void TriggerConnectedParts(CarPart sender)
+        protected void TriggerConnectedParts(CarPart sender)
         {
             foreach (CarPart connected in sender.ConnectedParts)
             {

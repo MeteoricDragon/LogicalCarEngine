@@ -1,4 +1,5 @@
-﻿using LogicalEngine.EngineContainers;
+﻿using LogicalCarEngine.Engines;
+using LogicalEngine.EngineContainers;
 using LogicalEngine.EngineParts;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ namespace LogicalEngine.Engines
 {
     public abstract class CombustionEngine : Engine
     {
+        public CombustionStrokeCycler StrokeCycler;
         public Cylinders Chamber { get; protected set; }
         public IgnitionSwitch Ignition { get; protected set; }
         public Crankshaft Crankshaft { get; protected set; }
@@ -18,6 +20,8 @@ namespace LogicalEngine.Engines
         
         public void MakeSurePartRefsAreSet()
         {
+            if (StrokeCycler == null)
+                StrokeCycler = AllParts.Find(x => x is CombustionStrokeCycler) as CombustionStrokeCycler;
             if (Ignition == null)
                 Ignition = AllParts.Find(x => x is IgnitionSwitch) as IgnitionSwitch;
             if (Chamber == null)
@@ -39,14 +43,13 @@ namespace LogicalEngine.Engines
         public override void TickEngine()
         {
             MakeSurePartRefsAreSet();
-            if (Crankshaft == null)
-                Crankshaft = AllParts.Find(x => x is Crankshaft) as Crankshaft;
+
             base.TickEngine();
 
             bool firstRun = !CycleComplete;
 
             if (CycleComplete)
-                Chamber.ResetStrokeCycle();
+                StrokeCycler.ResetStrokeCycle();
 
             if (firstRun)
                 Ignition?.Tick();

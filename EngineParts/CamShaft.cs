@@ -1,4 +1,5 @@
-﻿using LogicalEngine.Engines;
+﻿using LogicalCarEngine.Engines;
+using LogicalEngine.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,12 +22,11 @@ namespace LogicalEngine.EngineParts
         private void ToggleValves()
         {
             var CE = Engine as CombustionEngine;
-            var stroke = CE.Chamber.StrokeCycle;
             var parts = CE.AllParts;
             var ExhaustValve = parts.Find(x => x is ValveExhaust) as IValve;
             var IntakeValve = parts.Find(x => x is ValveIntake) as IValve;
             
-            switch (CE.Chamber.StrokeCycle)
+            switch (CE.StrokeCycler.StrokeCycle)
             {
                 case CombustionStrokeCycles.Intake:
                     IntakeValve.IsOpen = true;
@@ -49,12 +49,12 @@ namespace LogicalEngine.EngineParts
         protected override bool ShouldActivate(CarPart target, in bool transferSuccess)
         {
             var CE = (Engine as CombustionEngine);
-            var stroke = CE.Chamber.StrokeCycle;
+            var stroke = CE.StrokeCycler.StrokeCycle;
             return (
                 (target is FuelPump && stroke == CombustionStrokeCycles.Intake) && base.ShouldActivate(target, transferSuccess))
-                || (target is ValveIntake && stroke == CombustionStrokeCycles.Compression) 
                 || (target is Distributor && stroke == CombustionStrokeCycles.Combustion)
-                || (target is ValveExhaust && stroke == CombustionStrokeCycles.Exhaust);
+                || (target is CombustionStrokeCycler && (stroke == CombustionStrokeCycles.Compression || stroke == CombustionStrokeCycles.Exhaust)) 
+                ;
                 
         }
         protected override bool CanTransfer(UnitContainer receiver)

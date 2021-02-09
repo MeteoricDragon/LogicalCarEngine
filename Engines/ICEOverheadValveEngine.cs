@@ -6,16 +6,17 @@ using System.Text;
 using LogicalEngine.Engines;
 using LogicalEngine.EngineParts;
 using static LogicalEngine.EngineParts.Cylinders;
+using LogicalCarEngine.Engines;
 
 namespace LogicalEngine
 {
     public class ICEOverheadValveEngine : CombustionEngine
     {
-        public override bool CycleComplete { get => Chamber.StrokeCycle == CombustionStrokeCycles.End; }
+        public override bool CycleComplete { get => StrokeCycler.StrokeCycle == CombustionStrokeCycles.End; }
         public ICEOverheadValveEngine() : base()
         {
             EngineSubsystem[] systems = { new CombustionParts(this), new FuelParts(this), new PowerParts(this),
-                                          new ExhaustParts(this)};
+                                          new ExhaustParts(this), new AbstractParts(this)};
             Subsystems.AddRange(systems);
 
             DefineEngineSequence();

@@ -8,6 +8,7 @@ namespace LogicalEngine.EngineParts
 {
     public class Pistons : MechanicalPart
     {
+        public override int UnitsToGive => 10;
         public override string UserFriendlyName { get => "Pistons"; }
         public Pistons(Engine e) : base(e)
         {
@@ -17,7 +18,7 @@ namespace LogicalEngine.EngineParts
         protected override void RefreshEngineStage(CarPart sender)
         {
             var CE = Engine as CombustionEngine;
-            CE.Chamber.NextStroke();
+            CE.StrokeCycler.NextStroke();
         }
     }
 }

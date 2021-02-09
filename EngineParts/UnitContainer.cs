@@ -10,7 +10,7 @@ namespace LogicalEngine.EngineParts
         public UnitContainer Reservoir { get; set; }
         virtual public string UserFriendlyName { get => "Unit Container"; }
         virtual public string UnitTypeSent { get => "Units"; }
-        virtual public int UnitsMax { get => 20; }
+        virtual public int UnitsMax { get => 40; }
         public int UnitsOwned { get; protected set; }
         virtual public int UnitsToGive { get => 5; }
         virtual public int UnitsToConsume { get => 5; }

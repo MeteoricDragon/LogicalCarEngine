@@ -1,4 +1,5 @@
-﻿using LogicalEngine.EngineContainers;
+﻿using LogicalCarEngine.Engines;
+using LogicalEngine.EngineContainers;
 using LogicalEngine.EngineParts;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,7 @@ namespace LogicalEngine.Engines
             var pistons = FindPart<Pistons>(parts);
             var sparkPlugs = FindPart<SparkPlugs>(parts);
             var starterMotor = FindPart<StarterMotor>(parts);
+            var strokeCycler = FindPart<CombustionStrokeCycler>(parts);
             var timingChain = FindPart<TimingChain>(parts);
             var valveExhaust = FindPart<ValveExhaust>(parts);
             var valveIntake = FindPart<ValveIntake>(parts);
@@ -52,7 +54,7 @@ namespace LogicalEngine.Engines
                 { airCleaner, new List<CarPart> { } },
                 { alternator, new List<CarPart> { battery } },
                 { battery, new List<CarPart> { } },
-                { camShaft, new List<CarPart> { fuelPump, valveIntake, distributor, valveExhaust} },
+                { camShaft, new List<CarPart> { fuelPump, distributor, strokeCycler } },
                 { carburetor, new List<CarPart> { valveIntake } },
                 { crankshaft, new List<CarPart> { alternator, timingChain} },
                 { cylinders, new List<CarPart> { valveExhaust, pistons} },
@@ -64,7 +66,8 @@ namespace LogicalEngine.Engines
                 { ignitionSwitch, new List<CarPart> { ignitionCoil, starterMotor } },
                 { pistons, new List<CarPart> { crankshaft } },
                 { sparkPlugs, new List<CarPart> { cylinders } },
-                { starterMotor, new List<CarPart> { flywheel } }, 
+                { starterMotor, new List<CarPart> { flywheel } },
+                { strokeCycler, new List<CarPart> { cylinders } },
                 { timingChain, new List<CarPart> { camShaft } },
                 { valveExhaust, new List<CarPart> { cylinders, exhaustDown } },
                 { valveIntake, new List<CarPart> { cylinders } } 
