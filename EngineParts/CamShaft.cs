@@ -16,7 +16,35 @@ namespace LogicalEngine.EngineParts
 
         protected override void RefreshEngineStage(CarPart target)
         {
-            (Engine as CombustionEngine).Chamber.NextStroke();
+            ToggleValves();
+        }
+        private void ToggleValves()
+        {
+            var CE = Engine as CombustionEngine;
+            var stroke = CE.Chamber.StrokeCycle;
+            var parts = CE.AllParts;
+            var ExhaustValve = parts.Find(x => x is ValveExhaust) as IValve;
+            var IntakeValve = parts.Find(x => x is ValveIntake) as IValve;
+            
+            switch (CE.Chamber.StrokeCycle)
+            {
+                case CombustionStrokeCycles.Intake:
+                    IntakeValve.IsOpen = true;
+                    ExhaustValve.IsOpen = false;
+                    break;
+                case CombustionStrokeCycles.Compression:
+                    IntakeValve.IsOpen = false;
+                    ExhaustValve.IsOpen = false;
+                    break;
+                case CombustionStrokeCycles.Combustion:
+                    IntakeValve.IsOpen = false;
+                    ExhaustValve.IsOpen = false;
+                    break;
+                case CombustionStrokeCycles.Exhaust:
+                    IntakeValve.IsOpen = false;
+                    ExhaustValve.IsOpen = true;
+                    break;
+            }
         }
         protected override bool ShouldActivate(CarPart target, in bool transferSuccess)
         {

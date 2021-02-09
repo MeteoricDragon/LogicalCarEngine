@@ -8,6 +8,6 @@ namespace LogicalEngine.EngineParts
 {
     public interface IValve
     {
-        public bool IsOpen { get; }
+        public bool IsOpen { get; set; }
     }
 }

@@ -15,7 +15,6 @@ namespace LogicalEngine.EngineParts
         // TODO: consume all fuel when changing from Combustion to exhaust and after transfer to pistons.
         public enum CombustionStrokeCycles
         {
-            Start,
             Intake,
             Compression,
             Combustion,
@@ -36,9 +35,6 @@ namespace LogicalEngine.EngineParts
 
             switch (cycle)
             {
-                case CombustionStrokeCycles.Start:
-                    cycle = CombustionStrokeCycles.Intake;
-                    break;
                 case CombustionStrokeCycles.Intake:
                     cycle = CombustionStrokeCycles.Compression;
                     break;
@@ -51,9 +47,6 @@ namespace LogicalEngine.EngineParts
                 case CombustionStrokeCycles.Exhaust:
                     cycle = CombustionStrokeCycles.End;
                     break;
-                case CombustionStrokeCycles.End:
-                    cycle = CombustionStrokeCycles.Start;
-                    break;
             }
 
             if (StrokeCycle != cycle)
@@ -65,7 +58,7 @@ namespace LogicalEngine.EngineParts
 
         public void ResetStrokeCycle()
         {
-            StrokeCycle = CombustionStrokeCycles.Start;
+            StrokeCycle = CombustionStrokeCycles.Intake;
         }
 
         protected override bool ShouldActivate(CarPart target, in bool transferSuccess)

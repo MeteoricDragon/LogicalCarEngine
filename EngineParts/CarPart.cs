@@ -32,10 +32,11 @@ namespace LogicalEngine.EngineParts
             Activate += OnActivate;
         }
 
-        private void OnActivate(object sender, EventArgs e)
+        protected virtual void OnActivate(object sender, EventArgs e)
         {           
             var carPartSender = sender as CarPart;
             Output.ConnectedPartsHeader(carPartSender);
+            RefreshEngineStage(carPartSender);
             TriggerConnectedParts(carPartSender);
             Output.ConnectedPartsFooter(carPartSender);
         }
@@ -50,8 +51,6 @@ namespace LogicalEngine.EngineParts
 
                 if (doTransfer)
                     transferSuccess = TryTransferUnits(connected);
-
-                RefreshEngineStage(connected);
 
                 if ( !backToEngine )
                     doActivate = ShouldActivate(connected, transferSuccess);
@@ -77,10 +76,6 @@ namespace LogicalEngine.EngineParts
             return (target.UnitsOwned >= target.UnitTriggerThreshold);
         }
 
-        //protected virtual bool ShouldChangeEngineStage(CarPart sender)
-        //{
-        //   return false;
-        //}
         protected virtual void RefreshEngineStage(CarPart sender) { }
         protected virtual bool BackToEngineLoop(CarPart sender)
         {

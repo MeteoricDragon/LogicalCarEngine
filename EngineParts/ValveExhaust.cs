@@ -10,11 +10,7 @@ namespace LogicalEngine.EngineParts
     public class ValveExhaust : ExhaustPart, IValve
     {
         public override string UserFriendlyName { get => "Exhaust Valve"; }
-        public bool IsOpen { 
-            get {
-                return ((Engine as CombustionEngine).Chamber.StrokeCycle == CombustionStrokeCycles.Exhaust);
-            } 
-        }
+        public bool IsOpen { get; set; }
 
         public ValveExhaust(Engine e) : base(e)
         {
@@ -41,6 +37,10 @@ namespace LogicalEngine.EngineParts
             if (receiver is Cylinders)
                 return false;
             return base.TryTransferUnits(receiver);
+        }
+
+        protected override void RefreshEngineStage(CarPart target)
+        {
         }
     }
 }

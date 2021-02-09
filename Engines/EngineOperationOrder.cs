@@ -24,50 +24,50 @@ namespace LogicalEngine.Engines
         {
             var parts = engine.AllParts;
 
-            var Accelerator = FindPart<Accelerator>(parts);
-            var AirCleaner = FindPart<AirCleaner>(parts);
-            var Alternator = FindPart<Alternator>(parts);
-            var Battery = FindPart<Battery>(parts);
-            var CamShaft = FindPart<CamShaft>(parts);
-            var Carburetor = FindPart<Carburetor>(parts);
-            var Crankshaft = FindPart<Crankshaft>(parts);
-            var CombustionChamber = FindPart<Cylinders>(parts);
-            var Distributor = FindPart<Distributor>(parts);
-            var Flywheel = FindPart<Flywheel>(parts);
-            var FuelPump = FindPart<FuelPump>(parts);
-            var FuelTank = FindPart<FuelTank>(parts);
-            var IgnitionCoil = FindPart<IgnitionCoil>(parts);
-            var IgnitionSwitch = FindPart<IgnitionSwitch>(parts);
-            var Pistons = FindPart<Pistons>(parts);
-            var SparkPlugs = FindPart<SparkPlugs>(parts);
-            var StarterMotor = FindPart<StarterMotor>(parts);
-            var TimingChain = FindPart<TimingChain>(parts);
-            var ValveExhaust = FindPart<ValveExhaust>(parts);
-            var ValveIntake = FindPart<ValveIntake>(parts);
-            var ExhaustDown = FindPart<ExhaustDownPipe>(parts);
+            var accelerator = FindPart<Accelerator>(parts);
+            var airCleaner = FindPart<AirCleaner>(parts);
+            var alternator = FindPart<Alternator>(parts);
+            var battery = FindPart<Battery>(parts);
+            var camShaft = FindPart<CamShaft>(parts);
+            var carburetor = FindPart<Carburetor>(parts);
+            var crankshaft = FindPart<Crankshaft>(parts);
+            var cylinders = FindPart<Cylinders>(parts);
+            var distributor = FindPart<Distributor>(parts);
+            var flywheel = FindPart<Flywheel>(parts);
+            var fuelPump = FindPart<FuelPump>(parts);
+            var fuelTank = FindPart<FuelTank>(parts);
+            var ignitionCoil = FindPart<IgnitionCoil>(parts);
+            var ignitionSwitch = FindPart<IgnitionSwitch>(parts);
+            var pistons = FindPart<Pistons>(parts);
+            var sparkPlugs = FindPart<SparkPlugs>(parts);
+            var starterMotor = FindPart<StarterMotor>(parts);
+            var timingChain = FindPart<TimingChain>(parts);
+            var valveExhaust = FindPart<ValveExhaust>(parts);
+            var valveIntake = FindPart<ValveIntake>(parts);
+            var exhaustDown = FindPart<ExhaustDownPipe>(parts);
 
             PartChain = new Dictionary<CarPart, List<CarPart>>()
             {
-                { Accelerator, new List<CarPart> { Carburetor } },
-                { AirCleaner, new List<CarPart> { } },
-                { Alternator, new List<CarPart> { Battery } },
-                { Battery, new List<CarPart> { } },
-                { CamShaft, new List<CarPart> { FuelPump, ValveIntake, Distributor, ValveExhaust} },
-                { Carburetor, new List<CarPart> { ValveIntake } },
-                { Crankshaft, new List<CarPart> { Alternator, TimingChain} },
-                { CombustionChamber, new List<CarPart> { ValveExhaust, Pistons} },
-                { Distributor, new List<CarPart> { SparkPlugs } },
-                { Flywheel, new List<CarPart> { Crankshaft } },
-                { FuelPump, new List<CarPart> { Carburetor } },
-                { FuelTank, new List<CarPart> { } },
-                { IgnitionCoil, new List<CarPart> { Distributor } },
-                { IgnitionSwitch, new List<CarPart> { IgnitionCoil, StarterMotor } },
-                { Pistons, new List<CarPart> { Crankshaft } },
-                { SparkPlugs, new List<CarPart> { CombustionChamber } },
-                { StarterMotor, new List<CarPart> { Flywheel } }, 
-                { TimingChain, new List<CarPart> { CamShaft } },
-                { ValveExhaust, new List<CarPart> { CombustionChamber, ExhaustDown } },
-                { ValveIntake, new List<CarPart> { CombustionChamber } } 
+                { accelerator, new List<CarPart> { carburetor } },
+                { airCleaner, new List<CarPart> { } },
+                { alternator, new List<CarPart> { battery } },
+                { battery, new List<CarPart> { } },
+                { camShaft, new List<CarPart> { fuelPump, valveIntake, distributor, valveExhaust} },
+                { carburetor, new List<CarPart> { valveIntake } },
+                { crankshaft, new List<CarPart> { alternator, timingChain} },
+                { cylinders, new List<CarPart> { valveExhaust, pistons} },
+                { distributor, new List<CarPart> { sparkPlugs } },
+                { flywheel, new List<CarPart> { crankshaft } },
+                { fuelPump, new List<CarPart> { carburetor } },
+                { fuelTank, new List<CarPart> { } },
+                { ignitionCoil, new List<CarPart> { distributor } },
+                { ignitionSwitch, new List<CarPart> { ignitionCoil, starterMotor } },
+                { pistons, new List<CarPart> { crankshaft } },
+                { sparkPlugs, new List<CarPart> { cylinders } },
+                { starterMotor, new List<CarPart> { flywheel } }, 
+                { timingChain, new List<CarPart> { camShaft } },
+                { valveExhaust, new List<CarPart> { cylinders, exhaustDown } },
+                { valveIntake, new List<CarPart> { cylinders } } 
             };
         }
 

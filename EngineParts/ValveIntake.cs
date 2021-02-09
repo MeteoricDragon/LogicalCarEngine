@@ -9,13 +9,7 @@ namespace LogicalEngine.EngineParts
     public class ValveIntake : FuelPart, IValve
     {
         public override string UserFriendlyName { get => "Intake Valve"; }
-        public bool IsOpen
-        {
-            get
-            {
-                return ((Engine as CombustionEngine).Chamber.StrokeCycle == CombustionStrokeCycles.Intake);
-            }
-        }
+        public bool IsOpen { get; set; }
         public ValveIntake(Engine e) : base(e)
         {
             Engine = e;
