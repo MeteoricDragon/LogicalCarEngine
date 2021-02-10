@@ -27,10 +27,12 @@ namespace LogicalEngine.EngineParts
             return true;
         }
 
-        protected override bool BackToEngineLoop(CarPart sender)
+        protected override bool BackToEngineLoop(CarPart target)
         {// TODO: if doing Torque Converter, readdress how the engine 
             //goes back to loop? Will torque converter be triggered by other strokes?
-            if (sender is Pistons && Engine.CycleComplete) 
+            if (this is Crankshaft 
+                //&& target is TimingChain 
+                && Engine.CycleComplete) 
                 return true;
             return false;
         }

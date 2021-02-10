@@ -61,6 +61,7 @@ namespace LogicalCarEngine.Engines
         public void ResetStrokeCycle()
         {
             StrokeCycle = CombustionStrokeCycles.Intake;
+            Output.ChangeCycleReport(StrokeCycle);
         }
 
         public override bool TryTransferUnits(UnitContainer receiver) { return false; }

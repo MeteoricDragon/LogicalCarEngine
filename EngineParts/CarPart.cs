@@ -45,10 +45,10 @@ namespace LogicalEngine.EngineParts
             foreach (CarPart connected in sender.ConnectedParts)
             {
                 bool transferSuccess = false;
-                bool doTransfer = CanTransfer(connected);
+                bool backToEngine = BackToEngineLoop(connected);
                 bool doActivate = false;
-                bool backToEngine = BackToEngineLoop(sender);
-
+                bool doTransfer = !backToEngine && CanTransfer(connected);
+                
                 if (doTransfer)
                     transferSuccess = TryTransferUnits(connected);
 
