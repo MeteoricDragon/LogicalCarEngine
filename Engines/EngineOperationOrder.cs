@@ -84,16 +84,21 @@ namespace LogicalEngine.Engines
 
                 if (p.CanChargeBattery || p.CanDrawFromBattery)
                     p.Reservoir = battery;
-                else if (p.CanDrawFuel)
+                else if (p.CanDrawFromFuelTank)
                     p.Reservoir = fuelTank;
 
-                var activatingParts = GetActivatingPartsOf(p);
-                foreach (CarPart aP in activatingParts)
+                var candidateBackupParts = GetActivatingPartsOf(p);
+                if (p.CanDrawFromBattery)
+                    candidateBackupParts.Add(battery);
+                if (p.CanDrawFromFuelTank)
+                    candidateBackupParts.Add(fuelTank);
+                foreach (CarPart cBP in candidateBackupParts)
                 {
-                    if (p.HasBackupSource && aP.IsBackupSource)
-                        p.BackupSources.Add(aP);   
-                    // TODO: but what if the backup source has different units than what is needed?
-                    // Like Distributor getting Momentum from camshaft, when needing electricity from Ignition Coil?
+                    if (cBP.CanBeDrainedBy(p)
+                        || (cBP is Battery && p.CanDrawFromBattery)
+                        || (cBP is FuelTank && p.CanDrawFromFuelTank))
+                        p.BackupSources.Add(cBP);   
+
 
                 
                 }

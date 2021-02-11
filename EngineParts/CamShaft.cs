@@ -57,13 +57,13 @@ namespace LogicalEngine.EngineParts
                 ;
                 
         }
-        protected override bool CanTransfer(UnitContainer receiver)
+        public override bool CanTransferTo(UnitContainer receiver)
         {
             if (receiver is FuelPump)
                 return true;
             return false;
         }
-        protected override bool CanDrain(UnitContainer receiver)
+        public override bool CanBeDrainedBy(UnitContainer receiver)
         {
             if (receiver is FuelPump)
                 return true;

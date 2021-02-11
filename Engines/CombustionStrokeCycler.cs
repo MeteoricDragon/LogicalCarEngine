@@ -66,9 +66,9 @@ namespace LogicalCarEngine.Engines
 
         public override bool TryTransferUnits(UnitContainer receiver) { return false; }
         protected override bool BackToEngineLoop(CarPart sender)  { return false; }
-        protected override bool CanDrain(UnitContainer receiver)  { return false; }
+        public override bool CanBeDrainedBy(UnitContainer receiver)  { return false; }
         protected override bool CanFill(UnitContainer receiver)  { return false; }
-        protected override bool CanTransfer(UnitContainer receivingPart) { return false; }
+        public override bool CanTransferTo(UnitContainer receivingPart) { return false; }
         protected override void OnActivate(object sender, EventArgs e)
         {
             var carPartSender = sender as CarPart;

@@ -16,7 +16,7 @@ namespace LogicalEngine.EngineParts
         {
         }
 
-        protected override bool CanTransfer(UnitContainer receivingPart)
+        public override bool CanTransferTo(UnitContainer receivingPart)
         {
             var cycle = (Engine as CombustionEngine).StrokeCycler.StrokeCycle;
             if (cycle == CombustionStrokeCycles.Combustion)

@@ -20,10 +20,10 @@ namespace LogicalEngine.EngineParts
             return IsOpen;
         }
 
-        protected override bool CanTransfer(UnitContainer receivingPart)
+        public override bool CanTransferTo(UnitContainer receivingPart)
         {
             if (IsOpen)
-                return base.CanTransfer(receivingPart);
+                return base.CanTransferTo(receivingPart);
             else
                 return false;
         }

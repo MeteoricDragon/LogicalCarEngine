@@ -27,9 +27,9 @@ namespace LogicalEngine.EngineParts
             return true;
         }
 
-        protected override bool CanDrain(UnitContainer receiver)
+        public override bool CanBeDrainedBy(UnitContainer receiver)
         {
-            return base.CanDrain(receiver);
+            return base.CanBeDrainedBy(receiver);
         }
 
         protected override bool CanFill(UnitContainer receiver)

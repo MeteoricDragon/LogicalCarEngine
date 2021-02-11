@@ -16,11 +16,11 @@ namespace LogicalEngine.EngineParts
         {
             Engine = e;
         }
-        protected override bool CanTransfer(UnitContainer target)
+        public override bool CanTransferTo(UnitContainer target)
         {
             if (IsOpen)
             {
-                return base.CanTransfer(target);
+                return base.CanTransferTo(target);
             }
             return false;
         }

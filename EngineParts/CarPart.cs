@@ -47,7 +47,7 @@ namespace LogicalEngine.EngineParts
                 bool transferSuccess = false;
                 bool backToEngine = BackToEngineLoop(connected);
                 bool doActivate = false;
-                bool doTransfer = !backToEngine && CanTransfer(connected);
+                bool doTransfer = !backToEngine && CanTransferTo(connected);
                 
                 if (doTransfer)
                     transferSuccess = TryTransferUnits(connected);

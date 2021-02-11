@@ -27,7 +27,7 @@ namespace LogicalEngine.EngineParts
                 || (target is Pistons && threshold);
 
         }
-        protected override bool CanTransfer(UnitContainer receiver)
+        public override bool CanTransferTo(UnitContainer receiver)
         {
             if ((receiver is ValveExhaust exhaust && exhaust.IsOpen ) 
                 || (receiver is Pistons))

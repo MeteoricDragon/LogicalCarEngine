@@ -17,29 +17,30 @@ namespace LogicalEngine.EngineParts
         virtual public int UnitTriggerThreshold { get => 1; }
         public bool CanDrawFromBattery { get; set; }
         public bool CanChargeBattery { get; set; }
-        public bool CanDrawFuel { get; set; }
-        public bool IsBackupSource { get; protected set; }
-        public bool HasBackupSource { get; internal set; }
+        public bool CanDrawFromFuelTank { get; set; }
+
         public virtual bool TryTransferUnits(UnitContainer receiver)
         {
-            var success = false;
-            if (CanDrain(receiver) == false)
+            if (CanBeDrainedBy(receiver) == false)
             {
                 Output.TakeFromReservoirFailReport(UserFriendlyName);
-                return success;
+                return false;
             }
 
-            if ((CanDrawFromBattery || CanDrawFuel)
-                && Reservoir.HasEnoughToDrain(UnitsToConsume)
-                && !HasEnoughToDrain(UnitsToConsume))
+            if (!HasEnoughToDrain(UnitsToConsume)
+                && CanTransferTo(receiver) )
             {
-                Reservoir.Drain(UnitsToConsume);
-                Fill(Reservoir.UnitsToGive);
+                foreach (CarPart source in BackupSources)
+                {
+                    var foundUnits = source.TryTransferUnits(this);
+                    if (foundUnits)
+                        break;
+                }
             }
 
-            if (HasEnoughToDrain(UnitsToConsume))
+            var success = HasEnoughToDrain(UnitsToConsume);
+            if (success)
             {
-                success = true;
                 Drain(UnitsToConsume);
                 if (CanFill(receiver))
                     receiver.Fill(UnitsToGive);
@@ -47,7 +48,7 @@ namespace LogicalEngine.EngineParts
 
             return success;
         }
-        protected virtual bool CanTransfer(UnitContainer receivingPart)
+        public virtual bool CanTransferTo(UnitContainer receivingPart)
         {
             return true;
         }
@@ -55,7 +56,7 @@ namespace LogicalEngine.EngineParts
         {
             return (UnitsOwned - drainAmount >= 0);
         }
-        protected virtual bool CanDrain(UnitContainer receiver)
+        public virtual bool CanBeDrainedBy(UnitContainer receiver)
         {
             return true;
         }
