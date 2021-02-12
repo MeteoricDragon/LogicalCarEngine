@@ -27,8 +27,10 @@ namespace LogicalEngine.EngineParts
                 return false;
             }
 
-            if (!HasEnoughToDrain(UnitsToConsume)
-                && CanTransferTo(receiver) )
+            var transferrable = CanTransferTo(receiver);
+            if (transferrable 
+                 && !HasEnoughToDrain(UnitsToConsume)
+                )
             {
                 foreach (CarPart source in BackupSources)
                 {
@@ -38,11 +40,13 @@ namespace LogicalEngine.EngineParts
                 }
             }
 
-            var success = HasEnoughToDrain(UnitsToConsume);
+            var drainable = CanBeDrainedBy(receiver);
+            var success = drainable
+                && HasEnoughToDrain(UnitsToConsume);
             if (success)
             {
                 Drain(UnitsToConsume);
-                if (CanFill(receiver))
+                if (transferrable)
                     receiver.Fill(UnitsToGive);
             }
 
@@ -52,6 +56,7 @@ namespace LogicalEngine.EngineParts
         {
             return true;
         }
+
         private bool HasEnoughToDrain(int drainAmount)
         {
             return (UnitsOwned - drainAmount >= 0);
@@ -60,6 +65,7 @@ namespace LogicalEngine.EngineParts
         {
             return true;
         }
+
         private void Drain(int drainAmount)
         {
             Output.DrainReport(this, drainAmount);

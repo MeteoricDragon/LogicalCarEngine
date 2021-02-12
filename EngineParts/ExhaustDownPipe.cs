@@ -27,16 +27,6 @@ namespace LogicalEngine.EngineParts
             return true;
         }
 
-        public override bool CanBeDrainedBy(UnitContainer receiver)
-        {
-            return base.CanBeDrainedBy(receiver);
-        }
-
-        protected override bool CanFill(UnitContainer receiver)
-        {
-            return base.CanFill(receiver);
-        }
-
         private void EndOfSystemExpelUnits()
         {
             UnitsOwned = 0;

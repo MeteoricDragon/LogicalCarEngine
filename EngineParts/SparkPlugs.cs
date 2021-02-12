@@ -24,10 +24,7 @@ namespace LogicalEngine.EngineParts
         public override bool CanTransferTo(UnitContainer receiver)
         {
             var stroke = (Engine as CombustionEngine).StrokeCycler.StrokeCycle;
-
-            if (stroke == CombustionStrokeCycles.Combustion)
-                return true;
-            return false;
+            return stroke == CombustionStrokeCycles.Combustion;
         }
         protected override bool CanFill(UnitContainer receiver)
         {

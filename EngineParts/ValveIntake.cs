@@ -15,7 +15,7 @@ namespace LogicalEngine.EngineParts
             Engine = e;
         }
 
-        protected override bool CanFill(UnitContainer receiver)
+        public override bool CanBeDrainedBy(UnitContainer receiver)
         {
             return IsOpen;
         }

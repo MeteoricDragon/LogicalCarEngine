@@ -10,7 +10,7 @@ namespace LogicalEngine.EngineParts
 {
     public class Cylinders : FuelPart
     {
-        public override int UnitsToGive => 40;
+        public override int UnitsToGive => 10;
 
         // TODO: consume all fuel when changing from Combustion to exhaust and after transfer to pistons.
         public override string UserFriendlyName { get => "Cylinders"; }
@@ -34,12 +34,6 @@ namespace LogicalEngine.EngineParts
                 return true;
             return false;
         }
-        protected override bool CanFill(UnitContainer receiver)
-        {
-            if ((receiver is ValveExhaust exhaust && exhaust.IsOpen)
-                || (receiver is Pistons))
-                return true;
-            return false;
-        }
+
     }
 }
