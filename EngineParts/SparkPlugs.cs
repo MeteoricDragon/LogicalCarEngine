@@ -26,9 +26,5 @@ namespace LogicalEngine.EngineParts
             var stroke = (Engine as CombustionEngine).StrokeCycler.StrokeCycle;
             return stroke == CombustionStrokeCycles.Combustion;
         }
-        protected override bool CanFill(UnitContainer receiver)
-        {
-            return false;
-        }
     }
 }

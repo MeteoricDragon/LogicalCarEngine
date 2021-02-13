@@ -69,11 +69,5 @@ namespace LogicalEngine.EngineParts
                 return true;
             return false;
         }
-        protected override bool CanFill(UnitContainer receiver)
-        {
-            if (receiver is FuelPump)
-                return true;
-            return false;
-        }
     }
 }

@@ -70,10 +70,6 @@ namespace LogicalEngine.EngineParts
             Output.DrainReport(this, drainAmount);
             UnitsOwned -= drainAmount;
         }
-        protected virtual bool CanFill(UnitContainer receiver)
-        {
-            return true;
-        }
         private void Fill(int fillAmount)
         {
             Output.FillReport(this, fillAmount);
