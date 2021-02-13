@@ -7,7 +7,6 @@ namespace LogicalEngine.EngineParts
     public abstract class UnitContainer
     {
         public List<CarPart> BackupSources { get; set; }
-        public UnitContainer Reservoir { get; set; }
         virtual public string UserFriendlyName { get => "Unit Container"; }
         virtual public string UnitTypeSent { get => "Units"; }
         virtual public int UnitsMax { get => 40; }

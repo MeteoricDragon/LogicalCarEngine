@@ -81,12 +81,6 @@ namespace LogicalEngine.Engines
             var fuelTank = FindPart<FuelTank>(allParts);
             foreach (CarPart p in allParts)
             {
-
-                if (p.CanChargeBattery || p.CanDrawFromBattery)
-                    p.Reservoir = battery;
-                else if (p.CanDrawFromFuelTank)
-                    p.Reservoir = fuelTank;
-
                 var candidateBackupParts = GetActivatingPartsOf(p);
                 if (p.CanDrawFromBattery)
                     candidateBackupParts.Add(battery);
@@ -98,11 +92,7 @@ namespace LogicalEngine.Engines
                         || (cBP is Battery && p.CanDrawFromBattery)
                         || (cBP is FuelTank && p.CanDrawFromFuelTank))
                         p.BackupSources.Add(cBP);   
-
-
-                
                 }
-                
             }
         }
 
