@@ -30,7 +30,7 @@ namespace LogicalEngine.EngineParts
             InvokeActivate();
         }
 
-        public void TurnIgnitionClockwise()
+        public void TurnClockwise()
         {
             if (IgnitionSwitchState == IgnitionState.IgnitionState_Start)
                 throw new Exception();
@@ -43,7 +43,7 @@ namespace LogicalEngine.EngineParts
                 StartupOn = true;
         }
 
-        public void TurnIgnitionCounterClockwise()
+        public void TurnCounterClockwise()
         {
             if (IgnitionSwitchState == IgnitionState.IgnitionState_Off)
                 throw new Exception();

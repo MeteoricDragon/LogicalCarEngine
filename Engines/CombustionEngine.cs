@@ -34,9 +34,10 @@ namespace LogicalEngine.Engines
             MakeSurePartRefsAreSet();
             while (!Ignition.StartupOn)
             {
-                Ignition.TurnIgnitionClockwise();
+                Ignition.TurnClockwise();
             }
-
+            Ignition.Tick();
+            Ignition.TurnCounterClockwise();
         }
 
 
@@ -46,15 +47,10 @@ namespace LogicalEngine.Engines
 
             base.TickEngine();
 
-            bool firstRun = !CycleComplete;
-
-            if (CycleComplete)
+            //if (CycleComplete)
                 StrokeCycler.ResetStrokeCycle();
 
-            if (firstRun)
-                Ignition?.Tick();
-            else
-                Crankshaft?.Tick();
+            Crankshaft?.Tick();
         }
 
     }

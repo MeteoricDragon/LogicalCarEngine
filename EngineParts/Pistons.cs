@@ -15,7 +15,7 @@ namespace LogicalEngine.EngineParts
             Engine = e;
         }
 
-        protected override void RefreshEngineStage(CarPart sender)
+        protected override void RefreshEngineStage(CarPart target)
         {
             var CE = Engine as CombustionEngine;
             CE.StrokeCycler.NextStroke();
