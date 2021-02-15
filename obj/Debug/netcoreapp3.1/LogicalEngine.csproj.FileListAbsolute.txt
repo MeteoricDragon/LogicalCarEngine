@@ -1,0 +1,12 @@
+C:\Users\meteo\source\repos\LogicalCarEngine\obj\Debug\netcoreapp3.1\LogicalEngine.AssemblyInfoInputs.cache
+C:\Users\meteo\source\repos\LogicalCarEngine\obj\Debug\netcoreapp3.1\LogicalEngine.AssemblyInfo.cs
+C:\Users\meteo\source\repos\LogicalCarEngine\obj\Debug\netcoreapp3.1\LogicalEngine.csproj.CoreCompileInputs.cache
+C:\Users\meteo\source\repos\LogicalCarEngine\bin\Debug\netcoreapp3.1\LogicalEngine.exe
+C:\Users\meteo\source\repos\LogicalCarEngine\bin\Debug\netcoreapp3.1\LogicalEngine.deps.json
+C:\Users\meteo\source\repos\LogicalCarEngine\bin\Debug\netcoreapp3.1\LogicalEngine.runtimeconfig.json
+C:\Users\meteo\source\repos\LogicalCarEngine\bin\Debug\netcoreapp3.1\LogicalEngine.runtimeconfig.dev.json
+C:\Users\meteo\source\repos\LogicalCarEngine\bin\Debug\netcoreapp3.1\LogicalEngine.dll
+C:\Users\meteo\source\repos\LogicalCarEngine\bin\Debug\netcoreapp3.1\LogicalEngine.pdb
+C:\Users\meteo\source\repos\LogicalCarEngine\obj\Debug\netcoreapp3.1\LogicalEngine.dll
+C:\Users\meteo\source\repos\LogicalCarEngine\obj\Debug\netcoreapp3.1\LogicalEngine.pdb
+C:\Users\meteo\source\repos\LogicalCarEngine\obj\Debug\netcoreapp3.1\LogicalEngine.genruntimeconfig.cache
