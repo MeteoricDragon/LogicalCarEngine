@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LogicalCarEngine.Engines
+namespace LogicalEngine.Engines
 {        
     public enum CombustionStrokeCycles
     {
