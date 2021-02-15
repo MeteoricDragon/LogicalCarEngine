@@ -15,7 +15,7 @@ namespace LogicalEngine.EngineParts
             Engine = e;
         }
 
-        protected override bool ShouldActivate(CarPart target, in bool transferSuccess)
+        protected override bool ShouldActivate(CarPart target)
         {
             var stroke = (Engine as CombustionEngine).StrokeCycler.StrokeCycle;
             return stroke == CombustionStrokeCycles.Combustion;

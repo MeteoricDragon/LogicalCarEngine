@@ -11,7 +11,7 @@ namespace LogicalEngine.EngineParts
         {
         }
 
-        protected override bool ShouldActivate(CarPart target, in bool transferSuccess)
+        protected override bool ShouldActivate(CarPart target)
         {
             if (Engine.CycleComplete)
                 return false;

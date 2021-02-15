@@ -45,12 +45,12 @@ namespace LogicalEngine.EngineParts
                     break;
             }
         }
-        protected override bool ShouldActivate(CarPart target, in bool transferSuccess)
+        protected override bool ShouldActivate(CarPart target)
         {
             var CE = (Engine as CombustionEngine);
             var stroke = CE.StrokeCycler.StrokeCycle;
             return (
-                (target is FuelPump && stroke == CombustionStrokeCycles.Intake) && base.ShouldActivate(target, transferSuccess))
+                (target is FuelPump && stroke == CombustionStrokeCycles.Intake) && base.ShouldActivate(target))
                 || (target is Distributor && stroke == CombustionStrokeCycles.Combustion)
                 || (target is CombustionStrokeCycler && (stroke == CombustionStrokeCycles.Compression || stroke == CombustionStrokeCycles.Exhaust)) 
                 ;

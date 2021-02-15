@@ -24,7 +24,7 @@ namespace LogicalEngine.EngineParts
             }
             return false;
         }
-        protected override bool ShouldActivate(CarPart target, in bool transferSuccess)
+        protected override bool ShouldActivate(CarPart target)
         {
             if (target is Cylinders && IsOpen && !IsAtUnitThreshold(target)
                 || target is ExhaustDownPipe)

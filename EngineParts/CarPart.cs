@@ -44,18 +44,13 @@ namespace LogicalEngine.EngineParts
         {
             foreach (CarPart connected in sender.ConnectedParts)
             {
-                bool transferSuccess = false;
-                bool backToEngine = BackToEngineLoop(connected);
-                bool doActivate = false;
-                bool doTransfer = !backToEngine && CanTransferTo(connected);
+                if (BackToEngineLoop(connected))
+                    return;
                 
-                if (doTransfer)
-                    transferSuccess = TryTransferUnits(connected);
+                if (CanTransferTo(connected))
+                    TryTransferUnits(connected);
 
-                if ( !backToEngine )
-                    doActivate = ShouldActivate(connected, transferSuccess);
-
-                if (doActivate)
+                if (ShouldActivate(connected))
                 {
                     connected.InvokeActivate();
                 }
@@ -66,9 +61,9 @@ namespace LogicalEngine.EngineParts
             Activate?.Invoke(this, new EventArgs());
         }
         
-        protected virtual bool ShouldActivate(CarPart target, in bool transferSuccess) 
+        protected virtual bool ShouldActivate(CarPart target) 
         {
-            return transferSuccess && target.IsAtUnitThreshold(target);
+            return target.IsAtUnitThreshold(target);
         }
 
         public bool IsAtUnitThreshold(CarPart target)
