@@ -14,8 +14,12 @@ namespace LogicalEngine.Engines
         public IgnitionSwitch Ignition { get; protected set; }
         public Crankshaft Crankshaft { get; protected set; }
         public bool CombustionActive { get; protected set; }
+
+        public override bool IsCycling { get; set; }
+
         public CombustionEngine() : base()
         {
+            MakeSurePartRefsAreSet();
         }
         
         public void MakeSurePartRefsAreSet()
@@ -31,7 +35,6 @@ namespace LogicalEngine.Engines
         }
         public override void StartEngine()
         {
-            MakeSurePartRefsAreSet();
             while (!Ignition.StartupOn)
             {
                 Ignition.TurnClockwise();
@@ -43,12 +46,8 @@ namespace LogicalEngine.Engines
 
         public override void TickEngine()
         {
-            MakeSurePartRefsAreSet();
 
-            base.TickEngine();
-
-            //if (CycleComplete)
-                StrokeCycler.ResetStrokeCycle();
+            StrokeCycler.ResetStrokeCycle();
 
             Crankshaft?.Tick();
         }

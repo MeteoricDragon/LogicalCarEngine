@@ -44,11 +44,14 @@ namespace LogicalEngine.EngineParts
         {
             foreach (CarPart connected in sender.ConnectedParts)
             {
-                if (BackToEngineLoop(connected))
+                if (PreTransferReturnToEngineLoop(connected))
                     return;
                 
                 if (CanTransferTo(connected))
                     TryTransferUnits(connected);
+
+                if (PostTransferReturnToEngineLoop(connected))
+                    return;
 
                 if (ShouldActivate(connected))
                 {
@@ -72,7 +75,11 @@ namespace LogicalEngine.EngineParts
         }
 
         protected virtual void RefreshEngineStage(CarPart sender) { }
-        protected virtual bool BackToEngineLoop(CarPart sender)
+        protected virtual bool PreTransferReturnToEngineLoop(CarPart sender)
+        {
+            return false;
+        }
+        protected virtual bool PostTransferReturnToEngineLoop(CarPart sender)
         {
             return false;
         }

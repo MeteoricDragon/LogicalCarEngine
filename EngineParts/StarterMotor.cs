@@ -11,6 +11,9 @@ namespace LogicalEngine.EngineParts
         {
         }
 
-
+        protected override bool PostTransferReturnToEngineLoop(CarPart sender)
+        {
+            return true;
+        }
     }
 }

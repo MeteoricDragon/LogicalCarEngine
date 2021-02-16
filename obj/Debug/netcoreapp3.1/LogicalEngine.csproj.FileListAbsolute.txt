@@ -10,3 +10,4 @@ C:\Users\meteo\source\repos\LogicalCarEngine\bin\Debug\netcoreapp3.1\LogicalEngi
 C:\Users\meteo\source\repos\LogicalCarEngine\obj\Debug\netcoreapp3.1\LogicalEngine.dll
 C:\Users\meteo\source\repos\LogicalCarEngine\obj\Debug\netcoreapp3.1\LogicalEngine.pdb
 C:\Users\meteo\source\repos\LogicalCarEngine\obj\Debug\netcoreapp3.1\LogicalEngine.genruntimeconfig.cache
+C:\Users\meteo\source\repos\LogicalCarEngine\obj\Debug\netcoreapp3.1\LogicalEngine.csprojAssemblyReference.cache

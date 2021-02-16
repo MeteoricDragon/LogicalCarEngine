@@ -12,7 +12,7 @@ namespace LogicalEngine
     public class ICEOverheadValveEngine : CombustionEngine
     {
         public override bool CycleComplete { get => StrokeCycler.StrokeCycle == CombustionStrokeCycles.End; }
-        public ICEOverheadValveEngine() : base()
+        public ICEOverheadValveEngine()
         {
             EngineSubsystem[] systems = { new CombustionParts(this), new FuelParts(this), new PowerParts(this),
                                           new ExhaustParts(this), new AbstractParts(this)};
@@ -20,6 +20,7 @@ namespace LogicalEngine
 
             DefineEngineSequence();
             AssembleEngine();
+            base.MakeSurePartRefsAreSet();
         }
 
         public void DefineEngineSequence() // TODO: make this method in CombustionEngine instead. 

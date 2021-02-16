@@ -27,7 +27,7 @@ namespace LogicalEngine.EngineParts
             return true;
         }
 
-        protected override bool BackToEngineLoop(CarPart target)
+        protected override bool PreTransferReturnToEngineLoop(CarPart target)
         {// TODO: if doing Torque Converter, readdress how the engine 
             //goes back to loop? Will torque converter be triggered by other strokes?
             if (Engine.CycleComplete || (Engine as CombustionEngine).Ignition.StartupOn )

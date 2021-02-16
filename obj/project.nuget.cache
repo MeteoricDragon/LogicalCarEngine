@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yDFxxc3JbwnqBdhWQJPiih8wIPm/7cijqu461tfMewL8qi7x31gH+nKPVo+Ott9T1/hMSWo9DGmXY4b4Pbj39w==",
+  "dgSpecHash": "+Mr9IbRKN+j9tVJW91zw0v2XQpYs/3P2rX6sTqOSsjypw+l9ko3mezGdTZokxYxyJa1GOwvELpTFVLipGY3DBw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\meteo\\source\\repos\\LogicalCarEngine\\LogicalCarEngine.csproj",
+  "projectFilePath": "C:\\Users\\meteo\\source\\repos\\LogicalCarEngine\\LogicalEngine.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

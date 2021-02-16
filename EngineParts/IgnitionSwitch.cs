@@ -17,6 +17,7 @@ namespace LogicalEngine.EngineParts
         public IgnitionState IgnitionSwitchState { get; protected set; }
         public bool IgnitionSwitchOn { get; protected set; }
         public bool StartupOn { get; protected set; }
+        public bool IsRunning { get; protected set; }
         public override string UserFriendlyName { get => "Ignition Switch"; }
         public IgnitionSwitch(Engine e) : base(e)
         {
@@ -40,7 +41,10 @@ namespace LogicalEngine.EngineParts
             if (!IgnitionSwitchOn)
                 IgnitionSwitchOn = true;
             else if (!StartupOn)
+            {
                 StartupOn = true;
+                Engine.IsCycling = true;
+            }
         }
 
         public void TurnCounterClockwise()
@@ -54,6 +58,10 @@ namespace LogicalEngine.EngineParts
                 StartupOn = false;
             else if (IgnitionSwitchOn)
                 IgnitionSwitchOn = false;
+
+            if (IgnitionSwitchState == IgnitionState.IgnitionState_Off)
+                Engine.IsCycling = false;
+
         }
 
         protected override bool ShouldActivate(CarPart target)

@@ -11,6 +11,7 @@ namespace LogicalEngine
     {
         public int CycleCount = 0;
         public abstract bool CycleComplete { get; }
+        public abstract bool IsCycling { get; set; }
         protected EngineOperationOrder EngineOrder;
         public List<EngineSubsystem> Subsystems { get; protected set; }
 
@@ -28,20 +29,12 @@ namespace LogicalEngine
 
         public virtual void RunEngine()
         {
-            while (CycleCount++ < 2)
-            {
-                TickEngine();
-                Output.EngineCycleCount(CycleCount);
-            };
+            TickEngine();
+            Output.EngineCycleCount(++CycleCount);
         }
-        public virtual void TickEngine()
-        {
-            
-        }
-        public virtual void StartEngine()
-        {
+        public abstract void TickEngine();
+        public abstract void StartEngine();
 
-        }
         public virtual void StopEngine()
         {
 
