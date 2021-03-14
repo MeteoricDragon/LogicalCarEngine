@@ -27,10 +27,5 @@ namespace LogicalEngine.EngineParts
             else
                 return false;
         }
-
-        protected override bool ShouldActivate(CarPart target)
-        {
-            return true;
-        }
     }
 }

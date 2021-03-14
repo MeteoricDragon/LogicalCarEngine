@@ -13,9 +13,14 @@ namespace LogicalEngine.EngineParts
 
         protected override bool ShouldActivate(CarPart target)
         {
-            if (Engine.CycleComplete)
-                return false;
             // TODO: activate Crankshaft if starting up, but torque converter if cycle completed (not yet)
+            if (target is Crankshaft)
+                return false;
+            return true;
+        }
+
+        protected override bool PostTransferReturnToEngineLoop(CarPart sender)
+        {
             return true;
         }
     }

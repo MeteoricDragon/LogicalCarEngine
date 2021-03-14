@@ -24,7 +24,7 @@ namespace LogicalEngine.EngineParts
                 return false;
 
             // TODO: activate Flywheel if we're going to torque converter (not yet)
-            return true;
+            return base.ShouldActivate(target);
         }
 
         protected override bool PreTransferReturnToEngineLoop(CarPart target)
@@ -33,11 +33,6 @@ namespace LogicalEngine.EngineParts
             if (Engine.CycleComplete || (Engine as CombustionEngine).Ignition.StartupOn )
                 return true;
             return false;
-        }
-
-        public void Tick()
-        {
-            InvokeActivate();
         }
     }
 }

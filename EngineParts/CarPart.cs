@@ -13,6 +13,7 @@ namespace LogicalEngine.EngineParts
         public List<CarPart> ConnectedParts { get; set; }
 
         virtual public bool EngineCycleComplete { get => Engine.CycleComplete; }
+        public static bool ActivateWithPause;
 
         /// <summary>
         /// Reference to Engine that owns this part
@@ -35,8 +36,13 @@ namespace LogicalEngine.EngineParts
         protected virtual void OnActivate(object sender, EventArgs e)
         {           
             var carPartSender = sender as CarPart;
+
             Output.ConnectedPartsHeader(carPartSender);
             RefreshEngineStage(carPartSender);
+            if (ActivateWithPause)
+            {
+                Console.ReadKey(true);
+            }
             TriggerConnectedParts(carPartSender);
             Output.ConnectedPartsFooter(carPartSender);
         }
@@ -46,9 +52,12 @@ namespace LogicalEngine.EngineParts
             {
                 if (PreTransferReturnToEngineLoop(connected))
                     return;
-                
+
                 if (CanTransferTo(connected))
                     TryTransferUnits(connected);
+
+                // TODO: Log unit transfer
+
 
                 if (PostTransferReturnToEngineLoop(connected))
                     return;
@@ -58,6 +67,11 @@ namespace LogicalEngine.EngineParts
                     connected.InvokeActivate();
                 }
             }
+        }
+        public virtual void Tick(bool cycleWithPause)
+        {
+            ActivateWithPause = cycleWithPause;
+            InvokeActivate();
         }
         protected void InvokeActivate()
         {

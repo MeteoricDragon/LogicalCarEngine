@@ -21,10 +21,10 @@ namespace LogicalEngine.EngineParts
 
         protected override bool ShouldActivate(CarPart target)
         {
-            var threshold = IsAtUnitThreshold(target);
+            var baseConditions = base.ShouldActivate(target);
+            var openExhaustValve = (target is ValveExhaust exhaust && exhaust.IsOpen);
             
-            return (target is ValveExhaust exhaust && exhaust.IsOpen && threshold) 
-                || (target is Pistons && threshold);
+            return ((openExhaustValve || target is Pistons) && baseConditions);
 
         }
         public override bool CanTransferTo(UnitContainer receiver)

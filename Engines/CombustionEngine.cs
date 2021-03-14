@@ -44,12 +44,12 @@ namespace LogicalEngine.Engines
         }
 
 
-        public override void TickEngine()
+        public override void RunFullCycle(bool cycleWithPause = false)
         {
 
             StrokeCycler.ResetStrokeCycle();
 
-            Crankshaft?.Tick();
+            Crankshaft?.Tick(cycleWithPause: cycleWithPause);
         }
 
     }

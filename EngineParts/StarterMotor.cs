@@ -10,10 +10,5 @@ namespace LogicalEngine.EngineParts
         public StarterMotor(Engine e) : base(e)
         {
         }
-
-        protected override bool PostTransferReturnToEngineLoop(CarPart sender)
-        {
-            return true;
-        }
     }
 }

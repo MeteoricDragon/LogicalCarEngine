@@ -23,17 +23,21 @@ namespace LogicalEngine
                 {
                     parts.AddRange(x.Parts);
                 }
-                return parts; 
+                return parts;
             }
         }
 
-        public virtual void RunEngine()
+        public virtual void RunFullCycle(bool cycleWithPause = false)
         {
-            TickEngine();
-            Output.EngineCycleCount(++CycleCount);
+
+            if (CycleComplete)
+                Output.EngineCycleCount(++CycleCount);
         }
-        public abstract void TickEngine();
+
+
+
         public abstract void StartEngine();
+
 
         public virtual void StopEngine()
         {
