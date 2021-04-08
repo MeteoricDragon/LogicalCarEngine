@@ -33,6 +33,7 @@ namespace LogicalEngine.Engines
             if (Crankshaft == null)
                 Crankshaft = AllParts.Find(x => x is Crankshaft) as Crankshaft;
         }
+
         public override void StartEngine()
         {
             while (!Ignition.StartupOn)

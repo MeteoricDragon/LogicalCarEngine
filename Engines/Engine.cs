@@ -14,7 +14,7 @@ namespace LogicalEngine
         public abstract bool IsCycling { get; set; }
         protected EngineOperationOrder EngineOrder;
         public List<EngineSubsystem> Subsystems { get; protected set; }
-
+        public IOutput Output { get; private set; }
         public List<CarPart> AllParts
         {
             get {
@@ -62,5 +62,14 @@ namespace LogicalEngine
         }
 
         protected abstract void AssignPartListToPart(CarPart p);
+
+        public void SetServiceRefs(IOutput output)
+        {
+            Output = output;
+            foreach (UnitContainer u in AllParts)
+            {
+                u.Output = output;
+            }
+        }
     }
 }

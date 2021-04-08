@@ -4,37 +4,38 @@ using System.Text;
 using LogicalEngine.Engines;
 namespace LogicalEngine
 {
-    public static class MenuWriter
+    public class MenuWriter : IMenuWriter
     {
-        private static List<string> Options = new List<string>();
+        private List<string> Options = new List<string>();
         private const string UnformattedMenuItem = "{0}) {1}";
-        private static List<string> MenuItems = new List<string>();
+        private List<string> MenuItems = new List<string>();
         private const string Item_Exit = "Exit";
         private const string Item_StartEngine = "Start Engine";
         private const string Item_CycleEngine = "Cycle Engine";
         private const string Item_CycleEngineWithPause = "Step Engine";
-        private static void RefreshMenuOptions(Engine engine)
+
+        private void RefreshMenuOptions(Engine engine)
         {
             Options.Clear();
             Options.Add(Item_Exit);
 
             if (!engine.IsCycling)
-            { 
+            {
                 Options.Add(Item_StartEngine);
             }
             if (engine is CombustionEngine cE && cE.Ignition.IgnitionSwitchOn)
             {
                 Options.Add(Item_CycleEngine);
                 Options.Add(Item_CycleEngineWithPause);
-            }            
+            }
         }
-        private static void RefreshDisplayMenu()
+        private void RefreshDisplayMenu()
         {
             MenuItems.Clear();
             for (int i = 0; i < Options.Count; i++)
                 MenuItems.Add(String.Format(UnformattedMenuItem, i, Options[i]));
         }
-        private static void ShowMenu(Engine e)
+        private void ShowMenu(Engine e)
         {
             RefreshMenuOptions(e);
             RefreshDisplayMenu();
@@ -44,7 +45,7 @@ namespace LogicalEngine
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~");
             Console.Write("Enter Choice:");
         }
-        public static int PromptSelection(Engine engine)
+        public int PromptSelection(Engine engine)
         {
             ShowMenu(engine);
             var isNumeric = int.TryParse(Console.ReadLine(), out int choice);
@@ -52,13 +53,13 @@ namespace LogicalEngine
             string option = "";
             if (isNumeric && choice < Options.Count && choice >= 0)
             {
-                option = Options[choice];                    
+                option = Options[choice];
             }
             else
             {
                 choice = -1;
             }
-            
+
             switch (option)
             {
                 case Item_Exit:
