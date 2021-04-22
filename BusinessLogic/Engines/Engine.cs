@@ -4,6 +4,7 @@ using LogicalEngine.Engines;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LogicalEngine
 {
@@ -12,9 +13,10 @@ namespace LogicalEngine
         public int CycleCount = 0;
         public abstract bool CycleComplete { get; }
         public abstract bool IsCycling { get; set; }
-        protected EngineOperationOrder EngineOrder;
+        protected static readonly IServiceProvider Container = new BusinessContainerBuilder().Build();
+        protected static readonly IEngineAssembler EngineAssembler = Container.GetService<IEngineAssembler>();
         public List<EngineSubsystem> Subsystems { get; protected set; }
-        public IOutput Output { get; private set; }
+        public static IOutput Output { get; private set; }
         public List<CarPart> AllParts
         {
             get {
@@ -47,7 +49,6 @@ namespace LogicalEngine
         public Engine()
         {
             Subsystems = new List<EngineSubsystem>();
-            EngineOrder = new EngineOperationOrder();
         }
 
         protected void AssembleEngine() 
@@ -66,10 +67,6 @@ namespace LogicalEngine
         public void SetServiceRefs(IOutput output)
         {
             Output = output;
-            foreach (UnitContainer u in AllParts)
-            {
-                u.Output = output;
-            }
         }
     }
 }

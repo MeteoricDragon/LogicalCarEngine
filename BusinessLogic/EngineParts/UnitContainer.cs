@@ -17,13 +17,12 @@ namespace LogicalEngine.EngineParts
         public bool CanDrawFromBattery { get; set; }
         public bool CanChargeBattery { get; set; }
         public bool CanDrawFromFuelTank { get; set; }
-        public IOutput Output { get; set; }
 
         public virtual bool TryTransferUnits(UnitContainer receiver)
         {
             if (CanBeDrainedBy(receiver) == false)
             {
-                Output?.TakeFromReservoirFailReport(UserFriendlyName);
+                Engine.Output?.TakeFromReservoirFailReport(UserFriendlyName);
                 return false;
             }
 
@@ -68,12 +67,12 @@ namespace LogicalEngine.EngineParts
 
         private void Drain(int drainAmount)
         {
-            Output?.DrainReport(this, drainAmount);
+            Engine.Output?.DrainReport(this, drainAmount);
             UnitsOwned -= drainAmount;
         }
         private void Fill(int fillAmount)
         {
-            Output?.FillReport(this, fillAmount);
+            Engine.Output?.FillReport(this, fillAmount);
             UnitsOwned = Math.Min(UnitsOwned + fillAmount, UnitsMax);
         }
     }

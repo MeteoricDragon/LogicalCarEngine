@@ -54,14 +54,14 @@ namespace LogicalEngine.Engines
             if (StrokeCycle != cycle)
             {
                 StrokeCycle = cycle;
-                Output.ChangeCycleReport(cycle);
+                Engine.Output.ChangeCycleReport(cycle);
             }
         }
 
         public void ResetStrokeCycle()
         {
             StrokeCycle = CombustionStrokeCycles.Intake;
-            Output.ChangeCycleReport(StrokeCycle);
+            Engine.Output.ChangeCycleReport(StrokeCycle);
         }
 
         public override bool TryTransferUnits(UnitContainer receiver) { return false; }

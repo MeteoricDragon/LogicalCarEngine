@@ -37,14 +37,14 @@ namespace LogicalEngine.EngineParts
         {           
             var carPartSender = sender as CarPart;
 
-            Output.ConnectedPartsHeader(carPartSender);
+            Engine.Output.ConnectedPartsHeader(carPartSender);
             RefreshEngineStage(carPartSender);
             if (ActivateWithPause)
             {
                 Console.ReadKey(true);
             }
             TriggerConnectedParts(carPartSender);
-            Output.ConnectedPartsFooter(carPartSender);
+            Engine.Output.ConnectedPartsFooter(carPartSender);
         }
         protected void TriggerConnectedParts(CarPart sender)
         {

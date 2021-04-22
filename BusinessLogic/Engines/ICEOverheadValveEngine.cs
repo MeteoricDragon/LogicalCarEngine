@@ -26,13 +26,13 @@ namespace LogicalEngine
 
         public void DefineEngineSequence() // TODO: make this method in CombustionEngine instead. 
         {
-            EngineOrder.ConfigureICEOverheadValveEngine(this);
-            EngineOrder.ConnectBackup(this);
+            EngineAssembler.ConfigureICEOverheadValveEngine(this);
+            EngineAssembler.ConnectBackup(this);
         }
 
         protected override void AssignPartListToPart(CarPart part)
         {
-            if (EngineOrder.PartChain.TryGetValue(part, out List<CarPart> Targets))
+            if (EngineAssembler.PartChain.TryGetValue(part, out List<CarPart> Targets))
                 part.AssignTargetPart(Targets);
             
 
