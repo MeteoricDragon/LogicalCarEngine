@@ -1,20 +1,19 @@
 ﻿using LogicalEngine.Engines;
-using LogicalEngine.EngineContainers;
 using LogicalEngine.EngineParts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace LogicalEngine.Engines
+namespace LogicalEngine
 {
     /// <summary>
     /// Configurations for the engine part events.  This class should be a dependency?
     /// </summary>
-    public class EngineOperationOrder
+    public class EngineAssembler : IEngineAssembler
     {
         public Dictionary<CarPart, List<CarPart>> PartChain { get; protected set; }
-        public EngineOperationOrder()
+        public EngineAssembler()
         { }
         private T FindPart<T>(List<CarPart> PartList) where T : CarPart
         {
@@ -70,7 +69,7 @@ namespace LogicalEngine.Engines
                 { strokeCycler, new List<CarPart> { cylinders } },
                 { timingChain, new List<CarPart> { camShaft } },
                 { valveExhaust, new List<CarPart> { cylinders, exhaustDown } },
-                { valveIntake, new List<CarPart> { cylinders } } 
+                { valveIntake, new List<CarPart> { cylinders } }
             };
         }
 
@@ -91,12 +90,12 @@ namespace LogicalEngine.Engines
                     if (cBP.CanBeDrainedBy(p)
                         || (cBP is Battery && p.CanDrawFromBattery)
                         || (cBP is FuelTank && p.CanDrawFromFuelTank))
-                        p.BackupSources.Add(cBP);   
+                        p.BackupSources.Add(cBP);
                 }
             }
         }
 
-        public List<CarPart> GetActivatingPartsOf(CarPart part)
+        private List<CarPart> GetActivatingPartsOf(CarPart part)
         {
             return PartChain
                 .Where(e => e.Value.Contains(part)) // Filter elements that contains the CarSystemPart within their list

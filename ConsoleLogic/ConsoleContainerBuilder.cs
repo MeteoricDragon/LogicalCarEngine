@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LogicalEngine
 {
-    public class ContainerBuilder
+    public class ConsoleContainerBuilder
     {
         public IServiceProvider Build()
         {

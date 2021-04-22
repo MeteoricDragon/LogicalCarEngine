@@ -6,9 +6,10 @@ namespace LogicalEngine
 {
     class Program
     {
-        public static readonly IServiceProvider Container = new ContainerBuilder().Build();
         static void Main(string[] args)
         {
+            IServiceProvider Container = new ConsoleContainerBuilder().Build();
+
             // Not a concrete implementation.  calls for an interface
             var OutputService = Container.GetService<IOutput>();
             var MenuWriter = Container.GetService<IMenuWriter>();
