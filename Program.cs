@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using LogicalEngine.DBLogic;
-using LogicalEngine.DBLogic.Models;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,9 +17,6 @@ namespace LogicalEngine
 
             OutputService.Legend();
 
-            
-
-
             var engine = new ICEOverheadValveEngine(OutputService);
 
             var selection = -1;
@@ -29,8 +24,6 @@ namespace LogicalEngine
             {
                 selection = MenuWriter.PromptSelection(engine);
             }
-            
-
         }
 
     }
