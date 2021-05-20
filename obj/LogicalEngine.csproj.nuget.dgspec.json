@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\meteo\\source\\repos\\LogicalCarEngine\\LogicalEngine.csproj": {}
+    "C:\\Users\\meteo\\source\\repos\\LogicalEngine\\LogicalEngine.csproj": {}
   },
   "projects": {
-    "C:\\Users\\meteo\\source\\repos\\LogicalCarEngine\\LogicalEngine.csproj": {
+    "C:\\Users\\meteo\\source\\repos\\LogicalEngine\\LogicalEngine.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\meteo\\source\\repos\\LogicalCarEngine\\LogicalEngine.csproj",
+        "projectUniqueName": "C:\\Users\\meteo\\source\\repos\\LogicalEngine\\LogicalEngine.csproj",
         "projectName": "LogicalEngine",
-        "projectPath": "C:\\Users\\meteo\\source\\repos\\LogicalCarEngine\\LogicalEngine.csproj",
+        "projectPath": "C:\\Users\\meteo\\source\\repos\\LogicalEngine\\LogicalEngine.csproj",
         "packagesPath": "C:\\Users\\meteo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\meteo\\source\\repos\\LogicalCarEngine\\obj\\",
+        "outputPath": "C:\\Users\\meteo\\source\\repos\\LogicalEngine\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\meteo\\AppData\\Roaming\\NuGet\\NuGet.Config",

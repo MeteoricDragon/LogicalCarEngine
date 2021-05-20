@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lOgRf7mW+R09AY4A+5PIFUAOSPX3cmzsaIMpo+Q/tSvY6zWRHns+c/tH1SyV1SymAeMgVd9Xo36bKh2DlrEizg==",
+  "dgSpecHash": "5U7QjMXbv9tLMmNC6y9xhE/8d0Y1H/zrqwY52ctoC1yfZDmKGAUYwrHpkcgtsYLTQvbZQsplCsNugLIr5cQQng==",
   "success": true,
-  "projectFilePath": "C:\\Users\\meteo\\source\\repos\\LogicalCarEngine\\LogicalEngine.csproj",
+  "projectFilePath": "C:\\Users\\meteo\\source\\repos\\LogicalEngine\\LogicalEngine.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\meteo\\.nuget\\packages\\microsoft.entityframeworkcore\\5.0.5\\microsoft.entityframeworkcore.5.0.5.nupkg.sha512",
     "C:\\Users\\meteo\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\5.0.5\\microsoft.entityframeworkcore.abstractions.5.0.5.nupkg.sha512",
